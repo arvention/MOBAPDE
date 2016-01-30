@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0px"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:overScrollMode="always"
+    tools:context="com.example.arces.introapp.LayoutActivity"
+    tools:showIn="@layout/activity_layout">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:background="#557794"
+        android:textColor="#ffeedd"
+        android:text="The Wildlings"
+        android:textSize="30dp"
+        android:gravity="center"
+        />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
+        android:background="@drawable/stark"
+        android:alpha="0.5"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:alpha="0.9"
+            android:background="#ffffff"
+            >
+            <TextView
+                android:id="@+id/starkTitle"
+
+                android:background="#000000"
+                android:paddingTop="10dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                android:text="ARREN ANTIOQUIA"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                />
+
+            <TextView
+                android:id="@+id/starkMotto"
+                android:layout_below="@id/starkTitle"
+
+                android:padding="10dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+                android:textSize="20dp"
+                android:text="\' Winter is coming \'"
+                android:textStyle="italic"
+
+                android:fontFamily="sans-serif-light"
+                android:textColor="#1f1f1f"
+                android:background="#ffffff"
+                />
+
+            <Button
+                android:layout_below="@id/starkMotto"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:onClick="goStark"
+                android:text="Read more about the starks"
+                android:layout_marginBottom="5dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
+        android:background="@drawable/lannister"
+        android:alpha=".8"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:alpha="0.9"
+            android:background="#2f2f2f"
+            >
+
+            <TextView
+                android:id="@+id/lannisterTitle"
+
+                android:background="#940000"
+                android:paddingTop="10dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                android:text="ARCES TALAVERA"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:textColor="#949400"
+                />
+
+            <TextView
+                android:id="@+id/lannisterMotto"
+                android:layout_below="@id/lannisterTitle"
+
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:text="\' A Lannister always pays his debt \'"
+
+                android:fontFamily="sans-serif-light"
+                android:textColor="#ffffff"
+                android:textStyle="italic"
+                />
+
+            <Button
+                android:layout_below="@id/lannisterMotto"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:text="Read more about Arces"
+                android:background="#afafaf"
+                android:layout_marginBottom="10dp"
+                android:onClick="goLannister"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

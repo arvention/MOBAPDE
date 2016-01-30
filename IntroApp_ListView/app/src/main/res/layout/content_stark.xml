@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.arces.introapp.StarkActivity"
+    tools:showIn="@layout/activity_stark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#557794"
+        >
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffeedd"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="Go Back"
+            android:background="#446684"
+            android:onClick="goBack"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:textColor="#ffeedd"
+            android:text="The Wildlings"
+            android:textSize="30dp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/stark"
+        >
+        <TextView
+            android:id="@+id/stark_page_header"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="ARREN ANTIOQUIA"
+            android:textStyle="bold|italic"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ffffff"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="30dp"
+            android:background="#5f5f5f"
+            />
+        <ScrollView
+            android:layout_below="@id/stark_page_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="20dp"
+                android:background="#efefef"
+                android:textColor="#1f1f1f"
+                android:padding="15dp"
+                android:layout_margin="15dp"
+                android:alpha="0.8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/text_body_stark"
+                />
+        </ScrollView>
+    </RelativeLayout>
+</LinearLayout>
