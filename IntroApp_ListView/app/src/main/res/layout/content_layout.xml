@@ -11,73 +11,76 @@
     tools:context="com.example.arces.introapp.LayoutActivity"
     tools:showIn="@layout/activity_layout">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="bold"
-        android:background="#557794"
-        android:textColor="#ffeedd"
-        android:text="The Wildlings"
-        android:textSize="30dp"
-        android:gravity="center"
-        />
+        android:background="@color/colorHeader">
 
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="20dp"
+            android:src="@drawable/wildlings"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorHeaderText"
+            android:text="@string/title"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:paddingLeft="-50dp"
+            />
+    </LinearLayout>
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="278dp"
-        android:background="@drawable/stark"
-        android:alpha="0.5"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
             android:alpha="0.9"
-            android:background="#ffffff"
+            android:background="@color/colorStarkBackground"
             >
             <TextView
                 android:id="@+id/starkTitle"
 
-                android:background="#000000"
+                android:background="@color/colorNameStarkBackground"
                 android:paddingTop="10dp"
                 android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
 
-                android:text="ARREN ANTIOQUIA"
-                android:textSize="20dp"
+                android:text="@string/name_arren_caps"
+                android:textSize="20sp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorNameStarkText"
                 />
-
-            <TextView
-                android:id="@+id/starkMotto"
+            <ImageView
+                android:id="@+id/starkSigil"
                 android:layout_below="@id/starkTitle"
 
-                android:padding="10dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
 
-                android:textSize="20dp"
-                android:text="\' Winter is coming \'"
-                android:textStyle="italic"
-
-                android:fontFamily="sans-serif-light"
-                android:textColor="#1f1f1f"
-                android:background="#ffffff"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/stark"
                 />
 
             <Button
-                android:layout_below="@id/starkMotto"
+                android:layout_below="@id/starkSigil"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:onClick="goStark"
-                android:text="Read more about the starks"
+                android:text="@string/read_more_arren"
                 android:layout_marginBottom="5dp"
                 />
         </RelativeLayout>
@@ -87,58 +90,49 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="278dp"
-        android:background="@drawable/lannister"
-        android:alpha=".8"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:alpha="0.9"
-            android:background="#2f2f2f"
+            android:background="@color/colorLannisterBackground"
             >
 
             <TextView
                 android:id="@+id/lannisterTitle"
 
-                android:background="#940000"
+                android:background="@color/colorNameLannisterBackground"
                 android:paddingTop="10dp"
                 android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
 
-                android:text="ARCES TALAVERA"
-                android:textSize="20dp"
+                android:text="@string/name_arces_caps"
+                android:textSize="20sp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
-                android:textColor="#949400"
+                android:textColor="@color/colorNameLannisterText"
                 />
 
-            <TextView
-                android:id="@+id/lannisterMotto"
+            <ImageView
+                android:id="@+id/lannisterSigil"
                 android:layout_below="@id/lannisterTitle"
 
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:padding="10dp"
-                android:textSize="20dp"
-                android:text="\' A Lannister always pays his debt \'"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
 
-                android:fontFamily="sans-serif-light"
-                android:textColor="#ffffff"
-                android:textStyle="italic"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/lannister"
                 />
 
             <Button
-                android:layout_below="@id/lannisterMotto"
+                android:layout_below="@id/lannisterSigil"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:text="Read more about Arces"
-                android:background="#afafaf"
-                android:layout_marginBottom="10dp"
+                android:text="@string/read_more_arces"
+                android:background="@color/colorListViewBackground"
+                android:layout_marginBottom="20dp"
                 android:onClick="goLannister"
                 />
         </RelativeLayout>

@@ -2,8 +2,20 @@
     <string name="app_name">The Wildlings</string>
     <string name="title">The Wildlings</string>
     <string name="action_settings">Settings</string>
+    <string name="go_back">Go Back</string>
+
     <string name="title_activity_lannister">Lannister</string>
     <string name="title_activity_stark">Stark</string>
+    <string name="stark_words">\'Winter is coming\'</string>
+    <string name="lannister_words">\'Hear me roar\'</string>
+
+    <string name="name_arren_caps">ARREN ANTIOQUIA</string>
+    <string name="name_arces_caps">ARCES TALAVERA</string>
+
+    <string name="read_more_arren">Read more about Arren</string>
+    <string name="read_more_arces">Read more about Arces</string>
+
     <string name="text_body_lannister">Name: Arces Talavera\nBirthdate: Dec. 28, 1996\nHouse: Lannister\n\nHobbies: \n\tSleeping\n\tEating\n\tPlaying Video Games\n\tWatching TV Series\n\nInterests: \n\tGame of Thrones\n\tPokemon\n\tStar Wars\n\tYummy Foods\n\n2016 New Year\'s Resolution:\n\"I don\'t know. Stop procrastinating, maybe?\"</string>
     <string name="text_body_stark">Name: Arren Matthew C. Antioquia\nBirthdate: May 14, 1997\nHouse: Stark\n\nHobbies: \n\tWatching TV Series\n\tSleeping\n\tEating\n\nInterests: \n\tGame of Thrones\n\tPokemon\n\n2016 New Year\'s Resolution:\n\"Do things more efficiently\"</string>
+
 </resources>

@@ -1,14 +1,14 @@
 package com.example.arces.introapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LannisterActivity extends AppCompatActivity {
@@ -25,7 +25,21 @@ public class LannisterActivity extends AppCompatActivity {
         final String[] values = new String[]{"Arces Talavera", "Dec. 28 1996", "Lannister", "Eating\nSleeping\nPlaying Video Games\nWatching TV Series", "Game of Thrones\nPokemon\nStar Wars\nYummy Foods", "Stop Procrastinating"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, labels);
+                android.R.id.text1, labels){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                /// Get the Item from ListView
+                View view = super.getView(position, convertView, parent);
+
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                // Set the text size 20 dip for ListView each item
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+
+                // Return the view
+                return view;
+            }
+        };
 
         listView.setAdapter(adapter);
 

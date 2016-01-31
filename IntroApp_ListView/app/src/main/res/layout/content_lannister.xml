@@ -12,18 +12,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#557794"
+        android:background="@color/colorHeader"
         >
 
         <Button
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:textColor="#ffeedd"
+            android:textColor="@color/colorHeaderText"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
-            android:textSize="16dp"
-            android:text="Go Back"
-            android:background="#446684"
+            android:textSize="16sp"
+            android:text="@string/go_back"
+            android:background="@color/colorBackButton"
             android:onClick="goBack"
             />
 
@@ -32,38 +32,45 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
-            android:textColor="#ffeedd"
-            android:text="The Wildlings"
-            android:textSize="30dp"
+            android:textColor="@color/colorHeaderText"
+            android:text="@string/title"
+            android:textSize="30sp"
             android:gravity="center"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/lannister"
         >
+
+        <ImageView
+            android:id="@+id/lannister_sigil"
+            android:layout_alignParentLeft="true"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@color/colorLannisterBackground"
+            android:src="@drawable/lannister"
+            />
+
         <TextView
             android:id="@+id/lannister_page_header"
+            android:layout_toRightOf="@id/lannister_sigil"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="ARCES TALAVERA"
+            android:text="@string/name_arces_caps"
             android:gravity="center_vertical|center_horizontal"
-            android:textColor="#949400"
+            android:textColor="@color/colorNameLannisterText"
             android:textStyle="bold|italic"
             android:fontFamily="sans-serif-medium"
-            android:textSize="30dp"
-            android:background="#640000"
-            />
-            <ListView
-                android:id="@+id/lannister_list"
-                android:layout_below="@id/lannister_page_header"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#afafaf"
-                android:padding="20dp"
-                android:gravity="center_horizontal"
-                android:alpha="0.5"
-                >
-            </ListView>
+            android:textSize="30sp"
+            android:background="@color/colorNameLannisterBackground" />
+        <ListView
+            android:id="@+id/lannister_list"
+            android:layout_below="@id/lannister_page_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorNameStarkText"
+            android:padding="20dp"
+            android:gravity="center_horizontal">
+        </ListView>
     </RelativeLayout>
 </LinearLayout>
