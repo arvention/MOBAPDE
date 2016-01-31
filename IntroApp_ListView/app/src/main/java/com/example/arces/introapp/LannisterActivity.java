@@ -25,21 +25,7 @@ public class LannisterActivity extends AppCompatActivity {
         final String[] values = new String[]{"Arces Talavera", "Dec. 28 1996", "Lannister", "Eating\nSleeping\nPlaying Video Games\nWatching TV Series", "Game of Thrones\nPokemon\nStar Wars\nYummy Foods", "Stop Procrastinating"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, labels){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                /// Get the Item from ListView
-                View view = super.getView(position, convertView, parent);
-
-                TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                // Set the text size 20 dip for ListView each item
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-
-                // Return the view
-                return view;
-            }
-        };
+                android.R.id.text1, labels);
 
         listView.setAdapter(adapter);
 
