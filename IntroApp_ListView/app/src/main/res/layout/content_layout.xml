@@ -130,10 +130,9 @@
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:text="@string/read_more_arces"
-                android:background="@color/colorListViewBackground"
-                android:layout_marginBottom="20dp"
                 android:onClick="goLannister"
+                android:text="@string/read_more_arces"
+                android:layout_marginBottom="5dp"
                 />
         </RelativeLayout>
     </RelativeLayout>

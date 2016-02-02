@@ -62,14 +62,74 @@
             android:fontFamily="sans-serif-medium"
             android:textSize="30sp"
             android:background="@color/colorNameLannisterBackground" />
+
         <ListView
             android:id="@+id/lannister_list"
             android:layout_below="@id/lannister_page_header"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorNameStarkText"
+            android:layout_width="250dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="60dp"
+            android:background="@color/colorListViewBackground"
             android:padding="20dp"
             android:gravity="center_horizontal">
         </ListView>
+
+        <ImageView
+            android:id="@+id/lannister_jaime_avatar"
+            android:layout_width="300dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="60dp"
+            android:padding="10dp"
+            android:layout_toRightOf="@id/lannister_list"
+            android:layout_below="@id/lannister_page_header"
+            android:src="@drawable/jaimelannister"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorMusicPlayer">
+
+            <ImageView
+                android:id="@+id/lannister_music_player_soundtrack"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/soundtrack"
+                />
+
+            <TextView
+                android:id="@+id/lannister_music_player_now_playing"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lannister_music_player_soundtrack"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="10sp"
+                android:textColor="@color/colorMusicPlayerText"
+                android:text="@string/now_playing"/>
+
+            <TextView
+                android:id="@+id/lannister_music_player_song_name"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/lannister_music_player_soundtrack"
+                android:layout_below="@id/lannister_music_player_now_playing"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorMusicPlayerText"
+                android:text="@string/lannister_song_name"/>
+
+            <!--Button
+                android:id="@+id/lannister_music_player_play_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_toRightOf="@id/lannister_music_player_song_name"
+                android:background="@drawable/play"
+                /-->
+
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

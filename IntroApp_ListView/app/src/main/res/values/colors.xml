@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#557794</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">#315c80</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorHeader">#557794</color>
@@ -16,5 +16,8 @@
     <color name="colorNameLannisterBackground">#640000</color>
     <color name="colorLannisterBackground">#4b0000</color>
 
-    <color name="colorListViewBackground">#afafaf</color>
+    <color name="colorListViewBackground">#ffffff</color>
+
+    <color name="colorMusicPlayer">#161616</color>
+    <color name="colorMusicPlayerText">#ffffff</color>
 </resources>
