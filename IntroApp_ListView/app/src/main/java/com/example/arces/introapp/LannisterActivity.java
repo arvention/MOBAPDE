@@ -1,6 +1,9 @@
 package com.example.arces.introapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
@@ -42,5 +45,19 @@ public class LannisterActivity extends AppCompatActivity {
 
     public void goBack(View view){
         this.finish();
+    }
+
+    public void sendEmail(View view){
+        Uri uri = Uri.parse("mailto:arcestalavera@gmail.com");
+        Intent emailAct = new Intent(Intent.ACTION_SENDTO, uri);
+        startActivity(emailAct);
+    }
+
+    public void playMusic(View view){
+        Intent musicAct = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse("file:///storage/extSdCard/The Rains of Castamere.mp3");
+
+        musicAct.setDataAndType(uri, "audio/mp3");
+        startActivity(musicAct);
     }
 }

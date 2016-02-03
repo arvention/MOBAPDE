@@ -48,4 +48,17 @@ public class StarkActivity extends AppCompatActivity {
         this.finish();
     }
 
+    public void sendEmail(View view){
+        Uri uri = Uri.parse("mailto:amc.antioquia@yahoo.com.ph");
+        Intent emailAct = new Intent(Intent.ACTION_SENDTO, uri);
+        startActivity(emailAct);
+    }
+
+    public void playMusic(View view){
+        Intent musicAct = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse("file:///storage/extSdCard/The North Remembers.mp3");
+
+        musicAct.setDataAndType(uri, "audio/mp3");
+        startActivity(musicAct);
+    }
 }

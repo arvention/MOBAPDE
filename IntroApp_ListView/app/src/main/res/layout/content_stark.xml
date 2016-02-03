@@ -75,13 +75,21 @@
         <ImageView
             android:id="@+id/stark_robb_avatar"
             android:layout_width="300dp"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="60dp"
+            android:layout_height="320dp"
             android:padding="10dp"
             android:layout_toRightOf="@id/stark_list"
             android:layout_below="@id/stark_page_header"
             android:src="@drawable/robbstark"
             />
+        <Button
+            android:layout_below="@id/stark_robb_avatar"
+            android:layout_toRightOf="@id/stark_list"
+            android:layout_margin="0dp"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Email Arren"
+            android:onClick="sendEmail"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -119,14 +127,15 @@
                 android:textColor="@color/colorMusicPlayerText"
                 android:text="@string/stark_song_name"/>
 
-            <!--Button
+            <Button
                 android:id="@+id/stark_music_player_play_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_toRightOf="@id/stark_music_player_song_name"
                 android:background="@drawable/play"
-                /-->
+                android:onClick="playMusic"
+                />
 
         </RelativeLayout>
     </RelativeLayout>
