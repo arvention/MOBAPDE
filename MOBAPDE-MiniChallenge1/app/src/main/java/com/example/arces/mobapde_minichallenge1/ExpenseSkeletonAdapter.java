@@ -16,9 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by courtneyngo on 1/31/16.
- */
 public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeletonAdapter.ExpenseViewHolder> {
 
     private ArrayList<Expense> mExpenseArrayList;
@@ -73,8 +70,6 @@ public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeleton
 
         holder.name.setText(expense.getName());
         holder.price.setText(convertPriceToString(expense.getPrice()));
-
-
     }
 
     @Override

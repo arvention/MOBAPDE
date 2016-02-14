@@ -11,7 +11,7 @@
         android:layout_height="55dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:hint="Item Name"
+        android:hint="@string/item_name_label"
         android:textSize="24dp"
         android:gravity="center"
         android:background="#dfdfdf"
@@ -23,9 +23,9 @@
         android:layout_height="55dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:hint="Item Price"
+        android:hint="@string/item_price_label"
         android:textSize="24dp"
         android:inputType="number"
         android:gravity="center"
-        android:background="#dfdfdf"/>
+        android:background="@color/gray"/>
 </LinearLayout>

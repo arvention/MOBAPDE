@@ -1,10 +1,13 @@
 package com.example.arces.mobapde_minichallenge1;
 
-import java.util.Date;
+import android.util.Log;
 
-/**
- * Created by Arces on 13/02/2016.
- */
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Expense {
     private String name;
     private float price;
@@ -26,11 +29,25 @@ public class Expense {
         this.price = price;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    public Date getDate() {;return date;}
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String toCSVString(){
+        return name + "," + String.valueOf(price) + "," + String.valueOf(date);
+    }
+
+    public void toExpenseObject(String csvString){
+        String[] separatedString = csvString.split(",");
+        this.name = separatedString[0];
+        this.price = Float.valueOf(separatedString[1]);
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+        try {
+            this.date = df.parse(separatedString[2]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

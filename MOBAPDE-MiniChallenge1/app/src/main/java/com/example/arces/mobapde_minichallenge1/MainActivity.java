@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +46,30 @@ public class MainActivity extends AppCompatActivity {
         createViews();
         this.expenseAdapter = new ExpenseSkeletonAdapter(main, expenseList);
         this.rv.setAdapter(expenseAdapter);
+
+        CSVIO csvIO = new CSVIO();
+        ArrayList<String> expenseFileContent = csvIO.read(Environment.getExternalStorageDirectory().toString()+"/test.csv", ",");
+        createExpenseObjectFromCSV(expenseFileContent);
         //initializeItems();
+    }
+
+    public void onStop(){
+        super.onStop();
+
+        CSVIO csvIO = new CSVIO();
+        ArrayList<String> output = new ArrayList<>();
+        for(Expense e : expenseList){
+            output.add(e.toCSVString());
+        }
+        csvIO.write(output, Environment.getExternalStorageDirectory().toString()+"/test.csv", ",");
+    }
+
+    public void createExpenseObjectFromCSV(ArrayList<String> expenseFileContent){
+        for(String s : expenseFileContent){
+            Expense expense = new Expense();
+            expense.toExpenseObject(s);
+            expenseList.add(expense);
+        }
     }
 
     public void createViews(){
@@ -54,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         rv.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void initializeItems(){
+    /*public void initializeItems(){
         ProgressDialog pd = ProgressDialog.show(MainActivity.this, null, "Initializing Items ...", true, false);
         expenseList.clear();
         Date date = Calendar.getInstance().getTime();
@@ -78,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         pd.dismiss();
-    }
+    }*/
     
     public void addExpense(View view){
         showAlert("add");

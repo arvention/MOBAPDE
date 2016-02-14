@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Expense Tracker</string>
+    <string name="app_name">Budgetarian</string>
+    <string name="delete_btn">DELETE</string>
+    <string name="add_btn">+</string>
+    <string name="get_started">Click on an item to get started</string>
+    <string name="item_name_label">Item Name</string>
+    <string name="item_price_label">Item Price</string>
 </resources>
