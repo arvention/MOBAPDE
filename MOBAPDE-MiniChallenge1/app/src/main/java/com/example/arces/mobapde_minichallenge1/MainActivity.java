@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static int itemPosition;
     private static Button delBtn;
     private static Button editBtn;
-    private static TextView expenseName, expensePrice, expenseDate, instruction;
+    private static TextView expenseName, expensePrice, expenseDate, instruction, totalPrice;
     private ExpenseSkeletonAdapter expenseAdapter;
     public static ArrayList<Expense> expenseList = new ArrayList<>();
 
@@ -40,16 +40,18 @@ public class MainActivity extends AppCompatActivity {
         this.expensePrice = (TextView) findViewById(R.id.item_price);
         this.expenseDate = (TextView) findViewById(R.id.item_date);
         this.instruction = (TextView) findViewById(R.id.instruction);
+        this.totalPrice = (TextView) findViewById(R.id.total_price);
 
         this.delBtn = (Button) findViewById(R.id.deleteBtn);
         this.editBtn = (Button) findViewById(R.id.editBtn);
         createViews();
-        this.expenseAdapter = new ExpenseSkeletonAdapter(main, expenseList);
-        this.rv.setAdapter(expenseAdapter);
 
         CSVIO csvIO = new CSVIO();
         ArrayList<String> expenseFileContent = csvIO.read(Environment.getExternalStorageDirectory().toString()+"/test.csv", ",");
         createExpenseObjectFromCSV(expenseFileContent);
+
+        this.expenseAdapter = new ExpenseSkeletonAdapter(main, expenseList);
+        this.rv.setAdapter(expenseAdapter);
         //initializeItems();
     }
 
@@ -216,5 +218,9 @@ public class MainActivity extends AppCompatActivity {
         expenseName.setText(name);
         expensePrice.setText(price);
         expenseDate.setText(date);
+    }
+
+    public static void showTotalPrice(String price){
+        totalPrice.setText(price);
     }
 }

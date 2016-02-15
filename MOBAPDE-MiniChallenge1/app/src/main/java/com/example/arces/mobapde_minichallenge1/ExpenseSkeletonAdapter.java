@@ -22,6 +22,7 @@ public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeleton
     private OnItemClickListener mOnItemClickListener;
     private LayoutInflater inflater;
     private Activity main;
+    private float total;
     private Context context;
 
     public ExpenseSkeletonAdapter(Context context, final ArrayList<Expense> expenseArrayList){
@@ -36,6 +37,10 @@ public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeleton
                 MainActivity.showExpense(positionOfItemClicked, tempex.getName(), convertPriceToString(tempex.getPrice()), convertDateToString(tempex.getDate()));
             }
         });
+
+        total = computeTotal();
+        Log.d("adapter", "total = " + total);
+        MainActivity.showTotalPrice(convertPriceToString(total));
     }
 
     public class ExpenseViewHolder extends RecyclerView.ViewHolder{
@@ -103,6 +108,8 @@ public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeleton
 
     public void addExpense(Expense e){
         mExpenseArrayList.add(e);
+        total = computeTotal();
+        MainActivity.showTotalPrice(convertPriceToString(total));
         notifyDataSetChanged();
     }
 
@@ -114,11 +121,24 @@ public class ExpenseSkeletonAdapter extends RecyclerView.Adapter<ExpenseSkeleton
         ex.setDate(e.getDate());
 
         notifyItemChanged(position);
+        total = computeTotal();
+        MainActivity.showTotalPrice(convertPriceToString(total));
         MainActivity.showEditUpdate(ex.getName(), convertPriceToString(ex.getPrice()), convertDateToString(ex.getDate()));
     }
 
     public void deleteExpense(int position){
         mExpenseArrayList.remove(position);
+        total = computeTotal();
+        MainActivity.showTotalPrice(convertPriceToString(total));
         notifyDataSetChanged();
+    }
+
+    public float computeTotal(){
+        float total = 0;
+        for(Expense e : mExpenseArrayList){
+            total += e.getPrice();
+        }
+
+        return total;
     }
 }
