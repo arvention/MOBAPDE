@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Invalid username / password. Please try again.", Toast.LENGTH_SHORT);
                         toast.show();
                     }
+                    editTextLoginUsername.setText("", EditText.BufferType.EDITABLE);
+                    editTextLoginPassword.setText("", EditText.BufferType.EDITABLE);
                 }
                 else if(editTextLoginUsername.getText().toString().equals("") && editTextLoginPassword.getText().toString().equals("")){
                     (Toast.makeText(getApplicationContext(), "Plese enter username and password.", Toast.LENGTH_SHORT)).show();
