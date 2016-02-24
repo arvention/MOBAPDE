@@ -53,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
                     startActivity(new Intent(getApplicationContext(), Home.class));
                 }
+                else if(editTextLoginUsername.getText().toString().equals("") && editTextLoginPassword.getText().toString().equals("")){
+                    (Toast.makeText(getApplicationContext(), "Plese enter username and password.", Toast.LENGTH_SHORT)).show();
+                }
+                else if(editTextLoginUsername.getText().toString().equals("")){
+                    (Toast.makeText(getApplicationContext(), "Please enter username.", Toast.LENGTH_SHORT)).show();
+                }
+                else if(editTextLoginPassword.getText().toString().equals("")){
+                    (Toast.makeText(getApplicationContext(), "Please enter password.", Toast.LENGTH_SHORT)).show();
+                }
             }
         });
 
@@ -64,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
-            toast.show();
+            (Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail") + ".", Toast.LENGTH_SHORT)).show();
 
             startActivity(new Intent(getApplicationContext(), Home.class));
         }
+
     }
 }
