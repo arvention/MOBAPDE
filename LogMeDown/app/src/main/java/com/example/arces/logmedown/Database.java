@@ -11,6 +11,7 @@ import android.util.Log;
  * Created by Arces on 22/02/2016.
  */
 public class Database extends SQLiteOpenHelper{
+    private static Database dbInstance;
     private static final String db_name = "LogMeDown.db";
     private static final int db_version = 1;
 
@@ -23,7 +24,15 @@ public class Database extends SQLiteOpenHelper{
     private static final String add_user_to_bloc_table = "add_user_to_bloc";
     private static final String request_to_join_table = "request_to_join";
 
-    public Database(Context context){
+    public static Database getInstance(Context context){
+        if(dbInstance == null){
+            dbInstance = new Database(context.getApplicationContext());
+        }
+
+        return dbInstance;
+    }
+
+    private Database(Context context){
         super(context, db_name, null, db_version);
     }
 
