@@ -1,6 +1,7 @@
 package com.example.arces.logmedown;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,32 +30,42 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
-        if(!sharedPreferences.contains(stringUsernameTag) && !sharedPreferences.contains(stringPasswordTag)) {
-            editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
-            editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-            buttonLogin = (Button) findViewById(R.id.buttonLogIn);
-            buttonSignup = (Button) findViewById(R.id.buttonSignUp);
+        editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
+        editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
+        buttonLogin = (Button) findViewById(R.id.buttonLogIn);
+        buttonSignup = (Button) findViewById(R.id.buttonSignUp);
 
-            sharedPreferences = getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
 
-            buttonLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
-                    editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
-                    editor.commit();
+                editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
+                editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
 
-                    Context context = getApplicationContext();
-                    Toast toast = Toast.makeText(context, sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-        }
-        else{
-            Toast toast = Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_SHORT);
+                editor.commit();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
+                toast.show();
+
+                startActivity(new Intent(getApplicationContext(), Home.class));
+            }
+        });
+
+        buttonSignup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SignUp.class));
+            }
+        });
+
+        if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
             toast.show();
+
+            startActivity(new Intent(getApplicationContext(), Home.class));
         }
     }
 }

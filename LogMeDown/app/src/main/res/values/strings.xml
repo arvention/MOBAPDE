@@ -3,4 +3,6 @@
 
     <string name="textLoginUsername">Username</string>
     <string name="textLoginPassword">Password</string>
+
+    <string name="textLogOut">Log Out</string>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.arces.logmedown.SignUp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/colorBackgroundColor">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/log_me_down_logo_text"/>
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextSignUpFirstName"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:hint="First Name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextSignUpLastName"
+        android:layout_below="@+id/editTextSignUpFirstName"
+        android:layout_centerHorizontal="true"
+        android:hint="Last Name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextSignUpEmailAddress"
+        android:layout_below="@+id/editTextSignUpLastName"
+        android:layout_centerHorizontal="true"
+        android:hint="Email" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextSignUpUsername"
+        android:layout_below="@+id/editTextSignUpEmailAddress"
+        android:layout_centerHorizontal="true"
+        android:hint="Username" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextSignUpPassword"
+        android:layout_below="@+id/editTextSignUpUsername"
+        android:layout_centerHorizontal="true"
+        android:hint="Password" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Me Up"
+        android:id="@+id/buttonSignUp"
+        android:layout_below="@+id/editTextSignUpPassword"
+        android:layout_alignStart="@+id/editTextSignUpPassword"
+        android:layout_alignEnd="@+id/editTextSignUpPassword"
+        />
+
+</RelativeLayout>
