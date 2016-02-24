@@ -22,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonLogin;
     private Button buttonSignup;
 
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = Database.getInstance(this);
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
         editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
