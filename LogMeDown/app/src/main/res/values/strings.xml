@@ -5,4 +5,8 @@
     <string name="textLoginPassword">Password</string>
 
     <string name="textLogOut">Log Out</string>
+
+    <string name="textLogOutPrompt">Do you want to log out?</string>
+    <string name="textLogOutYes">Yes</string>
+    <string name="textLogOutNo">No</string>
 </resources>
