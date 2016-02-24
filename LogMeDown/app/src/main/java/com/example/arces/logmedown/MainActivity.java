@@ -50,10 +50,17 @@ public class MainActivity extends AppCompatActivity {
 
                     editor.commit();
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
-                    toast.show();
+                    User user = logInUser();
+                    if(user != null) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
+                        toast.show();
 
-                    startActivity(new Intent(getApplicationContext(), Home.class));
+                        startActivity(new Intent(getApplicationContext(), Home.class));
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid username / password. Please try again.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
                 else if(editTextLoginUsername.getText().toString().equals("") && editTextLoginPassword.getText().toString().equals("")){
                     (Toast.makeText(getApplicationContext(), "Plese enter username and password.", Toast.LENGTH_SHORT)).show();
@@ -80,5 +87,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), Home.class));
         }
 
+    }
+
+    public User logInUser(){
+        String username = editTextLoginUsername.getText().toString();
+        String password = editTextLoginPassword.getText().toString();
+
+        User user = db.logInUser(username, password);
+
+        return user;
     }
 }

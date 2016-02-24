@@ -39,7 +39,7 @@ public class Database extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Create User Table
-        String CREATE_USER_TABLE = "CREATE TABLE " + user_table + "(userID INTEGER PRIMARY KEY NOT NULL, firstName TEXT NOT NULL, " +
+        String CREATE_USER_TABLE = "CREATE TABLE " + user_table + "(userID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, firstName TEXT NOT NULL, " +
                 "lastName TEXT NOT NULL, emailAddress TEXT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL)";
         db.execSQL(CREATE_USER_TABLE);
 
@@ -59,7 +59,8 @@ public class Database extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + user_table);
+        onCreate(db);
     }
 
     public void addUser(User user){
@@ -78,11 +79,13 @@ public class Database extends SQLiteOpenHelper{
 
     public User logInUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        User user = new User();
+        User user = null;
         Cursor rs = db.query(true, user_table, null, "username = ? AND password = ?", new String[]{username, password}, null, null, null, null);
 
-        if (rs != null) {
+        if (rs.getCount() != 0) {
             rs.moveToFirst();
+
+            user = new User();
 
             user.setUserID(rs.getInt(0));
             user.setFirstName(rs.getString(1));
@@ -92,6 +95,9 @@ public class Database extends SQLiteOpenHelper{
             user.setPassword(rs.getString(5));
 
             user.setNotes(null);
+
+            Log.d("log-in", "id = " + user.getUserID() + " ; name = " + user.getFirstName() + " " + user.getLastName() +
+                    " ; email = " + user.getEmailAddress() + " ; username = " + user.getUsername() + " ; password = " + user.getPassword());
         }
         return user;
     }
