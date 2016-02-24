@@ -40,17 +40,19 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(!editTextLoginUsername.getText().toString().equals("") && !editTextLoginPassword.getText().toString().equals("")) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
-                editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
+                    editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
+                    editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
 
-                editor.commit();
+                    editor.commit();
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
-                toast.show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail"), Toast.LENGTH_SHORT);
+                    toast.show();
 
-                startActivity(new Intent(getApplicationContext(), Home.class));
+                    startActivity(new Intent(getApplicationContext(), Home.class));
+                }
             }
         });
 
