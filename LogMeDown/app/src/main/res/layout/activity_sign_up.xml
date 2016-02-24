@@ -73,6 +73,7 @@
         android:layout_below="@+id/editTextSignUpPassword"
         android:layout_alignStart="@+id/editTextSignUpPassword"
         android:layout_alignEnd="@+id/editTextSignUpPassword"
+        android:onClick="signUpUser"
         />
 
 </RelativeLayout>

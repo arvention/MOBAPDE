@@ -29,4 +29,6 @@ public class SignUp extends AppCompatActivity {
         buttonSignUp = (Button)findViewById(R.id.buttonSignUp);
 
     }
+
+
 }
