@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
@@ -84,20 +86,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
-            (Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail") + ".", Toast.LENGTH_SHORT)).show();
+      //  if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
+        //    (Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail") + ".", Toast.LENGTH_SHORT)).show();
 
-            startActivity(new Intent(getApplicationContext(), Home.class));
-        }
+          //  startActivity(new Intent(getApplicationContext(), Home.class));
+       // }
 
     }
 
     public User logInUser(){
+        sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         String username = editTextLoginUsername.getText().toString();
         String password = editTextLoginPassword.getText().toString();
 
         User user = db.logInUser(username, password);
 
+        if(user != null){
+            Gson gson = new Gson();
+            String json = gson.toJson(user);
+            editor.putString("loggedUser", json);
+            editor.commit();
+        }
         return user;
     }
 }

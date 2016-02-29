@@ -4,9 +4,12 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.app.AlertDialog;
+
+import com.google.gson.Gson;
 
 public class Home extends AppCompatActivity {
 
@@ -19,7 +22,14 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("loggedUser", "");
+        User user = gson.fromJson(json, User.class);
+
+        Log.d("logged_user", "Name: " + user.getFirstName() + " " + user.getLastName() + "" +
+                " Username: " + user.getUsername() + " Email Address: " + user.getEmailAddress());
         buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
