@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
-                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                        startActivity(new Intent(getApplicationContext(), Home.class));
 
                         editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
                         editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
