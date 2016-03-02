@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USERPREFERENCES = "UserPreferences";
     private static final String stringUsernameTag = "un";
     private static final String stringPasswordTag = "pw";
+    private static final String LOGGEDUSER = "loggedUser";
     public SharedPreferences sharedPreferences;
 
     private EditText editTextLoginUsername;
@@ -47,18 +48,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!editTextLoginUsername.getText().toString().equals("") && !editTextLoginPassword.getText().toString().equals("")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                    editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
-                    editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
-
-                    editor.commit();
-
                     User user = logInUser();
                     if(user != null) {
                         Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
-                        startActivity(new Intent(getApplicationContext(), Home.class));
+                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+
+                        editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
+                        editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
+
+                        editor.commit();
                     }
                     else{
                         Toast toast = Toast.makeText(getApplicationContext(), "Invalid username / password. Please try again.", Toast.LENGTH_SHORT);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     editTextLoginPassword.setText("", EditText.BufferType.EDITABLE);
                 }
                 else if(editTextLoginUsername.getText().toString().equals("") && editTextLoginPassword.getText().toString().equals("")){
-                    (Toast.makeText(getApplicationContext(), "Plese enter username and password.", Toast.LENGTH_SHORT)).show();
+                    (Toast.makeText(getApplicationContext(), "Please enter username and password.", Toast.LENGTH_SHORT)).show();
                 }
                 else if(editTextLoginUsername.getText().toString().equals("")){
                     (Toast.makeText(getApplicationContext(), "Please enter username.", Toast.LENGTH_SHORT)).show();
@@ -86,12 +86,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-      //  if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
-        //    (Toast.makeText(getApplicationContext(), "Welcome " + sharedPreferences.getString(stringUsernameTag, "fail") + ".", Toast.LENGTH_SHORT)).show();
+      if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
+          Gson gson = new Gson();
+          String json = sharedPreferences.getString(LOGGEDUSER, "");
+          User user = gson.fromJson(json, User.class);
+          (Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
 
-          //  startActivity(new Intent(getApplicationContext(), Home.class));
-       // }
-
+          startActivity(new Intent(getApplicationContext(), Home.class));
+      }
     }
 
     public User logInUser(){
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         if(user != null){
             Gson gson = new Gson();
             String json = gson.toJson(user);
-            editor.putString("loggedUser", json);
+            editor.putString(LOGGEDUSER, json);
             editor.commit();
         }
         return user;

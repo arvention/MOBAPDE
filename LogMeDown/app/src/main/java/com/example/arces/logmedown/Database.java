@@ -54,7 +54,8 @@ public class Database extends SQLiteOpenHelper{
         db.execSQL(CREATE_NOTE_TABLE);
 
         //Create Friend Table
-        String CREATE_FRIEND_TABLE = "CREATE TABLE ";
+        String CREATE_FRIEND_TABLE = "CREATE TABLE " + friend_table + "(friend1 INTEGER NOT NULL, friend2 INTEGER NOT NULL)";
+        db.execSQL(CREATE_FRIEND_TABLE);
     }
 
     @Override
