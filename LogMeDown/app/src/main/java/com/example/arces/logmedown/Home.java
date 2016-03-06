@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.app.AlertDialog;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -27,11 +28,14 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        final TextView fragmentName = (TextView) findViewById(R.id.fragmentName);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Home")); // Text of Tabs
         tabLayout.addTab(tabLayout.newTab().setText("Bloc")); // Text of Tabs
         tabLayout.addTab(tabLayout.newTab().setText("Profile")); // Text of Tabs
@@ -46,6 +50,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
             }
 
             @Override

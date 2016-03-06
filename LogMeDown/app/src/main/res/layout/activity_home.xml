@@ -41,6 +41,8 @@
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -48,8 +50,19 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/log_me_down_logo"
-            android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/fragmentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textHome"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            />
 
         <Button
             android:id="@+id/buttonLogOut"
@@ -58,9 +71,9 @@
             android:text="@string/textLogOut"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
-            android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
             android:background="@color/colorBackgroundColor"/>
 
     </android.support.v7.widget.Toolbar>

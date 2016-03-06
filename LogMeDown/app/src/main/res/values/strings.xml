@@ -9,4 +9,8 @@
     <string name="textLogOutPrompt">Do you want to log out?</string>
     <string name="textLogOutYes">Yes</string>
     <string name="textLogOutNo">No</string>
+
+    <string name="textHome">Home</string>
+    <string name="textBloc">Bloc</string>
+    <string name="textProfile">Profile</string>
 </resources>
