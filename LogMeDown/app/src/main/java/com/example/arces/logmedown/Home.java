@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,15 +82,15 @@ public class Home extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int index = -1;
                 for(int i = 0; i < arrayTabNames.length(); i++){
-                    Log.d("POS", String.valueOf(position) + String.valueOf(drawerList.getCount()));
-                    Log.d("TAG", tabLayout.getTabAt(i).getText().toString() + " " + arrayNavigationNames[position]);
                     if(tabLayout.getTabAt(i).getText().toString().equalsIgnoreCase(arrayNavigationNames[position])){
                         index = i;
                     }
                 }
-                viewPager.setCurrentItem(index);
-                fragmentName.setText(tabLayout.getTabAt(index).getText());
-                drawer.closeDrawer(drawerList);
+                if(index < arrayTabNames.length() && index  != -1) {
+                    viewPager.setCurrentItem(index);
+                    fragmentName.setText(tabLayout.getTabAt(index).getText());
+                    drawer.closeDrawer(drawerList);
+                }
             }
         });
 
