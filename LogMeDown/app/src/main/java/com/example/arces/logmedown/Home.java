@@ -10,10 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.app.AlertDialog;
@@ -43,7 +43,7 @@ public class Home extends AppCompatActivity {
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        TypedArray arrayTabNames = getResources().obtainTypedArray(R.array.tabNames);
+        final TypedArray arrayTabNames = getResources().obtainTypedArray(R.array.tabNames);
         for(int  i = 0; i < arrayTabNames.length(); i++){
             tabLayout.addTab(tabLayout.newTab().setText(arrayTabNames.getText(i)));
         }
@@ -51,9 +51,9 @@ public class Home extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        final PagerAdapter pagerAdapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -74,11 +74,27 @@ public class Home extends AppCompatActivity {
         });
 
 
-        String[] arrayNavigationNames = getResources().getStringArray(R.array.navigationNames);
+        final String[] arrayNavigationNames = getResources().getStringArray(R.array.navigationNames);
         final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         final ListView drawerList = (ListView) findViewById(R.id.left_drawer);
 
         drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, arrayNavigationNames));
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index = -1;
+                for(int i = 0; i < arrayTabNames.length(); i++){
+                    Log.d("POS", String.valueOf(position) + String.valueOf(drawerList.getCount()));
+                    Log.d("TAG", tabLayout.getTabAt(i).getText().toString() + " " + arrayNavigationNames[position]);
+                    if(tabLayout.getTabAt(i).getText().toString().equalsIgnoreCase(arrayNavigationNames[position])){
+                        index = i;
+                    }
+                }
+                viewPager.setCurrentItem(index);
+                fragmentName.setText(tabLayout.getTabAt(index).getText());
+                drawer.closeDrawer(drawerList);
+            }
+        });
 
         final ImageButton appLogo = (ImageButton)findViewById(R.id.app_logo);
         appLogo.setOnClickListener(new View.OnClickListener() {
