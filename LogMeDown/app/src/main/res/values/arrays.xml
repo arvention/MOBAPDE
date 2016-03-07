@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="tabNames">
+        <item>@string/textHome</item>
+        <item>@string/textBloc</item>
+        <item>@string/textProfile</item>
+    </array>
+
+    <array name="navigationNames">
+        <item>@string/textHome</item>
+        <item>@string/textBloc</item>
+        <item>@string/textProfile</item>
+        <item>@string/textLogOut</item>
+    </array>
+</resources>

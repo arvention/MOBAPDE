@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.arces.logmedown.Home">
@@ -29,10 +30,13 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                <ImageView
+                <ImageButton
+                    android:id="@+id/app_logo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/log_me_down_logo"
+                    android:background="@color/colorPrimary"
                     android:layout_centerVertical="true"/>
 
                 <TextView
@@ -46,17 +50,16 @@
                     android:layout_gravity="left"
                     />
 
-                <Button
-                    android:id="@+id/buttonLogOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/textLogOut"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorWhite"
+                <ImageButton
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_gravity="right"
-                    android:background="@color/colorBackgroundColor"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/log_me_down_search"
+                    android:background="@color/colorPrimary"/>
 
             </android.support.v7.widget.Toolbar>
 

@@ -2,17 +2,23 @@ package com.example.arces.logmedown;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.app.AlertDialog;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,9 +42,12 @@ public class Home extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Home"));
-        tabLayout.addTab(tabLayout.newTab().setText("Bloc"));
-        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
+
+        TypedArray arrayTabNames = getResources().obtainTypedArray(R.array.tabNames);
+        for(int  i = 0; i < arrayTabNames.length(); i++){
+            tabLayout.addTab(tabLayout.newTab().setText(arrayTabNames.getText(i)));
+        }
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -65,6 +74,21 @@ public class Home extends AppCompatActivity {
         });
 
 
+        String[] arrayNavigationNames = getResources().getStringArray(R.array.navigationNames);
+        final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        final ListView drawerList = (ListView) findViewById(R.id.left_drawer);
+
+        drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, arrayNavigationNames));
+
+        final ImageButton appLogo = (ImageButton)findViewById(R.id.app_logo);
+        appLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(drawerList);
+            }
+        });
+
+
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
         Gson gson = new Gson();
@@ -73,7 +97,7 @@ public class Home extends AppCompatActivity {
 
         Log.d("logged_user", "Name: " + user.getFirstName() + " " + user.getLastName() + "" +
                 " Username: " + user.getUsername() + " Email Address: " + user.getEmailAddress());
-        buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
+        /*buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +118,7 @@ public class Home extends AppCompatActivity {
                         .setNegativeButton(R.string.textLogOutNo, null)
                         .show();
             }
-        });
+        });*/
     }
 
     @Override
