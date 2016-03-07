@@ -28,7 +28,7 @@ public class UserProfile extends AppCompatActivity {
         User user = gson.fromJson(json, User.class);
 
         profileName.setText(user.getFirstName() + " " + user.getLastName());
-        profileEmail.setText(user.getEmailAddress());
+        profileEmail.setText("( " + user.getEmailAddress() + " )");
         profileUsername.setText(user.getUsername());
         profilePassword.setText(user.getPassword());
     }

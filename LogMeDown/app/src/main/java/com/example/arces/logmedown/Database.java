@@ -21,7 +21,7 @@ public class Database extends SQLiteOpenHelper{
     private static final String note_table = "note";
     private static final String friend_table = "friend";
     private static final String add_as_friend_table = "add_as_friend";
-    private static final String add_user_to_bloc_table = "add_user_to_bloc";
+    private static final String invite_user_to_bloc_table = "invite_user_to_bloc";
     private static final String request_to_join_table = "request_to_join";
 
     public static Database getInstance(Context context){
@@ -56,6 +56,18 @@ public class Database extends SQLiteOpenHelper{
         //Create Friend Table
         String CREATE_FRIEND_TABLE = "CREATE TABLE " + friend_table + "(friend1 INTEGER NOT NULL, friend2 INTEGER NOT NULL)";
         db.execSQL(CREATE_FRIEND_TABLE);
+
+        //Create Add As Friend Table
+        String CREATE_ADD_FRIEND_TABLE = "CREATE TABLE " + add_as_friend_table + "(adderID INTEGER NOT NULL, addedID INTEGER NOT NULL, status TEXT NOT NULL)";
+        db.execSQL(CREATE_ADD_FRIEND_TABLE);
+
+        //Create Invite User To Bloc Table
+        String CREATE_INVITE_TO_BLOC_TABLE = "CREATE TABLE " + invite_user_to_bloc_table + "(adderID INTEGER NOT NULL, addedID INTEGER NOT NULL, groupID TEXT NOT NULL, status TEXT NOT NULL)";
+        db.execSQL(CREATE_INVITE_TO_BLOC_TABLE);
+
+        //Create Request To Join Bloc Table
+        String CREATE_REQUEST_TO_JOIN_BLOC_TABLE = "CREATE TABLE " + request_to_join_table + "(ownerID INTEGER NOT NULL, groupID INTEGER NOT NULL, requesterID TEXT NOT NULL, status TEXT NOT NULL)";
+        db.execSQL(CREATE_REQUEST_TO_JOIN_BLOC_TABLE);
     }
 
     @Override
