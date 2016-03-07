@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SignUp extends AppCompatActivity {
 
@@ -45,6 +46,8 @@ public class SignUp extends AppCompatActivity {
         user.setUsername(editTextSignUpUsername.getText().toString());
         user.setPassword(editTextSignUpPassword.getText().toString());
         db.addUser(user);
-        Log.d("add", "user " + user.getFirstName() + " added!");
+
+        (Toast.makeText(getApplicationContext(), "Welcome to LogMeDown, " + user.getFirstName() + " " + user.getLastName() + "!", Toast.LENGTH_SHORT)).show();
+        finish();
     }
 }

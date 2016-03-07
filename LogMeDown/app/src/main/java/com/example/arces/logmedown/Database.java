@@ -21,6 +21,7 @@ public class Database extends SQLiteOpenHelper{
     private static final String note_table = "note";
     private static final String friend_table = "friend";
     private static final String add_as_friend_table = "add_as_friend";
+    private static final String add_user_to_bloc_table = "add_user_to_bloc";
     private static final String invite_user_to_bloc_table = "invite_user_to_bloc";
     private static final String request_to_join_table = "request_to_join";
 
@@ -50,7 +51,7 @@ public class Database extends SQLiteOpenHelper{
 
         //Create Note Table
         String CREATE_NOTE_TABLE = "CREATE TABLE " + note_table + "(noteID INTEGER PRIMARY KEY NOT NULL, userID INTEGER NOT NULL, " +
-                "blocID INTEGER NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
+                "blocID INTEGER, title TEXT NOT NULL, content TEXT NOT NULL, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
         db.execSQL(CREATE_NOTE_TABLE);
 
         //Create Friend Table
@@ -60,6 +61,10 @@ public class Database extends SQLiteOpenHelper{
         //Create Add As Friend Table
         String CREATE_ADD_FRIEND_TABLE = "CREATE TABLE " + add_as_friend_table + "(adderID INTEGER NOT NULL, addedID INTEGER NOT NULL, status TEXT NOT NULL)";
         db.execSQL(CREATE_ADD_FRIEND_TABLE);
+
+        //Create Add User To Bloc Table
+        String CREATE_ADD_USER_TO_BLOC_TABLE = "CREATE TABLE " + add_user_to_bloc_table + "(creatorID INTEGER NOT NULL, memberID INTEGER NOT NULL, blocID INTEGER NOT NULL)";
+        db.execSQL(CREATE_ADD_USER_TO_BLOC_TABLE);
 
         //Create Invite User To Bloc Table
         String CREATE_INVITE_TO_BLOC_TABLE = "CREATE TABLE " + invite_user_to_bloc_table + "(adderID INTEGER NOT NULL, addedID INTEGER NOT NULL, groupID TEXT NOT NULL, status TEXT NOT NULL)";
@@ -113,5 +118,25 @@ public class Database extends SQLiteOpenHelper{
                     " ; email = " + user.getEmailAddress() + " ; username = " + user.getUsername() + " ; password = " + user.getPassword());
         }
         return user;
+    }
+
+    public void addNote(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues val = new ContentValues();
+        val.put("title", note.getTitle());
+        val.put("userID", note.getCreator().getUserID());
+
+        if(note.getBloc() == null)
+            val.put("blocID", -1);
+        else
+            val.put("blocID", note.getBloc().getBlocID());
+
+        val.put("content", note.getContent());
+
+        db.insert(note_table, null, val);
+
+        Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName());
+        db.close();
     }
 }

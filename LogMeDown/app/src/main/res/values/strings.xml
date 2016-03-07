@@ -13,4 +13,6 @@
     <string name="textHome">Home</string>
     <string name="textBloc">Bloc</string>
     <string name="textProfile">Profile</string>
+
+    <string name="textDiscardPrompt">Do you want to discard the note?</string>
 </resources>

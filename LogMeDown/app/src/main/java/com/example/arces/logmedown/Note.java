@@ -12,7 +12,7 @@ public class Note {
     private String title;
     private String content;
     private Date time;
-    private ArrayList<Integer> viewRestriction;
+    private Bloc bloc;
 
     public int getNoteID() {
         return noteID;
@@ -54,11 +54,11 @@ public class Note {
         this.creator = creator;
     }
 
-    public ArrayList<Integer> getViewRestriction() {
-        return viewRestriction;
+    public Bloc getBloc() {
+        return bloc;
     }
 
-    public void setViewRestriction(ArrayList<Integer> viewRestriction) {
-        this.viewRestriction = viewRestriction;
+    public void setBloc(Bloc bloc) {
+        this.bloc = bloc;
     }
 }
