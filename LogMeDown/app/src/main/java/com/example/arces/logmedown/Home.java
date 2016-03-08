@@ -3,6 +3,7 @@ package com.example.arces.logmedown;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -26,7 +27,6 @@ public class Home extends AppCompatActivity {
     public SharedPreferences sharedPreferences;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +150,8 @@ public class Home extends AppCompatActivity {
                 drawerLayout.openDrawer(navigationView);
             }
         });
+
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
     @Override

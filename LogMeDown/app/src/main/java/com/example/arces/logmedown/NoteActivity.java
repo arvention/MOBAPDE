@@ -91,7 +91,7 @@ public class NoteActivity extends AppCompatActivity {
         if (action == "add") {
             Note note = new Note();
 
-            note.setCreatorID(loggedUser.getUserID());
+            note.setCreator(loggedUser);
             note.setTitle(editTitle.getText().toString());
             note.setContent(editContent.getText().toString());
 

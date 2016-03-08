@@ -122,7 +122,7 @@ public class Database extends SQLiteOpenHelper{
 
         ContentValues val = new ContentValues();
         val.put("title", note.getTitle());
-        val.put("creatorID", note.getCreatorID());
+        val.put("creatorID", note.getCreator().getUserID());
 
         if (note.getBloc() == null)
             val.put("blocID", -1);
@@ -154,7 +154,7 @@ public class Database extends SQLiteOpenHelper{
                 Date date = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("date")));
 
                 note.setNoteID(noteID);
-                note.setCreatorID(user.getUserID());
+                note.setCreator(user);
 
                 if(blocID == -1)
                     note.setBloc(null);
@@ -165,7 +165,7 @@ public class Database extends SQLiteOpenHelper{
                 note.setContent(content);
                 note.setDate(date);
 
-                Log.d("get_note", note.getTitle() + " by " + note.getCreatorID() + " on " + note.getDate());
+                Log.d("get_note", note.getTitle() + " by " + user.getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }

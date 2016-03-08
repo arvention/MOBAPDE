@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Note implements Serializable{
     private int noteID;
-    private int creatorID;
+    private User creator;
     private String title;
     private String content;
     private Date date;
@@ -47,12 +47,12 @@ public class Note implements Serializable{
         this.date = date;
     }
 
-    public int getCreatorID() {
-        return creatorID;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreatorID(int creatorID) {
-        this.creatorID = creatorID;
+    public void setCreator(User creatorID) {
+        this.creator = creator;
     }
 
     public Bloc getBloc() {

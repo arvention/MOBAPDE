@@ -58,7 +58,6 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
                 intent.putExtra("note_details", note);
 
                 main.startActivityForResult(intent, 1);
-
             }
         });
     }
