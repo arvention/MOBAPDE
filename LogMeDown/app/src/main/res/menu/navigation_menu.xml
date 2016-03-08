@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:checked="false"
+            android:icon="@drawable/icon_temp"
+            android:title="@string/textHome" />
+
+        <item
+            android:id="@+id/nav_bloc"
+            android:checked="false"
+            android:icon="@drawable/icon_temp"
+            android:title="@string/textBloc" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:checked="false"
+            android:icon="@drawable/icon_temp"
+            android:title="@string/textProfile" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:checked="false"
+            android:icon="@drawable/icon_temp"
+            android:title="@string/textLogOut" />
+
+    </group>
+</menu>
