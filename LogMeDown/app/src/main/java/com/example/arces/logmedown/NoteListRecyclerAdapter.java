@@ -21,12 +21,10 @@ import java.util.ArrayList;
  */
 public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecyclerAdapter.NoteViewHolder> {
 
-    private static final String NOTEPREFERENCES = "NotePreferences";
     private ArrayList<Note> noteList = new ArrayList<>();
     private OnItemClickListener mOnItemClickListener;
     private LayoutInflater inflater;
     private Activity main;
-    private SharedPreferences sharedPreferences;
 
     public class NoteViewHolder extends RecyclerView.ViewHolder{
         View container;
@@ -41,7 +39,11 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
 
     /*-- CONSTRUCTOR --*/
     public NoteListRecyclerAdapter(Context context, final ArrayList<Note> noteList){
-        this.noteList = noteList;
+        if(noteList != null){
+            this.noteList = noteList;
+        }else{
+            this.noteList = new ArrayList<>();
+        }
         this.inflater = LayoutInflater.from(context);
         this.main = (Activity) context;
 

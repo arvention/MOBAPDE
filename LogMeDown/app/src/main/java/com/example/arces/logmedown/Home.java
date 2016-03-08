@@ -36,9 +36,13 @@ public class Home extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
+        /*
         Gson gson = new Gson();
         String json = sharedPreferences.getString("loggedUser", "");
         User user = gson.fromJson(json, User.class);
+*/
+        //Bundle extras = getIntent().getExtras();
+        User user = (User) getIntent().getSerializableExtra("logged_user");
 
         Log.d("logged_user", "Name: " + user.getFirstName() + " " + user.getLastName() + "" +
                 " Username: " + user.getUsername() + " Email Address: " + user.getEmailAddress());

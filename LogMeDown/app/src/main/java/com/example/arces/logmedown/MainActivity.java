@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USERPREFERENCES = "UserPreferences";
     private static final String stringUsernameTag = "un";
     private static final String stringPasswordTag = "pw";
-    private static final String LOGGEDUSER = "loggedUser";
+    //private static final String LOGGEDUSER = "loggedUser";
     public SharedPreferences sharedPreferences;
 
     private EditText editTextLoginUsername;
@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
-                        startActivity(new Intent(getApplicationContext(), Home.class));
+                        Intent intent = new Intent(getApplicationContext(), Home.class);
+                        intent.putExtra("logged_user", user);
+                        startActivity(intent);
 
                         editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
                         editor.putString(stringPasswordTag, editTextLoginPassword.getText().toString());
@@ -96,12 +98,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
       if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
-          Gson gson = new Gson();
-          String json = sharedPreferences.getString(LOGGEDUSER, "");
-          User user = gson.fromJson(json, User.class);
+          String username = sharedPreferences.getString(stringUsernameTag, "");
+          String password = sharedPreferences.getString(stringPasswordTag, "");
+          User user = db.logInUser(username, password);
           (Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
 
-          startActivity(new Intent(getApplicationContext(), Home.class));
+          Intent intent = new Intent(getApplicationContext(), Home.class);
+          intent.putExtra("logged_user", user);
+          startActivity(intent);
       }
     }
 
@@ -113,12 +117,13 @@ public class MainActivity extends AppCompatActivity {
 
         User user = db.logInUser(username, password);
 
+        /*
         if(user != null){
             Gson gson = new Gson();
             String json = gson.toJson(user);
             editor.putString(LOGGEDUSER, json);
             editor.commit();
-        }
+        }*/
         return user;
     }
 }

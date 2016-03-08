@@ -1,11 +1,12 @@
 package com.example.arces.logmedown;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Arces on 23/02/2016.
  */
-public class User {
+public class User implements Serializable{
     private int userID;
     private String firstName;
     private String lastName;

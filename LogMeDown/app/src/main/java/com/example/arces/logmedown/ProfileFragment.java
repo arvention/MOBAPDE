@@ -41,11 +41,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 */
-        sharedPreferences = this.getActivity().getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
+        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
+       /* sharedPreferences = this.getActivity().getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(LOGGEDUSER, "");
         user = gson.fromJson(json, User.class);
-
+*/
         profileName.setText(user.getFirstName() + " " + user.getLastName());
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
