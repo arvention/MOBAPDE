@@ -4,6 +4,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.arces.logmedown.BlocFragment;
+import com.example.arces.logmedown.HomeFragment;
+import com.example.arces.logmedown.ProfileFragment;
+
 public class PagerAdapter extends FragmentStatePagerAdapter{
     int numTabs;
 

@@ -1,17 +1,18 @@
 package com.example.arces.logmedown;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Arces on 23/02/2016.
  */
-public class Note {
+public class Note implements Serializable{
     private int noteID;
-    private User creator;
+    private int creatorID;
     private String title;
     private String content;
-    private Date time;
+    private Date date;
     private Bloc bloc;
 
     public int getNoteID() {
@@ -38,20 +39,20 @@ public class Note {
         this.content = content;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public User getCreator() {
-        return creator;
+    public int getCreatorID() {
+        return creatorID;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreatorID(int creatorID) {
+        this.creatorID = creatorID;
     }
 
     public Bloc getBloc() {

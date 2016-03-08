@@ -22,7 +22,9 @@ public class ProfileFragment extends Fragment {
     private TextView profileName, profileEmail, profileUsername;
     private Button addNoteBtn;
     private SharedPreferences sharedPreferences;
+    private NoteListRecyclerAdapter noteAdapter;
     private RecyclerView rv;
+    private User user;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_profile, container, false);
@@ -35,20 +37,26 @@ public class ProfileFragment extends Fragment {
         addNoteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddNote.class));
+                Intent intent = new Intent(getActivity(), NoteActivity.class);
+                intent.putExtra("note_action", "add");
+                startActivity(intent);
             }
         });
 
         sharedPreferences = this.getActivity().getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(LOGGEDUSER, "");
-        User user = gson.fromJson(json, User.class);
+        user = gson.fromJson(json, User.class);
 
         profileName.setText(user.getFirstName() + " " + user.getLastName());
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
 
         createNotesView(view);
+
+        this.noteAdapter = new NoteListRecyclerAdapter(this.getActivity(), user.getNotes());
+        this.rv.setAdapter(noteAdapter);
+
         return view;
     }
 
@@ -58,4 +66,5 @@ public class ProfileFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
     }
+
 }

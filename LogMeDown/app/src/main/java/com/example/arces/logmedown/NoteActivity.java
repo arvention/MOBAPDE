@@ -12,27 +12,39 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 
-public class AddNote extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity {
     private static final String USERPREFERENCES = "UserPreferences";
+    private static final String NOTEPREFERENCES = "NotePreferences";
     private static final String LOGGEDUSER = "loggedUser";
     private Button saveBtn, cancelBtn;
     private SharedPreferences sharedPreferences;
     private EditText editTitle, editContent;
     private User loggedUser;
     private Database db;
+    private String action;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+        //retrieve note action
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            action = extras.getString("note_action");
+        }
+
+        //retrieve logged user details
+        gson = new Gson();
         sharedPreferences = getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
         String json = sharedPreferences.getString(LOGGEDUSER, "");
         loggedUser = gson.fromJson(json, User.class);
 
+        //database
         db = Database.getInstance(this);
 
+        //UI components
         saveBtn = (Button) findViewById(R.id.addNoteSaveButton);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +63,13 @@ public class AddNote extends AppCompatActivity {
 
         editTitle = (EditText) findViewById(R.id.addNoteTitle);
         editContent = (EditText) findViewById(R.id.addNoteContent);
+
+        if(action.equals("edit")){
+            Note note = (Note) getIntent().getSerializableExtra("note_details");
+
+            editTitle.setText(note.getTitle());
+            editContent.setText(note.getContent());
+        }
     }
 
     public void cancelAddNote() {
@@ -68,13 +87,18 @@ public class AddNote extends AppCompatActivity {
                 .show();
     }
 
-    public void saveNote(){
-        Note note = new Note();
+    public void saveNote() {
+        if (action == "add") {
+            Note note = new Note();
 
-        note.setCreator(loggedUser);
-        note.setTitle(editTitle.getText().toString());
-        note.setContent(editContent.getText().toString());
+            note.setCreatorID(loggedUser.getUserID());
+            note.setTitle(editTitle.getText().toString());
+            note.setContent(editContent.getText().toString());
 
-        db.addNote(note);
+            db.addNote(note);
+        }
+        else if(action == "edit"){
+
+        }
     }
 }
