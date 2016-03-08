@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Note implements Serializable{
     private int noteID;
-    private User creator;
+    private transient User creator;
     private String title;
     private String content;
     private Date date;
@@ -51,7 +51,7 @@ public class Note implements Serializable{
         return creator;
     }
 
-    public void setCreator(User creatorID) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 

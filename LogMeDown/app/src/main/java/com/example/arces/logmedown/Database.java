@@ -165,7 +165,7 @@ public class Database extends SQLiteOpenHelper{
                 note.setContent(content);
                 note.setDate(date);
 
-                Log.d("get_note", note.getTitle() + " by " + user.getFirstName() + " on " + note.getDate());
+                Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }

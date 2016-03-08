@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecyclerAdapter.NoteViewHolder> {
 
     private static final String NOTEPREFERENCES = "NotePreferences";
-    private ArrayList<Note> noteList;
+    private ArrayList<Note> noteList = new ArrayList<>();
     private OnItemClickListener mOnItemClickListener;
     private LayoutInflater inflater;
     private Activity main;

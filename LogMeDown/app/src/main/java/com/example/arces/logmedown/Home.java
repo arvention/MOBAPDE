@@ -1,6 +1,7 @@
 package com.example.arces.logmedown;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.design.widget.FloatingActionButton;
@@ -152,6 +153,15 @@ public class Home extends AppCompatActivity {
         });
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, NoteActivity.class);
+                intent.putExtra("note_action", "add");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

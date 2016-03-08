@@ -32,17 +32,15 @@ public class ProfileFragment extends Fragment {
         profileName = (TextView) view.findViewById(R.id.profileName);
         profileEmail = (TextView) view.findViewById(R.id.profileEmail);
         profileUsername = (TextView) view.findViewById(R.id.profileUsername);
-        addNoteBtn = (Button) view.findViewById(R.id.addNoteBtn);
+      //  addNoteBtn = (Button) view.findViewById(R.id.addNoteBtn);
 
-        addNoteBtn.setOnClickListener(new View.OnClickListener(){
+     /*   addNoteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NoteActivity.class);
-                intent.putExtra("note_action", "add");
-                startActivity(intent);
+
             }
         });
-
+*/
         sharedPreferences = this.getActivity().getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(LOGGEDUSER, "");
