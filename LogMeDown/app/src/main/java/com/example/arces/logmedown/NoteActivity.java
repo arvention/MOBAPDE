@@ -14,6 +14,8 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 
+import java.util.Date;
+
 public class NoteActivity extends AppCompatActivity {
     private Button saveBtn, cancelBtn;
     private EditText editTitle, editContent;
@@ -94,9 +96,15 @@ public class NoteActivity extends AppCompatActivity {
                             note.setCreator(loggedUser);
                             note.setTitle(editTitle.getText().toString());
                             note.setContent(editContent.getText().toString());
+                            note.setDate(new Date());
 
                             Log.d("add_note", note.getTitle() + " " + note.getContent());
                             db.addNote(note);
+
+                            Intent intent = new Intent();
+                            intent.putExtra("saved_note", note);
+
+                            setResult(2, intent);
                             finish();
                         }
 

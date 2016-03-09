@@ -70,4 +70,12 @@ public class User implements Serializable{
     public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
+
+    public void addNote(Note note){
+        notes.add(note);
+    }
+
+    public Note getNoteAt(int position){
+        return notes.get(position);
+    }
 }

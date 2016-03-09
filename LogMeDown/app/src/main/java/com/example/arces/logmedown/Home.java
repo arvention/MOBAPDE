@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,6 @@ import android.app.AlertDialog;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 public class Home extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
@@ -29,6 +28,7 @@ public class Home extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private User loggedUser;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,8 @@ public class Home extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter pagerAdapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
+
+        profileFragment = (ProfileFragment) pagerAdapter.getItem(2);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -159,7 +161,7 @@ public class Home extends AppCompatActivity {
                 Intent intent = new Intent(Home.this, NoteActivity.class);
                 intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
     }
@@ -201,5 +203,22 @@ public class Home extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        switch(resultCode){
+            case 2:
+                Log.d("result_home_test", "SUCCESS");
+                Note editedNote = (Note) data.getSerializableExtra("saved_note");
+
+                Log.d("result_home_test", editedNote.getTitle());
+                //loggedUser.addNote(editedNote);
+                profileFragment.addNoteToUser(editedNote);
+                break;
+            default:
+                Log.d("result_test_home", "FAIL");
+                break;
+        }
+    }
 }

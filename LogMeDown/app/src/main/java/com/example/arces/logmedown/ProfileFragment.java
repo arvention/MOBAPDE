@@ -12,19 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 
 public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter.OnItemClickListener{
     private TextView profileName, profileEmail, profileUsername;
     private NoteListRecyclerAdapter noteAdapter;
     private RecyclerView rv;
     private User user;
-    private ArrayList<Note> noteList;
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_profile, container, false);
 
@@ -34,7 +30,6 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
 
         user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
-        noteList = user.getNotes();
         profileName.setText(user.getFirstName() + " " + user.getLastName());
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
@@ -49,14 +44,13 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
 
     public void createNotesView(View view){
         rv = (RecyclerView) view.findViewById(R.id.profileNoteRecyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     public void onItemClick(int position, Note note) {
-
 
         Log.d("debug_recycler", note.getTitle());
 
@@ -78,14 +72,22 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
                 Note editedNote = (Note) data.getSerializableExtra("edited_note");
 
                 int position = data.getIntExtra("position", 0);
-                user.getNotes().get(position).setContent(editedNote.getContent());
-                user.getNotes().get(position).setTitle(editedNote.getTitle());
+                user.getNoteAt(position).setContent(editedNote.getContent());
+                user.getNoteAt(position).setTitle(editedNote.getTitle());
 
                 noteAdapter.notifyItemChanged(position);
                 break;
             default:
                 Log.d("result_test", "FAIL");
                 break;
+        }
+    }
+
+    public void addNoteToUser(Note note){
+        Log.d("profile_add_debug", "hehe");
+        if(user != null) {
+            user.addNote(note);
+            noteAdapter.notifyDataSetChanged();
         }
     }
 }

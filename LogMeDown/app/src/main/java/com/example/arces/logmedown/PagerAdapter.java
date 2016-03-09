@@ -10,26 +10,26 @@ import com.example.arces.logmedown.ProfileFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter{
     int numTabs;
-
+    private HomeFragment homeTab;
+    private BlocFragment blocTab;
+    private ProfileFragment profileTab;
     public PagerAdapter(FragmentManager fm, int numTabs){
         super(fm);
         this.numTabs = numTabs;
+
+        homeTab = new HomeFragment();
+        blocTab = new BlocFragment();
+        profileTab = new ProfileFragment();
+
     }
 
     @Override
     public Fragment getItem(int position) {
         switch(position){
-            case 0:
-                HomeFragment homeTab = new HomeFragment();
-                return homeTab;
-            case 1:
-                BlocFragment blocTab = new BlocFragment();
-                return blocTab;
-            case 2:
-                ProfileFragment profileTab = new ProfileFragment();
-                return profileTab;
-            default:
-                return null;
+            case 0: return homeTab;
+            case 1: return blocTab;
+            case 2: return profileTab;
+            default: return null;
         }
     }
 
