@@ -205,4 +205,13 @@ public class Database extends SQLiteOpenHelper{
         }
         return user;
     }
+
+    public void editNote(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put("title", note.getTitle());
+        val.put("content", note.getContent());
+
+        db.update(note_table, val, "noteID = " + note.getNoteID(), null);
+    }
 }

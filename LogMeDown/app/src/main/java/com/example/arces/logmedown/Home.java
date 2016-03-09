@@ -28,6 +28,7 @@ public class Home extends AppCompatActivity {
     public SharedPreferences sharedPreferences;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +37,10 @@ public class Home extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
 
-        /*
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("loggedUser", "");
-        User user = gson.fromJson(json, User.class);
-*/
-        //Bundle extras = getIntent().getExtras();
-        User user = (User) getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getIntent().getSerializableExtra("logged_user");
 
-        Log.d("logged_user", "Name: " + user.getFirstName() + " " + user.getLastName() + "" +
-                " Username: " + user.getUsername() + " Email Address: " + user.getEmailAddress());
+        Log.d("logged_user", "Name: " + loggedUser.getFirstName() + " " + loggedUser.getLastName() + "" +
+                " Username: " + loggedUser.getUsername() + " Email Address: " + loggedUser.getEmailAddress());
 
         final TextView fragmentName = (TextView) findViewById(R.id.fragmentName);
 
@@ -162,6 +157,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this, NoteActivity.class);
+                intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
                 startActivity(intent);
             }

@@ -9,13 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
       if(sharedPreferences.contains(stringUsernameTag) && sharedPreferences.contains(stringPasswordTag)) {
           String username = sharedPreferences.getString(stringUsernameTag, "");
           String password = sharedPreferences.getString(stringPasswordTag, "");
+
           User user = db.logInUser(username, password);
           (Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
 
@@ -110,20 +106,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public User logInUser(){
-        sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         String username = editTextLoginUsername.getText().toString();
         String password = editTextLoginPassword.getText().toString();
 
         User user = db.logInUser(username, password);
 
-        /*
-        if(user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(user);
-            editor.putString(LOGGEDUSER, json);
-            editor.commit();
-        }*/
         return user;
     }
 }

@@ -3,9 +3,11 @@ package com.example.arces.logmedown;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,16 +15,12 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 
 public class NoteActivity extends AppCompatActivity {
-    private static final String USERPREFERENCES = "UserPreferences";
-    private static final String NOTEPREFERENCES = "NotePreferences";
-    private static final String LOGGEDUSER = "loggedUser";
     private Button saveBtn, cancelBtn;
-    private SharedPreferences sharedPreferences;
     private EditText editTitle, editContent;
     private User loggedUser;
     private Database db;
     private String action;
-    private Gson gson;
+    private Note editNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +28,12 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
 
         //retrieve note action
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            action = extras.getString("note_action");
-        }
+        action = getIntent().getStringExtra("note_action");
+        Log.d("note_debug", action);
+
 
         //retrieve logged user details
-        gson = new Gson();
-        sharedPreferences = getSharedPreferences(USERPREFERENCES, Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString(LOGGEDUSER, "");
-        loggedUser = gson.fromJson(json, User.class);
+        loggedUser = (User) getIntent().getSerializableExtra("logged_user");
 
         //database
         db = Database.getInstance(this);
@@ -65,10 +59,10 @@ public class NoteActivity extends AppCompatActivity {
         editContent = (EditText) findViewById(R.id.addNoteContent);
 
         if(action.equals("edit")){
-            Note note = (Note) getIntent().getSerializableExtra("note_details");
+            editNote = (Note) getIntent().getSerializableExtra("note_details");
 
-            editTitle.setText(note.getTitle());
-            editContent.setText(note.getContent());
+            editTitle.setText(editNote.getTitle());
+            editContent.setText(editNote.getContent());
         }
     }
 
@@ -88,17 +82,54 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void saveNote() {
-        if (action == "add") {
-            Note note = new Note();
+        if (action.equals("add")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Save Note")
+                    .setMessage(R.string.textSavePrompt)
+                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note note = new Note();
 
-            note.setCreator(loggedUser);
-            note.setTitle(editTitle.getText().toString());
-            note.setContent(editContent.getText().toString());
+                            note.setCreator(loggedUser);
+                            note.setTitle(editTitle.getText().toString());
+                            note.setContent(editContent.getText().toString());
 
-            db.addNote(note);
+                            Log.d("add_note", note.getTitle() + " " + note.getContent());
+                            db.addNote(note);
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .show();
         }
-        else if(action == "edit"){
+        else if(action.equals("edit")){
+            new AlertDialog.Builder(this)
+                    .setTitle("Edit Note")
+                    .setMessage(R.string.textEditSavePrompt)
+                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note note = new Note();
 
+                            note.setNoteID(editNote.getNoteID());
+                            note.setTitle(editTitle.getText().toString());
+                            note.setContent(editContent.getText().toString());
+
+                            db.editNote(note);
+
+                            int position = getIntent().getIntExtra("position", 0);
+                            Intent intent = new Intent();
+                            intent.putExtra("edited_note", note);
+                            intent.putExtra("position", position);
+                            setResult(1, intent);
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .show();
         }
     }
 }

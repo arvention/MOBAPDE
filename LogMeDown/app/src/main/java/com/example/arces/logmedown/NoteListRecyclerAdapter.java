@@ -2,16 +2,13 @@ package com.example.arces.logmedown;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ import java.util.ArrayList;
 public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecyclerAdapter.NoteViewHolder> {
 
     private ArrayList<Note> noteList = new ArrayList<>();
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener clicker;
     private LayoutInflater inflater;
     private Activity main;
 
@@ -38,7 +35,7 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
     }
 
     /*-- CONSTRUCTOR --*/
-    public NoteListRecyclerAdapter(Context context, final ArrayList<Note> noteList){
+    public NoteListRecyclerAdapter(Fragment fragment, Context context, final ArrayList<Note> noteList){
         if(noteList != null){
             this.noteList = noteList;
         }else{
@@ -46,22 +43,7 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
         }
         this.inflater = LayoutInflater.from(context);
         this.main = (Activity) context;
-
-        this.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int positionOfItemClicked) {
-                Note note = noteList.get(positionOfItemClicked);
-
-                Log.d("debug_recycler", note.getTitle());
-                Log.d("debug_recycler", main.getTitle().toString());
-
-                Intent intent = new Intent(main, NoteActivity.class);
-                intent.putExtra("note_action", "edit");
-                intent.putExtra("note_details", note);
-
-                main.startActivityForResult(intent, 1);
-            }
-        });
+        this.clicker = (OnItemClickListener) fragment;
     }
 
     @Override
@@ -71,19 +53,18 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
     }
 
     @Override
-    public void onBindViewHolder(final NoteViewHolder holder, int position) {
-        Note note = noteList.get(position);
+    public void onBindViewHolder(final NoteViewHolder holder, final int position) {
+        final Note note = noteList.get(position);
 
         holder.container.setTag(holder);
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onItemClick(((NoteViewHolder) v.getTag()).getAdapterPosition());
+                clicker.onItemClick(position, note);
             }
         });
 
         holder.title.setText(note.getTitle());
-
 
         SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy");
         holder.date.setText(df.format(note.getDate()));
@@ -94,11 +75,7 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
         return noteList.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.mOnItemClickListener = onItemClickListener;
-    }
-
     public interface OnItemClickListener{
-        void onItemClick(int positionOfItemClicked);
+        void onItemClick(int position, Note note);
     }
 }

@@ -17,4 +17,6 @@
     <string name="textAddBloc">Add Bloc</string>
 
     <string name="textDiscardPrompt">Do you want to discard the note?</string>
+    <string name="textSavePrompt">Do you want to save the note?</string>
+    <string name="textEditSavePrompt">Do you want to save the changes made to the note?</string>
 </resources>
