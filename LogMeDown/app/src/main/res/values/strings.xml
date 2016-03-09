@@ -15,6 +15,9 @@
     <string name="textProfile">Profile</string>
 
     <string name="textAddBloc">Add Bloc</string>
+    <string name="textBlocName">Bloc Name</string>
+    <string name="textSave">SAVE</string>
+    <string name="textCancel">CANCEL</string>
 
     <string name="textDiscardPrompt">Do you want to discard the note?</string>
     <string name="textSavePrompt">Do you want to save the note?</string>
