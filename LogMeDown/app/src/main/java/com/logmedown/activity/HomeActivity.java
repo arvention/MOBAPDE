@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,13 @@ import android.app.AlertDialog;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class Home extends AppCompatActivity {
+import com.logmedown.adapter.PagerAdapter;
+import com.example.arces.logmedown.R;
+import com.logmedown.fragment.ProfileFragment;
+import com.logmedown.model.Note;
+import com.logmedown.model.User;
+
+public class HomeActivity extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
     public SharedPreferences sharedPreferences;
@@ -109,7 +114,7 @@ public class Home extends AppCompatActivity {
                     viewPager.setCurrentItem(index);
                     fragmentName.setText(item.getTitle().toString());
                 } else {
-                    new AlertDialog.Builder(Home.this)
+                    new AlertDialog.Builder(HomeActivity.this)
                             .setTitle("Log Out")
                             .setMessage(R.string.textLogOutPrompt)
                             .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
@@ -158,7 +163,7 @@ public class Home extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this, NoteActivity.class);
+                Intent intent = new Intent(HomeActivity.this, NoteActivity.class);
                 intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
                 startActivityForResult(intent, 2);

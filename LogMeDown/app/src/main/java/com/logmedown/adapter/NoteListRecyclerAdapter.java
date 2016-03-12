@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+import com.example.arces.logmedown.R;
+import com.logmedown.model.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.arces.logmedown.R;
 
 public class DrawerListItemAdapter extends BaseAdapter {
 

@@ -1,15 +1,17 @@
-package com.example.arces.logmedown;
+package com.logmedown.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.arces.logmedown.R;
+import com.logmedown.database.Database;
+import com.logmedown.model.User;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
-                        Intent intent = new Intent(getApplicationContext(), Home.class);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         intent.putExtra("logged_user", user);
                         startActivity(intent);
 
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SignUp.class));
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             }
         });
 
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
           User user = db.logInUser(username, password);
           (Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
 
-          Intent intent = new Intent(getApplicationContext(), Home.class);
+          Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
           intent.putExtra("logged_user", user);
           startActivity(intent);
       }

@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.example.arces.logmedown.R;
+import com.logmedown.database.Database;
+import com.logmedown.model.Note;
+import com.logmedown.model.User;
 
 import java.util.Date;
 

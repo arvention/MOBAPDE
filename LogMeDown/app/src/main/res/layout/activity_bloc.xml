@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingTop="20dp"
     android:paddingLeft="20dp"
-    tools:context="com.example.arces.logmedown.BlocActivity">
+    tools:context="com.logmedown.activity.BlocActivity">
 
     <TextView
         android:layout_width="wrap_content"

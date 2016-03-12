@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

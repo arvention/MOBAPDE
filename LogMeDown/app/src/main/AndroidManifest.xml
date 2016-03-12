@@ -8,17 +8,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.logmedown.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp" />
-        <activity android:name=".Home" />
-        <activity android:name=".NoteActivity" />
-        <activity android:name=".BlocActivity" />
+        <activity android:name="com.logmedown.activity.SignUpActivity" />
+        <activity android:name="com.logmedown.activity.HomeActivity" />
+        <activity android:name="com.logmedown.activity.NoteActivity" />
+        <activity android:name="com.logmedown.activity.BlocActivity" />
     </application>
 
 </manifest>

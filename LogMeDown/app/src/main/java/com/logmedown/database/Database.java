@@ -1,4 +1,4 @@
-package com.example.arces.logmedown;
+package com.logmedown.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.logmedown.model.Note;
+import com.logmedown.model.User;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

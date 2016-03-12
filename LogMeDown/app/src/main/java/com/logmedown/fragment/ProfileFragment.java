@@ -1,8 +1,6 @@
-package com.example.arces.logmedown;
+package com.logmedown.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,7 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter.OnItemClickListener{
+import com.logmedown.model.Note;
+import com.logmedown.adapter.NoteListRecyclerAdapter;
+import com.example.arces.logmedown.R;
+import com.logmedown.model.User;
+
+public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter.OnItemClickListener {
     private TextView profileName, profileEmail, profileUsername;
     private NoteListRecyclerAdapter noteAdapter;
     private RecyclerView rv;

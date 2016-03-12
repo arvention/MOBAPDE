@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.arces.logmedown.SignUp">
+    tools:context="com.logmedown.activity.SignUpActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
