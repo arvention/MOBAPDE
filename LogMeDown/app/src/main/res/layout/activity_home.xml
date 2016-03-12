@@ -82,8 +82,8 @@
 
             </android.support.v4.view.ViewPager>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
+            <!--android.support.design.widget.FloatingActionButton
+                android:id="@+id/addNoteFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -93,7 +93,7 @@
                 android:src="@drawable/log_me_down_logo_fab"
                 app:fabSize="normal"
 
-                 />
+                 /-->
 
         </RelativeLayout>
 

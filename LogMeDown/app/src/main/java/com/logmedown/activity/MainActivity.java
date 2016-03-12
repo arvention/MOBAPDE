@@ -2,6 +2,7 @@ package com.logmedown.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
+                        finish();
+
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         intent.putExtra("logged_user", user);
                         startActivity(intent);
@@ -105,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
           intent.putExtra("logged_user", user);
           startActivity(intent);
       }
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        finish();
     }
 
     public User logInUser(){

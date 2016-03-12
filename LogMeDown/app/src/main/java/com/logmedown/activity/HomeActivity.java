@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.app.AlertDialog;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,7 +47,10 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationView navigationView;
 
     private ImageButton appLogo;
-    private FloatingActionButton fab;
+    private FloatingActionButton addNoteFab;
+
+    private Animation zoomIn;
+    private Animation zoomOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
+
+        zoomIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
+        zoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
 
         loggedUser = (User) getIntent().getSerializableExtra("logged_user");
 
@@ -170,38 +178,21 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*addNoteFab = (FloatingActionButton) findViewById(R.id.addNoteFab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        addNoteFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                addNoteFab.startAnimation(zoomIn);
+
                 Intent intent = new Intent(HomeActivity.this, NoteActivity.class);
                 intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
                 startActivityForResult(intent, 2);
             }
-        });
-    }
+        });*/
 
-    @Override
-    public void onBackPressed() {
-
-        new AlertDialog.Builder(this)
-                .setTitle("Log Out")
-                .setMessage(R.string.textLogOutPrompt)
-                .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sharedPreferences = getSharedPreferences(USERPREFERENCES, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.commit();
-                        finish();
-                    }
-
-                })
-                .setNegativeButton(R.string.textLogOutNo, null)
-                .show();
 
     }
 
@@ -223,6 +214,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //addNoteFab.startAnimation(zoomOut);
 
         switch(resultCode){
             case 2:

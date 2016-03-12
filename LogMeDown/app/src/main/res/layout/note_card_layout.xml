@@ -16,8 +16,8 @@
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/user_image"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -30,7 +30,7 @@
                 android:id="@+id/user_name"
                 android:layout_toRightOf="@id/user_image"
                 android:layout_alignParentTop="true"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 />
 
             <TextView

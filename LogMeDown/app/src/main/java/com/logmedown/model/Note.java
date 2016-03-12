@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Note implements Serializable{
     private int noteID;
-    private transient User creator;
+    private User creator;
     private String title;
     private String content;
     private Date date;
