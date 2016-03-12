@@ -30,10 +30,22 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
     public SharedPreferences sharedPreferences;
+    private User loggedUser;
+
+    private TextView fragmentName;
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
+    private ProfileFragment profileFragment;
+    private TypedArray tabNames;
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private User loggedUser;
-    private ProfileFragment profileFragment;
+
+    private ImageButton appLogo;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,28 +59,28 @@ public class HomeActivity extends AppCompatActivity {
         Log.d("logged_user", "Name: " + loggedUser.getFirstName() + " " + loggedUser.getLastName() + "" +
                 " Username: " + loggedUser.getUsername() + " Email Address: " + loggedUser.getEmailAddress());
 
-        final TextView fragmentName = (TextView) findViewById(R.id.fragmentName);
+        fragmentName = (TextView) findViewById(R.id.fragmentName);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        final TypedArray arrayTabNames = getResources().obtainTypedArray(R.array.tabNames);
-        for (int i = 0; i < arrayTabNames.length(); i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(arrayTabNames.getText(i)));
+        tabNames = getResources().obtainTypedArray(R.array.tabNames);
+        for (int i = 0; i < tabNames.length(); i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(tabNames.getText(i)));
         }
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter pagerAdapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setOffscreenPageLimit(2);
         profileFragment = (ProfileFragment) pagerAdapter.getItem(2);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -105,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int index = -1;
-                for (int i = 0; i < arrayTabNames.length() && index == -1; i++) {
+                for (int i = 0; i < tabNames.length() && index == -1; i++) {
                     if (item.getTitle().toString().equalsIgnoreCase(tabLayout.getTabAt(i).getText().toString())) {
                         index = i;
                     }
@@ -150,7 +162,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //drawerList.setAdapter(new DrawerListItemAdapter(this, arrayNavigationNames, arrayNavigationImages,viewPager,fragmentName, drawer, drawerList, tabLayout, arrayTabNames.length()));
 
-        final ImageButton appLogo = (ImageButton) findViewById(R.id.app_logo);
+        appLogo = (ImageButton) findViewById(R.id.app_logo);
         appLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

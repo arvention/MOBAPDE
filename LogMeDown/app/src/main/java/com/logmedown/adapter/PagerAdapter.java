@@ -9,10 +9,12 @@ import com.logmedown.fragment.HomeFragment;
 import com.logmedown.fragment.ProfileFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter{
+
     int numTabs;
     private HomeFragment homeTab;
     private BlocFragment blocTab;
     private ProfileFragment profileTab;
+
     public PagerAdapter(FragmentManager fm, int numTabs){
         super(fm);
         this.numTabs = numTabs;
