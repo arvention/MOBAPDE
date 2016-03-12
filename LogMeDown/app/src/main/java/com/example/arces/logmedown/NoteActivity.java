@@ -1,23 +1,20 @@
 package com.example.arces.logmedown;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.google.gson.Gson;
+import android.widget.ImageButton;
 
 import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
-    private Button saveBtn, cancelBtn;
+    private ImageButton saveBtn, discardBtn;
     private EditText editTitle, editContent;
     private User loggedUser;
     private Database db;
@@ -27,7 +24,7 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+        setContentView(R.layout.activity_note);
 
         //retrieve note action
         action = getIntent().getStringExtra("note_action");
@@ -41,7 +38,7 @@ public class NoteActivity extends AppCompatActivity {
         db = Database.getInstance(this);
 
         //UI components
-        saveBtn = (Button) findViewById(R.id.addNoteSaveButton);
+        saveBtn = (ImageButton) findViewById(R.id.noteSaveButton);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +46,11 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        cancelBtn = (Button) findViewById(R.id.addNoteCancelButton);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
+        discardBtn = (ImageButton) findViewById(R.id.noteDiscardButton);
+        discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelAddNote();
+                cancelNoteAction();
             }
         });
 
@@ -68,19 +65,35 @@ public class NoteActivity extends AppCompatActivity {
         }
     }
 
-    public void cancelAddNote() {
-        new AlertDialog.Builder(this)
-                .setTitle("Discard Note")
-                .setMessage(R.string.textDiscardPrompt)
-                .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
+    public void cancelNoteAction() {
+        if(action.equals("add")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Discard Note")
+                    .setMessage(R.string.textSaveDiscardPrompt)
+                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
 
-                })
-                .setNegativeButton(R.string.textLogOutNo, null)
-                .show();
+                    })
+                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .show();
+        }
+        else if(action.equals("edit")){
+            new AlertDialog.Builder(this)
+                    .setTitle("Discard Note")
+                    .setMessage(R.string.textEditDiscardPrompt)
+                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .show();
+        }
     }
 
     public void saveNote() {
@@ -88,7 +101,7 @@ public class NoteActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("Save Note")
                     .setMessage(R.string.textSavePrompt)
-                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.textSave, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Note note = new Note();
@@ -109,14 +122,14 @@ public class NoteActivity extends AppCompatActivity {
                         }
 
                     })
-                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .setNegativeButton(R.string.textCancel, null)
                     .show();
         }
         else if(action.equals("edit")){
             new AlertDialog.Builder(this)
                     .setTitle("Edit Note")
                     .setMessage(R.string.textEditSavePrompt)
-                    .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.textSave, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Note note = new Note();
@@ -136,7 +149,7 @@ public class NoteActivity extends AppCompatActivity {
                         }
 
                     })
-                    .setNegativeButton(R.string.textLogOutNo, null)
+                    .setNegativeButton(R.string.textCancel, null)
                     .show();
         }
     }

@@ -19,7 +19,8 @@
     <string name="textSave">SAVE</string>
     <string name="textCancel">CANCEL</string>
 
-    <string name="textDiscardPrompt">Do you want to discard the note?</string>
+    <string name="textSaveDiscardPrompt">Do you want to discard the note?</string>
     <string name="textSavePrompt">Do you want to save the note?</string>
     <string name="textEditSavePrompt">Do you want to save the changes made to the note?</string>
+    <string name="textEditDiscardPrompt">Do you want to discard the changes made to the note?</string>
 </resources>

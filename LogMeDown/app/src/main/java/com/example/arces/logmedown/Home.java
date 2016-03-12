@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter pagerAdapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
-
+        viewPager.setOffscreenPageLimit(2);
         profileFragment = (ProfileFragment) pagerAdapter.getItem(2);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

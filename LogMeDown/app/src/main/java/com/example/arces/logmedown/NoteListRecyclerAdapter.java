@@ -60,6 +60,8 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              //  holder.date.setTextColor(main.getResources().getColor(R.color.colorWhite));
+              //  holder.container.setBackgroundColor(main.getResources().getColor(R.color.colorGray));
                 clicker.onItemClick(position, note);
             }
         });

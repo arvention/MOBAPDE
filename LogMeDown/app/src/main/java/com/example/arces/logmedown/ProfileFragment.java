@@ -54,12 +54,13 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
 
         Log.d("debug_recycler", note.getTitle());
 
+        /*
         Intent intent = new Intent(this.getActivity(), NoteActivity.class);
         intent.putExtra("note_action", "edit");
         intent.putExtra("note_details", note);
         intent.putExtra("position", position);
 
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 1);*/
     }
 
     @Override

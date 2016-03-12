@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ImageButton
+        android:id="@+id/noteSaveButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/save_button"
+        android:background="@color/colorBackgroundColor"
+        android:layout_alignParentRight="true"/>
+    <ImageButton
+        android:id="@+id/noteDiscardButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/discard_button"
+        android:background="@color/colorBackgroundColor"
+        android:layout_alignParentLeft="true"/>
+
+    <EditText
+        android:id="@+id/addNoteTitle"
+        android:layout_width="fill_parent"
+        android:layout_toLeftOf="@id/noteSaveButton"
+        android:layout_toRightOf="@id/noteDiscardButton"
+
+        android:layout_height="60dp"
+        android:hint="Title"
+        android:textColorHint="@color/colorGray"
+        android:gravity="center"
+        android:textSize="20dp"
+
+        android:textColor="@color/colorWhite"
+        android:padding="20dp"
+        android:background="@color/colorBackgroundColor"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+
+    <ScrollView
+        android:id="@+id/addNoteScroll"
+        android:layout_below="@id/addNoteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="15dp">
+        <EditText
+            android:id="@+id/addNoteContent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            android:textCursorDrawable="@null"
+            android:hint="Tap Here to Start Writing a Note"/>
+    </ScrollView>
+</RelativeLayout>
