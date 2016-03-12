@@ -25,10 +25,12 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
     private OnItemClickListener clicker;
     private LayoutInflater inflater;
     private Activity main;
+    private int selectedPos = -1;
 
-    public class NoteViewHolder extends RecyclerView.ViewHolder{
+    public class NoteViewHolder extends RecyclerView.ViewHolder {
         View container;
         TextView title, date;
+
         public NoteViewHolder(View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.container);
@@ -38,10 +40,10 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
     }
 
     /*-- CONSTRUCTOR --*/
-    public NoteListRecyclerAdapter(Fragment fragment, Context context, final ArrayList<Note> noteList){
-        if(noteList != null){
+    public NoteListRecyclerAdapter(Fragment fragment, Context context, final ArrayList<Note> noteList) {
+        if (noteList != null) {
             this.noteList = noteList;
-        }else{
+        } else {
             this.noteList = new ArrayList<>();
         }
         this.inflater = LayoutInflater.from(context);
@@ -59,13 +61,26 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
     public void onBindViewHolder(final NoteViewHolder holder, final int position) {
         final Note note = noteList.get(position);
 
+        if (selectedPos == position) {
+            holder.date.setTextColor(main.getResources().getColor(R.color.colorWhite));
+            holder.container.setBackgroundColor(main.getResources().getColor(R.color.colorGray));
+        } else {
+            holder.date.setTextColor(main.getResources().getColor(R.color.colorGray));
+            holder.container.setBackgroundColor(main.getResources().getColor(R.color.colorWhite));
+        }
+
         holder.container.setTag(holder);
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  holder.date.setTextColor(main.getResources().getColor(R.color.colorWhite));
-              //  holder.container.setBackgroundColor(main.getResources().getColor(R.color.colorGray));
-                clicker.onItemClick(position, note);
+                notifyItemChanged(selectedPos);
+                if (selectedPos == position) {
+                    selectedPos = -1;
+                } else {
+                    selectedPos = position;
+                }
+                notifyItemChanged(selectedPos);
+                clicker.onItemClick(position);
             }
         });
 
@@ -75,12 +90,19 @@ public class NoteListRecyclerAdapter extends RecyclerView.Adapter<NoteListRecycl
         holder.date.setText(df.format(note.getDate()));
     }
 
+    public void deleteNoteAt(int position) {
+        selectedPos = -1;
+        noteList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, noteList.size());
+    }
+
     @Override
     public int getItemCount() {
         return noteList.size();
     }
 
-    public interface OnItemClickListener{
-        void onItemClick(int position, Note note);
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }

@@ -53,35 +53,6 @@
             </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/noteActionMenu"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/colorGray"
-        android:orientation="horizontal"
-        android:gravity="center|center_vertical"
-        android:layout_centerHorizontal="true">
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="55dp"
-            android:src="@drawable/edit_button"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="2dp"
-            android:scaleType="fitCenter"
-            />
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="2dp"
-            />
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="10dp"
-            />
-    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profileNoteRecyclerView"
         android:layout_below="@id/userDetailsLayout"
@@ -89,4 +60,34 @@
         android:layout_height="fill_parent">
     </android.support.v7.widget.RecyclerView>
 
+
+    <LinearLayout
+        android:id="@+id/noteActionMenu"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:visibility="gone"
+        android:background="@color/colorBlackOpacity"
+        android:orientation="horizontal"
+        android:gravity="center|center_vertical"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/noteEditButton"
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:src="@drawable/edit_button"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="2dp"
+            android:scaleType="fitCenter"
+            />
+        <ImageButton
+            android:id="@+id/noteDeleteButton"
+            android:layout_width="80dp"
+            android:src="@drawable/delete_button"
+            android:scaleType="fitCenter"
+            android:layout_height="55dp"
+            android:layout_marginRight="2dp"
+            />
+    </LinearLayout>
 </RelativeLayout>

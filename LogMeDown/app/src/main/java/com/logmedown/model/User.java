@@ -78,4 +78,8 @@ public class User implements Serializable{
     public Note getNoteAt(int position){
         return notes.get(position);
     }
+
+    public void deleteNote(int position){
+        notes.remove(position);
+    }
 }

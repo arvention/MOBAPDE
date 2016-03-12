@@ -86,7 +86,7 @@ public class NoteActivity extends AppCompatActivity {
         }
         else if(action.equals("edit")){
             new AlertDialog.Builder(this)
-                    .setTitle("Discard Note")
+                    .setTitle("Discard Changes")
                     .setMessage(R.string.textEditDiscardPrompt)
                     .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
                         @Override

@@ -217,4 +217,10 @@ public class Database extends SQLiteOpenHelper{
 
         db.update(note_table, val, "noteID = " + note.getNoteID(), null);
     }
+
+    public void deleteNote(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(note_table, "noteID = " + note.getNoteID(), null);
+    }
 }
