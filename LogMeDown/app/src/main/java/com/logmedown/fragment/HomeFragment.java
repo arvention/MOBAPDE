@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.logmedown.activity.NoteActivity;
 import com.logmedown.adapter.NoteRecyclerAdapter;
@@ -26,9 +28,11 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private User user;
+    private LinearLayout actionMenu;
+    private ImageButton editNoteButton;
+    private ImageButton viewNoteButton;
+    private ImageButton deleteNoteButton;
 
-    private Animation slideDown;
-    private Animation slideUp;
     private Animation zoomIn;
     private Animation zoomOut;
 
@@ -37,19 +41,23 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_home, container, false);
 
-        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
-
-        slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
-        slideUp = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
         zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
         zoomOut = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_out);
 
+        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
+
         homeAddNoteFab = (FloatingActionButton)view.findViewById(R.id.homeAddNoteFab);
 
-        homeAddNoteFab.setOnClickListener(new View.OnClickListener() {
+        actionMenu = (LinearLayout) view.findViewById(R.id.homeNoteActionMenu);
+
+        editNoteButton = (ImageButton) view.findViewById(R.id.homeNoteEditButton);
+        viewNoteButton = (ImageButton) view.findViewById(R.id.homeNoteViewButton);
+        deleteNoteButton = (ImageButton) view.findViewById(R.id.homeNoteDeleteButton);
+
+        getHomeAddNoteFab().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeAddNoteFab.startAnimation(zoomIn);
+                getHomeAddNoteFab().startAnimation(zoomIn);
 
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
                 intent.putExtra("logged_user", user);
@@ -58,10 +66,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity());
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
-        recyclerView.setAdapter(noteRecyclerAdapter);
+        recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -70,11 +78,12 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @Override
+    /*@Override
     public void onResume(){
         super.onResume();
-        homeAddNoteFab.startAnimation(zoomOut);
-    }
+        Log.d("Hellohello", "its me");
+        getHomeAddNoteFab().startAnimation(zoomOut);
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -91,5 +100,13 @@ public class HomeFragment extends Fragment {
                 Log.d("result_test_home", "FAIL");
                 break;
         }
+    }
+
+    public FloatingActionButton getHomeAddNoteFab() {
+        return homeAddNoteFab;
+    }
+
+    public NoteRecyclerAdapter getNoteRecyclerAdapter() {
+        return noteRecyclerAdapter;
     }
 }

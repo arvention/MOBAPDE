@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator_layout_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -21,4 +22,49 @@
         android:layout_marginRight="16dp"
         android:src="@drawable/log_me_down_logo_fab"
         app:fabSize="normal"/>
+
+    <LinearLayout
+        android:id="@+id/homeNoteActionMenu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorLightGray"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:gravity="center|center_vertical"
+        android:layout_gravity="bottom|end"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/homeNoteEditButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_button"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
+            android:id="@+id/homeNoteViewButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/view_button"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
+            android:id="@+id/homeNoteDeleteButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/delete_button"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:visibility="gone"
+            android:layout_marginRight="2dp"
+            />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

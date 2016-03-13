@@ -1,5 +1,6 @@
 package com.logmedown.activity;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.content.res.TypedArray;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 
 import com.logmedown.adapter.PagerAdapter;
 import com.example.arces.logmedown.R;
+import com.logmedown.fragment.BlocFragment;
+import com.logmedown.fragment.HomeFragment;
 import com.logmedown.fragment.ProfileFragment;
 import com.logmedown.model.Note;
 import com.logmedown.model.User;
@@ -40,14 +44,16 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-    private ProfileFragment profileFragment;
     private TypedArray tabNames;
+
+    private HomeFragment homeFragment;
+    private BlocFragment blocFragment;
+    private ProfileFragment profileFragment;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
     private ImageButton appLogo;
-    private FloatingActionButton addNoteFab;
 
     private Animation zoomIn;
     private Animation zoomOut;
@@ -85,26 +91,13 @@ public class HomeActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setOffscreenPageLimit(2);
+
+        homeFragment = (HomeFragment) pagerAdapter.getItem(0);
+        blocFragment = (BlocFragment) pagerAdapter.getItem(1);
         profileFragment = (ProfileFragment) pagerAdapter.getItem(2);
+
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -156,20 +149,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //final String[] arrayNavigationNames = getResources().getStringArray(R.array.navigationNames);
-        //final int[] arrayNavigationImages = {0,0,0,0};
-        //final DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        //final ListView drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        //View drawerHeader = getLayoutInflater().inflate(R.layout.drawer_header, null, false);
-        //TextView headerName = (TextView)findViewById(R.id.header_profile_name);
-        //headerName.setText(user.getFirstName() + " " + user.getLastName());
-        //TextView headerEmail = (TextView)findViewById(R.id.header_profile_email);
-        //headerEmail.setText(user.getEmailAddress());
-        //drawerList.addHeaderView(drawerHeader);
-
-        //drawerList.setAdapter(new DrawerListItemAdapter(this, arrayNavigationNames, arrayNavigationImages,viewPager,fragmentName, drawer, drawerList, tabLayout, arrayTabNames.length()));
-
         appLogo = (ImageButton) findViewById(R.id.app_logo);
         appLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,22 +157,42 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /*addNoteFab = (FloatingActionButton) findViewById(R.id.addNoteFab);
-
-        addNoteFab.setOnClickListener(new View.OnClickListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
 
-                addNoteFab.startAnimation(zoomIn);
-
-                Intent intent = new Intent(HomeActivity.this, NoteActivity.class);
-                intent.putExtra("logged_user", loggedUser);
-                intent.putExtra("note_action", "add");
-                startActivityForResult(intent, 2);
+                if (tab.getPosition() == 0) {
+                    FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    fm.detach(homeFragment).attach(homeFragment).commit();
+                    if(getSupportFragmentManager().executePendingTransactions())
+                        homeFragment.getHomeAddNoteFab().startAnimation(zoomOut);
+                } else if (tab.getPosition() == 1) {
+                    //bloc.getBlocAddNoteFab().startAnimation(zoomOut);
+                } else if (tab.getPosition() == 2) {
+                    FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    fm.detach(profileFragment).attach(profileFragment).commit();
+                    if(getSupportFragmentManager().executePendingTransactions())
+                        profileFragment.getProfileAddNoteFab().startAnimation(zoomOut);
+                }
             }
-        });*/
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    homeFragment.getHomeAddNoteFab().startAnimation(zoomIn);
+                } else if (tab.getPosition() == 1) {
+                    //bloc.getBlocAddNoteFab().startAnimation(zoomIn);
+                } else if (tab.getPosition() == 2) {
+                    profileFragment.getProfileAddNoteFab().startAnimation(zoomIn);
+                }
+            }
 
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     @Override
@@ -214,8 +213,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        //addNoteFab.startAnimation(zoomOut);
 
         switch(resultCode){
             case 2:

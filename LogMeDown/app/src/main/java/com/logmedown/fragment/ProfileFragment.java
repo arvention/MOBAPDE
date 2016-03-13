@@ -1,9 +1,8 @@
 package com.logmedown.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,59 +15,42 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.logmedown.activity.NoteActivity;
 import com.logmedown.adapter.NoteRecyclerAdapter;
-import com.logmedown.database.Database;
 import com.logmedown.model.Note;
-import com.logmedown.adapter.NoteListRecyclerAdapter;
 import com.example.arces.logmedown.R;
 import com.logmedown.model.User;
 
-import java.util.ArrayList;
-
-public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter.OnItemClickListener {
+public class ProfileFragment extends Fragment {
     private TextView profileName, profileEmail, profileUsername;
     private ImageView profileImage;
 
     private User user;
     private LinearLayout actionMenu;
-    private ImageButton editNoteButton, deleteNoteButton;
-    private int selectedPos;
-    private Database db;
+    private ImageButton editNoteButton;
+    private ImageButton viewNoteButton;
+    private ImageButton deleteNoteButton;
 
     private NoteRecyclerAdapter noteRecyclerAdapter;
     private RecyclerView recyclerView;
+
+    private FloatingActionButton profileAddNoteFab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_profile, container, false);
 
-        db = Database.getInstance(container.getContext());
-        selectedPos = -1;
+        profileAddNoteFab = (FloatingActionButton)view.findViewById(R.id.profileAddNoteFab);
 
         profileImage = (ImageView) view.findViewById(R.id.profileImage);
 
         profileName = (TextView) view.findViewById(R.id.profileName);
         profileEmail = (TextView) view.findViewById(R.id.profileEmail);
         profileUsername = (TextView) view.findViewById(R.id.profileUsername);
-        actionMenu = (LinearLayout) view.findViewById(R.id.noteActionMenu);
+        actionMenu = (LinearLayout) view.findViewById(R.id.profileNoteActionMenu);
 
-        editNoteButton = (ImageButton) view.findViewById(R.id.noteEditButton);
-        deleteNoteButton = (ImageButton) view.findViewById(R.id.noteDeleteButton);
-
-        editNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editNote();
-            }
-        });
-
-        deleteNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteNote();
-            }
-        });
+        editNoteButton = (ImageButton) view.findViewById(R.id.profileNoteEditButton);
+        viewNoteButton = (ImageButton) view.findViewById(R.id.profileNoteViewButton);
+        deleteNoteButton = (ImageButton) view.findViewById(R.id.profileNoteDeleteButton);
 
         user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
@@ -78,10 +60,10 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity());
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_profile);
-        recyclerView.setAdapter(noteRecyclerAdapter);
+        recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -90,25 +72,6 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
         return view;
     }
 
-
-
-    @Override
-    public void onItemClick(int position) {
-        Log.d("debug_recycler", "clicked = " + position + " vs " + selectedPos);
-
-        if (selectedPos == position) {
-            selectedPos = -1;
-        } else {
-            if (selectedPos == -1) {
-                actionMenu.setVisibility(View.VISIBLE);
-                actionMenu.setAlpha(0.0f);
-                actionMenu.animate()
-                        .translationY(0)
-                        .alpha(1.0f);
-            }
-            selectedPos = position;
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,7 +86,7 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
                 user.getNoteAt(position).setContent(editedNote.getContent());
                 user.getNoteAt(position).setTitle(editedNote.getTitle());
 
-                noteRecyclerAdapter.notifyItemChanged(position);
+                getNoteRecyclerAdapter().notifyItemChanged(position);
                 break;
             default:
                 Log.d("result_test", "FAIL");
@@ -135,35 +98,25 @@ public class ProfileFragment extends Fragment implements NoteListRecyclerAdapter
         Log.d("profile_add_debug", "hehe");
         if (user != null) {
             user.addNote(note);
-            noteRecyclerAdapter.notifyDataSetChanged();
+            getNoteRecyclerAdapter().notifyDataSetChanged();
         }
     }
 
-    public void editNote() {
+    public FloatingActionButton getProfileAddNoteFab() {
+        return profileAddNoteFab;
+    }
+
+    public NoteRecyclerAdapter getNoteRecyclerAdapter() {
+        return noteRecyclerAdapter;
+    }
+
+    /*public void editNote() {
         Intent intent = new Intent(this.getActivity(), NoteActivity.class);
         intent.putExtra("note_action", "edit");
         intent.putExtra("note_details", user.getNoteAt(selectedPos));
         intent.putExtra("position", selectedPos);
 
         startActivityForResult(intent, 1);
-    }
+    }*/
 
-    public void deleteNote() {
-        new AlertDialog.Builder(this.getContext())
-                .setTitle("Delete Note")
-                .setMessage(R.string.textDeleteNotePrompt)
-                .setPositiveButton(R.string.textConfirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        db.deleteNote(user.getNoteAt(selectedPos));
-
-                        user.deleteNote(selectedPos);
-                        noteRecyclerAdapter.deleteNoteAt(selectedPos);
-                        actionMenu.setVisibility(View.GONE);
-                    }
-
-                })
-                .setNegativeButton(R.string.textCancel, null)
-                .show();
-    }
 }

@@ -1,13 +1,20 @@
 package com.logmedown.adapter;
 
 import android.app.Activity;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +22,58 @@ import com.example.arces.logmedown.R;
 import com.logmedown.model.Note;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder> {
 
     private ArrayList<Note> notes;
     private Activity main;
-    private int selectedCount;
 
-    public NoteRecyclerAdapter(ArrayList<Note> notes, Activity main){
+    private ArrayList<Integer> selectedItems;
+    private Animation zoomIn;
+    private Animation zoomOut;
+    private Animation slideDown;
+    private Animation slideUp;
+
+    private LinearLayout noteActionMenu;
+    private ImageButton editNoteButton;
+    private ImageButton viewNoteButton;
+    private ImageButton deleteNoteButton;
+
+    public NoteRecyclerAdapter(final ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
+                               ImageButton viewNoteButton, ImageButton deleteNoteButton){
         this.notes = notes;
+
         this.main = main;
-        selectedCount = 0;
+        slideDown = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.slide_down);
+        slideUp = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.slide_up);
+        zoomIn = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.zoom_in);
+        zoomOut = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.zoom_out);
+
+        zoomOut.setStartOffset(100);
+        zoomOut.setDuration(100);
+        zoomIn.setDuration(100);
+        slideDown.setStartOffset(100);
+
+        this.noteActionMenu = noteActionMenu;
+        this.editNoteButton = editNoteButton;
+        this.viewNoteButton = viewNoteButton;
+        this.deleteNoteButton = deleteNoteButton;
+
+        selectedItems = new ArrayList<>();
+
+        this.deleteNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(selectedItems, Collections.reverseOrder());
+                for(int i = 0; i < selectedItems.size(); i++){
+                    notes.remove((int) selectedItems.get(i));
+                    notifyItemRemoved(selectedItems.get(i));
+                }
+                selectedItems = new ArrayList<>();
+                closeNoteActionMenu();
+            }
+        });
     }
 
     @Override
@@ -42,6 +90,7 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
         else // fix this
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > ");
+
         holder.userPostTitle.setText(notes.get(position).getTitle());
         holder.userImage.setImageResource(R.drawable.profile_img);
 
@@ -49,15 +98,51 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
             @Override
             public void onClick(View v) {
                 if(!holder.isSelected) {
-                    selectedCount += 1;
+                    selectedItems.add(holder.getAdapterPosition());
                     holder.isSelected = true;
                     holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorAccent));
+
                 }else{
-                    selectedCount -= 1;
+                    selectedItems.remove(selectedItems.indexOf(holder.getAdapterPosition()));
                     holder.isSelected = false;
                     holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
                 }
-                Toast.makeText(holder.cardView.getContext(), "Clicked in " + selectedCount, Toast.LENGTH_SHORT).show();
+                for(int i = 0; i < selectedItems.size(); i++) {
+                    Log.d("Adapter Selected ", String.valueOf(selectedItems.get(i)));
+                }
+
+                if(selectedItems.size() == 1 && noteActionMenu.getVisibility() != View.VISIBLE){
+                    noteActionMenu.setVisibility(View.VISIBLE);
+                    noteActionMenu.startAnimation(slideUp);
+
+                    editNoteButton.setVisibility(View.VISIBLE);
+                    editNoteButton.startAnimation(zoomOut);
+                    viewNoteButton.setVisibility(View.VISIBLE);
+                    viewNoteButton.startAnimation(zoomOut);
+                    deleteNoteButton.setVisibility(View.VISIBLE);
+                    deleteNoteButton.startAnimation(zoomOut);
+
+                }else if(selectedItems.size() == 1 && noteActionMenu.getVisibility() == View.VISIBLE){
+                    editNoteButton.setVisibility(View.VISIBLE);
+                    editNoteButton.startAnimation(zoomOut);
+                    viewNoteButton.setVisibility(View.VISIBLE);
+                    viewNoteButton.startAnimation(zoomOut);
+                }else if(selectedItems.size() > 1 && noteActionMenu.getVisibility() == View.VISIBLE){
+                    if(editNoteButton.getVisibility() == View.VISIBLE && viewNoteButton.getVisibility() == View.VISIBLE) {
+                        editNoteButton.setVisibility(View.GONE);
+                        editNoteButton.startAnimation(zoomIn);
+                        viewNoteButton.setVisibility(View.GONE);
+                        viewNoteButton.startAnimation(zoomIn);
+                        deleteNoteButton.setVisibility(View.GONE);
+                        deleteNoteButton.startAnimation(zoomIn);
+                    }
+                    if(deleteNoteButton.getVisibility() == View.GONE) {
+                        deleteNoteButton.setVisibility(View.VISIBLE);
+                        deleteNoteButton.startAnimation(zoomOut);
+                    }
+                }else if(selectedItems.size() == 0 && noteActionMenu.getVisibility() == View.VISIBLE){
+                    closeNoteActionMenu();
+                }
             }
         });
     }
@@ -72,10 +157,19 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public void deleteNoteAt(int position) {
-        notes.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, notes.size());
+    private void closeNoteActionMenu(){
+
+        if(editNoteButton.getVisibility() == View.VISIBLE && viewNoteButton.getVisibility() == View.VISIBLE){
+            deleteNoteButton.setVisibility(View.GONE);
+            deleteNoteButton.startAnimation(zoomIn);
+            editNoteButton.setVisibility(View.GONE);
+            editNoteButton.startAnimation(zoomIn);
+            viewNoteButton.setVisibility(View.GONE);
+            viewNoteButton.startAnimation(zoomIn);
+        }
+
+        noteActionMenu.setVisibility(View.GONE);
+        noteActionMenu.startAnimation(slideDown);
     }
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {

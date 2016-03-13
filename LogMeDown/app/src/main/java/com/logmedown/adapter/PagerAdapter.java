@@ -23,6 +23,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter{
         blocTab = new BlocFragment();
         profileTab = new ProfileFragment();
 
+
     }
 
     @Override
