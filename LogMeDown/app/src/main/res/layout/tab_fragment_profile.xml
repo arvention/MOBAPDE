@@ -1,75 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--TextView
-        android:id="@+id/textView"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:id="@+id/userDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:background="@color/colorLightGray"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                />
+            <TextView
+                android:id="@+id/profileName"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="40dp"
+                android:textSize="32dp"
+                android:textColor="@color/colorBlack"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_below="@id/profileName">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/profileUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorDarkGray"
+                    android:textStyle="italic"/>
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/profileEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorDarkGray"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userDetailsLayout"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/homeAddNoteFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="PROFILE"
-        android:textAppearance="?android:attr/textAppearanceLarge"/-->
-
-    <RelativeLayout
-        android:id="@+id/userDetailsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/colorBackgroundColor">
-        <TextView
-            android:id="@+id/profileName"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="40dp"
-            android:text="Juan Dela Cruz"
-            android:textSize="32dp"
-            android:textColor="@color/colorWhite"
-            android:gravity="center"
-            android:layout_alignParentTop="true"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_below="@id/profileName">
-            <TextView
-                android:gravity="center"
-                android:id="@+id/profileUsername"
-                android:layout_width="match_parent"
-                android:layout_height="18dp"
-                android:textSize="14dp"
-                android:text="Username: "
-                android:textColor="@color/colorGray"
-                android:textStyle="italic"/>
-            <TextView
-                android:gravity="center"
-                android:id="@+id/profileEmail"
-                android:layout_width="match_parent"
-                android:layout_height="18dp"
-                android:textSize="14dp"
-                android:text="E-mail Address: "
-                android:textColor="@color/colorGray"
-                android:textStyle="italic"/>
-            </LinearLayout>
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/profileNoteRecyclerView"
-        android:layout_below="@id/userDetailsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/log_me_down_logo_fab"
+        app:fabSize="normal"/>
 
 
     <LinearLayout
         android:id="@+id/noteActionMenu"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:visibility="gone"
         android:background="@color/colorBlackOpacity"
         android:orientation="horizontal"
         android:gravity="center|center_vertical"
+        android:layout_gravity="bottom|end"
         android:layout_centerHorizontal="true">
 
         <ImageButton
@@ -90,4 +107,4 @@
             android:layout_marginRight="2dp"
             />
     </LinearLayout>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

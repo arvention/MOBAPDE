@@ -19,7 +19,6 @@ import com.example.arces.logmedown.R;
 import com.logmedown.model.Note;
 import com.logmedown.model.User;
 
-import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
@@ -59,7 +58,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes());
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity());
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
         recyclerView.setAdapter(noteRecyclerAdapter);
@@ -80,8 +79,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        //homeAddNoteFab.startAnimation(zoomOut);
 
         switch(resultCode){
             case 2:
