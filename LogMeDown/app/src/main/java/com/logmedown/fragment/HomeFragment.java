@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
         noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

@@ -80,12 +80,13 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_card_layout, parent,false);
         final NoteViewHolder noteViewHolder = new NoteViewHolder(view);
-
         return  noteViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final NoteViewHolder holder, final int position) {
+        Log.d("BIND", String.valueOf(position));
+
         if(notes.get(position).getBloc() == null)
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
         else // fix this
@@ -97,21 +98,20 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!holder.isSelected) {
+                if (!holder.isSelected) {
                     selectedItems.add(holder.getAdapterPosition());
                     holder.isSelected = true;
                     holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorAccent));
-
-                }else{
+                } else if(holder.isSelected){
                     selectedItems.remove(selectedItems.indexOf(holder.getAdapterPosition()));
                     holder.isSelected = false;
                     holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
                 }
-                for(int i = 0; i < selectedItems.size(); i++) {
+                for (int i = 0; i < selectedItems.size(); i++) {
                     Log.d("Adapter Selected ", String.valueOf(selectedItems.get(i)));
                 }
 
-                if(selectedItems.size() == 1 && noteActionMenu.getVisibility() != View.VISIBLE){
+                if (selectedItems.size() == 1 && noteActionMenu.getVisibility() != View.VISIBLE) {
                     noteActionMenu.setVisibility(View.VISIBLE);
                     noteActionMenu.startAnimation(slideUp);
 
@@ -122,13 +122,13 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                     deleteNoteButton.setVisibility(View.VISIBLE);
                     deleteNoteButton.startAnimation(zoomOut);
 
-                }else if(selectedItems.size() == 1 && noteActionMenu.getVisibility() == View.VISIBLE){
+                } else if (selectedItems.size() == 1 && noteActionMenu.getVisibility() == View.VISIBLE) {
                     editNoteButton.setVisibility(View.VISIBLE);
                     editNoteButton.startAnimation(zoomOut);
                     viewNoteButton.setVisibility(View.VISIBLE);
                     viewNoteButton.startAnimation(zoomOut);
-                }else if(selectedItems.size() > 1 && noteActionMenu.getVisibility() == View.VISIBLE){
-                    if(editNoteButton.getVisibility() == View.VISIBLE && viewNoteButton.getVisibility() == View.VISIBLE) {
+                } else if (selectedItems.size() > 1 && noteActionMenu.getVisibility() == View.VISIBLE) {
+                    if (editNoteButton.getVisibility() == View.VISIBLE && viewNoteButton.getVisibility() == View.VISIBLE) {
                         editNoteButton.setVisibility(View.GONE);
                         editNoteButton.startAnimation(zoomIn);
                         viewNoteButton.setVisibility(View.GONE);
@@ -136,11 +136,11 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                         deleteNoteButton.setVisibility(View.GONE);
                         deleteNoteButton.startAnimation(zoomIn);
                     }
-                    if(deleteNoteButton.getVisibility() == View.GONE) {
+                    if (deleteNoteButton.getVisibility() == View.GONE) {
                         deleteNoteButton.setVisibility(View.VISIBLE);
                         deleteNoteButton.startAnimation(zoomOut);
                     }
-                }else if(selectedItems.size() == 0 && noteActionMenu.getVisibility() == View.VISIBLE){
+                } else if (selectedItems.size() == 0 && noteActionMenu.getVisibility() == View.VISIBLE) {
                     closeNoteActionMenu();
                 }
             }
@@ -150,11 +150,6 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     @Override
     public int getItemCount() {
         return notes.size();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     private void closeNoteActionMenu(){
