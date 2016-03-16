@@ -2,8 +2,6 @@ package com.example.arces.mini_challenge_2_unitconversion;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -81,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 String category = categorySpinner.getSelectedItem().toString().toLowerCase();
 
                 unitList = db.getUnits(category);
-
+                fromEdit.setText("");
+                toEdit.setText("");
                 updateSpinners();
             }
 
@@ -95,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedFrom = position;
+                fromEdit.setText("");
+                toEdit.setText("");
             }
 
             @Override
@@ -103,11 +104,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTo = position;
+                fromEdit.setText("");
+                toEdit.setText("");
             }
 
             @Override

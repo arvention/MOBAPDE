@@ -26,8 +26,11 @@ public class Converter {
             float x = Float.parseFloat(multiplier);
             result = value * x;
         } else {
-            //Unit unit = db.getUnit(fromID);
-            //multiplier.replace(unit.getName(), Float.toString(value));
+            if(fromID == 13){
+                result = convertCelsius(value);
+            } else if(fromID == 14){
+                result = convertFahrenheit(value);
+            }
         }
         return result;
     }
@@ -39,5 +42,17 @@ public class Converter {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public float convertCelsius(float value){
+        float f = (float)(value * 1.8 + 32);
+
+        return f;
+    }
+
+    public float convertFahrenheit(float value){
+        float c = (float)((value - 32) * 1.8);
+
+        return c;
     }
 }

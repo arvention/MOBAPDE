@@ -8,10 +8,15 @@ public class Unit {
     private String name;
     private String category;
 
+    public Unit(String name, String category){
+        this.name = name;
+        this.category = category;
+    }
+
     public Unit(int unitID, String name, String category){
-        this.setUnitID(unitID);
-        this.setName(name);
-        this.setCategory(category);
+        this.unitID = unitID;
+        this.name = name;
+        this.category = category;
     }
 
     public int getUnitID() {

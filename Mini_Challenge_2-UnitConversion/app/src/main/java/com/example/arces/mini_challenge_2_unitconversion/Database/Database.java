@@ -311,4 +311,40 @@ public class Database extends SQLiteOpenHelper {
         db.close();
         return multiplier;
     }
+
+    public Unit getUnit(int unitID){
+        Unit unit = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(true, unit_table, null, "unitID = ?", new String[]{Integer.toString(unitID)}, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+            int id = cursor.getInt(cursor.getColumnIndex("unitID"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            String category = cursor.getString(cursor.getColumnIndex("category"));
+
+            unit = new Unit(id, name, category);
+
+            cursor.close();
+        }
+
+        return unit;
+    }
+
+    public void addUnit(Unit existingUnit, String value, Unit unit){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues val = new ContentValues();
+
+        val.put("name", unit.getName());
+        val.put("category", unit.getCategory());
+        long id = db.insert(unit_table, null, val);
+        val.clear();
+
+        val.put("unitID", existingUnit.getUnitID());
+        val.put("value", value);
+        val.put("resultID", id);
+        db.insert(conversion_table, null, val);
+        val.clear();
+    }
 }
