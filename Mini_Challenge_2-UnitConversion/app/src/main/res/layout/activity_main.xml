@@ -7,72 +7,83 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimary"
-            >
+            android:background="@color/colorPrimary">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="30sp"
-                android:textColor="@color/colorBackgroundColor"
                 android:layout_centerInParent="true"
-                />
+                android:text="@string/app_name"
+                android:textColor="@color/colorBackgroundColor"
+                android:textSize="30sp" />
         </RelativeLayout>
+
+        <Spinner
+            android:id="@+id/categories"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/header"
+            >
+        </Spinner>
 
         <RelativeLayout
             android:id="@+id/layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/header"
-            >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/categories">
+
 
             <RelativeLayout
                 android:id="@+id/fromLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
+
                 <EditText
                     android:id="@+id/fromValue"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    />
+                    android:inputType="numberDecimal"/>
+
                 <Spinner
+                    android:id="@+id/fromSpinner"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fromValue"
-                    >
-                </Spinner>
+                    android:layout_below="@id/fromValue"></Spinner>
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/equalSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="="
-                android:textSize="30sp"
                 android:layout_toRightOf="@id/fromLayout"
-                />
+                android:text="="
+                android:textSize="30sp" />
+
             <RelativeLayout
                 android:id="@+id/toLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/equalSign"
-                >
+                android:layout_toRightOf="@id/equalSign">
+
                 <EditText
                     android:id="@+id/toValue"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    />
+                    android:inputType="numberDecimal" />
+
                 <Spinner
+                    android:id="@+id/toSpinner"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/toValue"
-                    >
-                </Spinner>
+                    android:layout_below="@id/toValue"></Spinner>
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -83,7 +94,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/ic_add"
-        />
+        android:src="@drawable/ic_add" />
 
 </android.support.design.widget.CoordinatorLayout>
