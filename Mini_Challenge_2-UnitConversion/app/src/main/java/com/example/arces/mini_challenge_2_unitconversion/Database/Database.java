@@ -347,4 +347,10 @@ public class Database extends SQLiteOpenHelper {
         db.insert(conversion_table, null, val);
         val.clear();
     }
+
+    public ArrayList<Integer> getChainIDs(){
+        ArrayList<Integer> chainIDList = new ArrayList<>();
+
+        return chainIDList;
+    }
 }
