@@ -1,12 +1,10 @@
 package com.logmedown.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.logmedown.adapter.NoteRecyclerAdapter;
-import com.logmedown.model.Note;
 import com.example.arces.logmedown.R;
 import com.logmedown.model.User;
 
@@ -74,7 +71,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -93,15 +90,15 @@ public class ProfileFragment extends Fragment {
                 Log.d("result_test", "FAIL");
                 break;
         }
-    }
+    }*/
 
-    public void addNoteToUser(Note note) {
+    /*public void addNoteToUser(Note note) {
         Log.d("profile_add_debug", "hehe");
         if (user != null) {
             user.addNote(note);
             getNoteRecyclerAdapter().notifyDataSetChanged();
         }
-    }
+    }*/
 
     public FloatingActionButton getProfileAddNoteFab() {
         return profileAddNoteFab;

@@ -133,6 +133,8 @@ public class NoteActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Note note = new Note();
 
+                            note.setNoteID(db.getLastNoteId()+1);
+                            Log.d("getNoteIdOfAdded", String.valueOf(note.getNoteID()));
                             note.setCreator(loggedUser);
                             note.setTitle(editTitle.getText().toString());
                             note.setContent(editContent.getText().toString());

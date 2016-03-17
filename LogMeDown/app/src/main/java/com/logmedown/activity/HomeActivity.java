@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
     public SharedPreferences sharedPreferences;
-    private User loggedUser;
+    public static User loggedUser;
 
     private TextView fragmentName;
 
@@ -160,6 +160,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 viewPager.setCurrentItem(tab.getPosition());
                 fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
 
@@ -210,6 +211,15 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    @Override
+    public void onBackPressed(){
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -219,9 +229,9 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("result_home_test", "SUCCESS");
                 Note editedNote = (Note) data.getSerializableExtra("saved_note");
 
-                Log.d("result_home_test", editedNote.getTitle());
-                //loggedUser.addNote(editedNote);
-                profileFragment.addNoteToUser(editedNote);
+                loggedUser.addNote(editedNote);
+                homeFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                profileFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
                 break;
             default:
                 Log.d("result_test_home", "FAIL");

@@ -79,14 +79,13 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    /*@Override
+    @Override
     public void onResume(){
         super.onResume();
-        Log.d("Hellohello", "its me");
         getHomeAddNoteFab().startAnimation(zoomOut);
-    }*/
+    }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -101,7 +100,7 @@ public class HomeFragment extends Fragment {
                 Log.d("result_test_home", "FAIL");
                 break;
         }
-    }
+    }*/
 
     public FloatingActionButton getHomeAddNoteFab() {
         return homeAddNoteFab;

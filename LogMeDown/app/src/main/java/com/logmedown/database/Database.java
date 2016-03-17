@@ -120,6 +120,22 @@ public class Database extends SQLiteOpenHelper{
         return user;
     }
 
+    public int getLastNoteId(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = -1;
+
+        Cursor cursor = db.query(note_table,new String [] {"MAX(noteID)"}, null, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+
+            id = cursor.getInt(cursor.getColumnIndex("MAX(noteID)"));
+            cursor.close();
+        }
+
+        return id;
+    }
+
     public void addNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -220,6 +236,8 @@ public class Database extends SQLiteOpenHelper{
 
     public void deleteNote(Note note){
         SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("Delete db", String.valueOf(note.getNoteID()));
 
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
     }

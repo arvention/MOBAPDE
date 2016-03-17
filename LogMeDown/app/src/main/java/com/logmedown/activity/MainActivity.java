@@ -110,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
       }
     }
 
-    @Override
+    /*@Override
     protected void onStop(){
         super.onStop();
         finish();
-    }
+    }*/
 
     public User logInUser(){
         String username = editTextLoginUsername.getText().toString();

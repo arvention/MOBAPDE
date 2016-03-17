@@ -1,8 +1,6 @@
 package com.logmedown.adapter;
 
 import android.app.Activity;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,15 +14,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.arces.logmedown.R;
+import com.logmedown.activity.HomeActivity;
+import com.logmedown.database.Database;
 import com.logmedown.model.Note;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder> {
+
+    private Database db;
 
     private ArrayList<Note> notes;
     private Activity main;
@@ -40,8 +41,9 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     private ImageButton viewNoteButton;
     private ImageButton deleteNoteButton;
 
-    public NoteRecyclerAdapter(final ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
+    public NoteRecyclerAdapter(ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
                                ImageButton viewNoteButton, ImageButton deleteNoteButton){
+
         this.notes = notes;
 
         this.main = main;
@@ -49,6 +51,8 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         slideUp = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.slide_up);
         zoomIn = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.zoom_in);
         zoomOut = AnimationUtils.loadAnimation(main.getApplicationContext(), R.anim.zoom_out);
+
+        db = Database.getInstance(main.getApplicationContext());
 
         zoomOut.setStartOffset(100);
         zoomOut.setDuration(100);
@@ -65,11 +69,15 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         this.deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Collections.sort(selectedItems, Collections.reverseOrder());
                 for(int i = 0; i < selectedItems.size(); i++){
-                    notes.remove((int) selectedItems.get(i));
+                    Log.d("DELETE", NoteRecyclerAdapter.this.notes.get((int) selectedItems.get(i)).getTitle());
+                    db.deleteNote(NoteRecyclerAdapter.this.notes.get((int) selectedItems.get(i)));
+                    NoteRecyclerAdapter.this.notes.remove((int) selectedItems.get(i));
                     notifyItemRemoved(selectedItems.get(i));
                 }
+
                 selectedItems = new ArrayList<>();
                 closeNoteActionMenu();
             }
@@ -78,34 +86,20 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_card_layout, parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_card_layout, parent,false);
         final NoteViewHolder noteViewHolder = new NoteViewHolder(view);
-        return  noteViewHolder;
-    }
 
-    @Override
-    public void onBindViewHolder(final NoteViewHolder holder, final int position) {
-        Log.d("BIND", String.valueOf(position));
-
-        if(notes.get(position).getBloc() == null)
-            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
-        else // fix this
-            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > ");
-
-        holder.userPostTitle.setText(notes.get(position).getTitle());
-        holder.userImage.setImageResource(R.drawable.profile_img);
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        noteViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!holder.isSelected) {
-                    selectedItems.add(holder.getAdapterPosition());
-                    holder.isSelected = true;
-                    holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorAccent));
-                } else if(holder.isSelected){
-                    selectedItems.remove(selectedItems.indexOf(holder.getAdapterPosition()));
-                    holder.isSelected = false;
-                    holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
+                if (!noteViewHolder.cardView.isSelected()) {
+                    selectedItems.add(noteViewHolder.getAdapterPosition());
+                    noteViewHolder.cardView.setSelected(true);
+                    noteViewHolder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorAccent));
+                } else if (noteViewHolder.cardView.isSelected()) {
+                    selectedItems.remove(selectedItems.indexOf(noteViewHolder.getAdapterPosition()));
+                    noteViewHolder.cardView.setSelected(false);
+                    noteViewHolder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
                 }
                 for (int i = 0; i < selectedItems.size(); i++) {
                     Log.d("Adapter Selected ", String.valueOf(selectedItems.get(i)));
@@ -145,6 +139,27 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                 }
             }
         });
+        return  noteViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(NoteViewHolder holder, int position) {
+        Log.d("BIND", String.valueOf(position));
+
+        if(notes.get(position).getBloc() == null)
+            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
+        else // fix this
+            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > ");
+
+        holder.userPostTitle.setText(notes.get(position).getTitle());
+        holder.userImage.setImageResource(R.drawable.profile_img);
+
+        holder.cardView.setSelected(selectedItems.contains(position));
+
+        if(holder.cardView.isSelected())
+            holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorAccent));
+        else
+            holder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
     }
 
     @Override
@@ -166,6 +181,7 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         noteActionMenu.setVisibility(View.GONE);
         noteActionMenu.startAnimation(slideDown);
     }
+
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         boolean isSelected;

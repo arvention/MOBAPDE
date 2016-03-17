@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical"
-                android:layout_below="@id/profileName">
+                android:layout_below="@id/profileName"
+                >
                 <TextView
                     android:gravity="center"
                     android:id="@+id/profileUsername"
@@ -57,7 +58,6 @@
                     android:textStyle="italic"/>
             </LinearLayout>
         </LinearLayout>
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_profile"

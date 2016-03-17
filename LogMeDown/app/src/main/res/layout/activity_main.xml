@@ -9,19 +9,20 @@
     tools:context="com.logmedown.activity.MainActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/log_me_down_logo_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:id="@+id/imageView" />
+        />
 
     <EditText
+        android:id="@+id/editTextLoginUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editTextLoginUsername"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
@@ -31,11 +32,11 @@
         android:textColor="@color/colorWhite"/>
 
     <EditText
+        android:id="@+id/editTextLoginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editTextLoginPassword"
         android:layout_below="@+id/editTextLoginUsername"
         android:layout_centerHorizontal="true"
         android:hint="@string/textLoginPassword"
@@ -43,19 +44,19 @@
         android:textColor="@color/colorWhite"/>
 
     <Button
+        android:id="@+id/buttonLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log Me In"
-        android:id="@+id/buttonLogIn"
         android:layout_below="@+id/editTextLoginPassword"
         android:layout_alignStart="@+id/editTextLoginPassword"
         android:layout_alignEnd="@+id/editTextLoginPassword" />
 
     <Button
+        android:id="@+id/buttonSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Me Up"
-        android:id="@+id/buttonSignUp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/buttonLogIn"
         android:layout_alignEnd="@+id/buttonLogIn"
