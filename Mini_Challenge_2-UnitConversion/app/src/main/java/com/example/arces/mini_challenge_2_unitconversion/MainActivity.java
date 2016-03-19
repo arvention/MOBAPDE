@@ -1,7 +1,10 @@
 package com.example.arces.mini_challenge_2_unitconversion;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] arraySpinner;
     private Spinner categorySpinner, toSpinner, fromSpinner;
     private EditText fromEdit, toEdit;
+    private FloatingActionButton addBtn;
     private Database db;
     private ArrayList<Unit> unitList;
     private Converter converter;
@@ -27,16 +31,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        deleteDatabase("UnitConversion.db");
+        //deleteDatabase("UnitConversion.db");
         unitList = new ArrayList<>();
         converter = new Converter(this);
         this.arraySpinner = new String[]{"Distance", "Weight", "Volume", "Area", "Temperature"};
         this.db = Database.getInstance(this);
-        db.initializeData();
         categorySpinner = (Spinner)findViewById(R.id.categories);
         fromSpinner = (Spinner)findViewById(R.id.fromSpinner);
         toSpinner = (Spinner)findViewById(R.id.toSpinner);
-
+        addBtn = (FloatingActionButton) findViewById(R.id.addUnitBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
         fromEdit = (EditText)findViewById(R.id.fromValue);
         toEdit = (EditText)findViewById(R.id.toValue);
 
@@ -44,9 +54,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(fromEdit.getText().length() != 0) {
-                    Float fromValue = Float.parseFloat(fromEdit.getText().toString());
-                    Float toValue = converter.convert(unitList.get(selectedFrom).getUnitID(), fromValue, unitList.get(selectedTo).getUnitID());
-                    toEdit.setText(Float.toString(toValue));
+                    if(!fromEdit.getText().toString().equals(".")) {
+                        Float fromValue = Float.parseFloat(fromEdit.getText().toString());
+                        Float toValue = converter.tryConvert(unitList.get(selectedFrom).getUnitID(), fromValue, unitList.get(selectedTo).getUnitID());
+                        toEdit.setText(Float.toString(toValue));
+                    }
                 }
                 else{
                     toEdit.setText("");
@@ -59,9 +71,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(toEdit.getText().length() != 0) {
-                    Float fromValue = Float.parseFloat(toEdit.getText().toString());
-                    Float toValue = converter.convert(unitList.get(selectedTo).getUnitID(), fromValue, unitList.get(selectedFrom).getUnitID());
-                    fromEdit.setText(Float.toString(toValue));
+                    if(!toEdit.getText().toString().equals(".")) {
+                        Float fromValue = Float.parseFloat(toEdit.getText().toString());
+                        Float toValue = converter.tryConvert(unitList.get(selectedTo).getUnitID(), fromValue, unitList.get(selectedFrom).getUnitID());
+                        fromEdit.setText(Float.toString(toValue));
+                    }
                 }
                 else{
                     fromEdit.setText("");
@@ -77,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String category = categorySpinner.getSelectedItem().toString().toLowerCase();
-
                 unitList = db.getUnits(category);
                 fromEdit.setText("");
                 toEdit.setText("");
@@ -130,5 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<String> toAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
         toSpinner.setAdapter(toAdapter);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == 1){
+            Unit newUnit = (Unit) data.getSerializableExtra("new_unit");
+            unitList.add(newUnit);
+            Log.d("new_unit_debug", newUnit.getName());
+            updateSpinners();
+        }
     }
 }

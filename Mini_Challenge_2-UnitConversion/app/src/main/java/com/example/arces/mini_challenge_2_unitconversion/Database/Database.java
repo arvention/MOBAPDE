@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.arces.mini_challenge_2_unitconversion.Unit;
 
@@ -42,6 +43,7 @@ public class Database extends SQLiteOpenHelper {
         String CREATE_CONVERSION_TABLE = "CREATE TABLE " + conversion_table + "(unitID INTEGER NOT NULL, value TEXT NOT NULL, resultID INTEGER NOT NULL);";
         db.execSQL(CREATE_CONVERSION_TABLE);
 
+        initializeData(db);
     }
 
     @Override
@@ -49,9 +51,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void initializeData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    public void initializeData(SQLiteDatabase db){
         ContentValues val = new ContentValues();
 
     //-- ADD UNITS ------------
@@ -227,9 +227,9 @@ public class Database extends SQLiteOpenHelper {
         val.clear();
 
         //m2 -> km2
-        val.put("unitID", 9);
+        val.put("unitID", 11);
         val.put("value", 0.000001);
-        val.put("resultID", 11);
+        val.put("resultID", 9);
         db.insert(conversion_table, null, val);
         val.clear();
 
@@ -261,8 +261,6 @@ public class Database extends SQLiteOpenHelper {
         val.put("resultID", 13);
         db.insert(conversion_table, null, val);
         val.clear();
-
-        db.close();
     }
 
     public ArrayList<Unit> getUnits(String category){
@@ -288,7 +286,7 @@ public class Database extends SQLiteOpenHelper {
         else{
             cursor.close();
         }
-        db.close();
+
         return unitList;
     }
 
@@ -312,45 +310,48 @@ public class Database extends SQLiteOpenHelper {
         return multiplier;
     }
 
-    public Unit getUnit(int unitID){
-        Unit unit = null;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(true, unit_table, null, "unitID = ?", new String[]{Integer.toString(unitID)}, null, null, null, null);
-
-        if(cursor.getCount() != 0){
-            cursor.moveToFirst();
-            int id = cursor.getInt(cursor.getColumnIndex("unitID"));
-            String name = cursor.getString(cursor.getColumnIndex("name"));
-            String category = cursor.getString(cursor.getColumnIndex("category"));
-
-            unit = new Unit(id, name, category);
-
-            cursor.close();
-        }
-
-        return unit;
-    }
-
-    public void addUnit(Unit existingUnit, String value, Unit unit){
+    public long addUnit(Unit existingUnit, String value, Unit unit){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues val = new ContentValues();
 
         val.put("name", unit.getName());
-        val.put("category", unit.getCategory());
+        val.put("category", unit.getCategory().toLowerCase());
         long id = db.insert(unit_table, null, val);
         val.clear();
+        Log.d("add_unit", "name = " + unit.getName() + " category = " + unit.getCategory());
 
         val.put("unitID", existingUnit.getUnitID());
         val.put("value", value);
         val.put("resultID", id);
         db.insert(conversion_table, null, val);
+
+        val.put("unitID", id);
+        val.put("value", 1/Float.parseFloat(value));
+        val.put("resultID", existingUnit.getUnitID());
+        db.insert(conversion_table, null, val);
+        Log.d("add_unit_conversion", "existing = " + existingUnit.getName() + " value = " + value + " unit = " + id);
+
         val.clear();
+
+        return id;
     }
 
-    public ArrayList<Integer> getChainIDs(){
-        ArrayList<Integer> chainIDList = new ArrayList<>();
+    public ArrayList<Integer> getConvertToList(int unitID){
+        ArrayList<Integer> toList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(true, conversion_table, new String[]{"resultID"}, "unitID = ?", new String[]{Integer.toString(unitID)}, null, null, null, null);
 
-        return chainIDList;
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                int id = cursor.getInt(cursor.getColumnIndex("resultID"));
+                toList.add(id);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+
+        return toList;
     }
 }

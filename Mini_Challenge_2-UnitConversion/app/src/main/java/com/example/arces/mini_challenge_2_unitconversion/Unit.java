@@ -1,9 +1,11 @@
 package com.example.arces.mini_challenge_2_unitconversion;
 
+import java.io.Serializable;
+
 /**
  * Created by Arces on 16/03/2016.
  */
-public class Unit {
+public class Unit implements Serializable{
     private int unitID;
     private String name;
     private String category;
