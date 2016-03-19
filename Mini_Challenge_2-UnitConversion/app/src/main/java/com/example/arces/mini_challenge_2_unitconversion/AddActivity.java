@@ -52,17 +52,23 @@ public class AddActivity extends AppCompatActivity {
                 String toValue = editTextToValue.getText().toString();
                 String toUnit = editTextToUnit.getText().toString();
 
-                Unit unit = new Unit(toUnit, category);
-                Unit existingUnit = unitList.get(selectedUnit);
-                Intent newUnit = new Intent();
-                newUnit.putExtra("new_unit", unit);
-                long newID = db.addUnit(existingUnit,toValue,unit);
+                if (toValue.length() == 0 || toValue.equals(".")) {
+                    Toast.makeText(getApplicationContext(), "Please input a valid decimal value for conversion", Toast.LENGTH_SHORT).show();
+                } else if (toUnit.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Please input a name for the new unit", Toast.LENGTH_SHORT).show();
+                } else {
+                    Unit unit = new Unit(toUnit, category);
+                    Unit existingUnit = unitList.get(selectedUnit);
+                    Intent newUnit = new Intent();
+                    newUnit.putExtra("new_unit", unit);
+                    long newID = db.addUnit(existingUnit, toValue, unit);
 
-                unit.setUnitID((int)newID);
-                setResult(1, newUnit);
+                    unit.setUnitID((int) newID);
+                    setResult(1, newUnit);
 
-                Toast.makeText(getApplicationContext(), unit.getName() + " has been added!", Toast.LENGTH_SHORT).show();
-                finish();
+                    Toast.makeText(getApplicationContext(), unit.getName() + " has been added!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
@@ -103,9 +109,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void updateSpinners(){
+    public void updateSpinners() {
         ArrayList<String> nameList = new ArrayList<>();
-        for(Unit unit: unitList){
+        for (Unit unit : unitList) {
             nameList.add(unit.getName());
         }
 
