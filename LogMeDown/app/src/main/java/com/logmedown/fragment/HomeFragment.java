@@ -6,32 +6,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.logmedown.activity.NoteActivity;
-import com.logmedown.adapter.NoteRecyclerAdapter;
 import com.example.arces.logmedown.R;
-import com.logmedown.model.Note;
+import com.logmedown.adapter.NoteRecyclerHomeAdapter;
 import com.logmedown.model.User;
 
 
 public class HomeFragment extends Fragment {
 
-    private NoteRecyclerAdapter noteRecyclerAdapter;
+    private NoteRecyclerHomeAdapter noteRecyclerHomeAdapter;
     private RecyclerView recyclerView;
 
     private User user;
-    private LinearLayout actionMenu;
-    private ImageButton editNoteButton;
-    private ImageButton viewNoteButton;
-    private ImageButton deleteNoteButton;
 
     private Animation zoomIn;
     private Animation zoomOut;
@@ -48,12 +40,6 @@ public class HomeFragment extends Fragment {
 
         homeAddNoteFab = (FloatingActionButton)view.findViewById(R.id.homeAddNoteFab);
 
-        actionMenu = (LinearLayout) view.findViewById(R.id.homeNoteActionMenu);
-
-        editNoteButton = (ImageButton) view.findViewById(R.id.homeNoteEditButton);
-        viewNoteButton = (ImageButton) view.findViewById(R.id.homeNoteViewButton);
-        deleteNoteButton = (ImageButton) view.findViewById(R.id.homeNoteDeleteButton);
-
         getHomeAddNoteFab().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,11 +52,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
         recyclerView.setHasFixedSize(true);
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
+        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), recyclerView, user);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -107,7 +92,7 @@ public class HomeFragment extends Fragment {
         return homeAddNoteFab;
     }
 
-    public NoteRecyclerAdapter getNoteRecyclerAdapter() {
-        return noteRecyclerAdapter;
+    public NoteRecyclerHomeAdapter getNoteRecyclerAdapter() {
+        return noteRecyclerHomeAdapter;
     }
 }

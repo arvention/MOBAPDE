@@ -26,7 +26,7 @@ import com.logmedown.model.Note;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder> {
+public class NoteRecyclerProfileAdapter extends RecyclerView.Adapter<NoteRecyclerProfileAdapter.NoteViewHolder> {
 
     private Database db;
 
@@ -46,8 +46,8 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
 
     private RecyclerView recyclerView;
 
-    public NoteRecyclerAdapter(ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
-                               ImageButton viewNoteButton, ImageButton deleteNoteButton, RecyclerView recyclerView){
+    public NoteRecyclerProfileAdapter(ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
+                                      ImageButton viewNoteButton, ImageButton deleteNoteButton, RecyclerView recyclerView){
 
         this.notes = notes;
 
@@ -79,16 +79,16 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
 
                 Collections.sort(selectedItems, Collections.reverseOrder());
                 for(int i = 0; i < selectedItems.size(); i++){
-                    Log.d("DELETE", NoteRecyclerAdapter.this.notes.get((int) selectedItems.get(i)).getTitle());
-                    db.deleteNote(NoteRecyclerAdapter.this.notes.get((int) selectedItems.get(i)));
-                    NoteRecyclerAdapter.this.notes.remove((int) selectedItems.get(i));
+                    Log.d("DELETE", NoteRecyclerProfileAdapter.this.notes.get((int) selectedItems.get(i)).getTitle());
+                    db.deleteNote(NoteRecyclerProfileAdapter.this.notes.get((int) selectedItems.get(i)));
+                    NoteRecyclerProfileAdapter.this.notes.remove((int) selectedItems.get(i));
                     notifyItemRemoved(selectedItems.get(i));
                 }
 
                 selectedItems = new ArrayList<>();
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)NoteRecyclerAdapter.this.recyclerView.getLayoutParams();
-                lp.height = NoteRecyclerAdapter.this.recyclerView.getMeasuredHeight() + NoteRecyclerAdapter.this.noteActionMenu.getHeight();
-                NoteRecyclerAdapter.this.recyclerView.setLayoutParams(lp);
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)NoteRecyclerProfileAdapter.this.recyclerView.getLayoutParams();
+                lp.height = NoteRecyclerProfileAdapter.this.recyclerView.getMeasuredHeight() + NoteRecyclerProfileAdapter.this.noteActionMenu.getHeight();
+                NoteRecyclerProfileAdapter.this.recyclerView.setLayoutParams(lp);
                 closeNoteActionMenu();
             }
         });
@@ -96,28 +96,28 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         this.viewNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoteRecyclerAdapter.this.main, NoteViewActivity.class);
-                intent.putExtra("note", NoteRecyclerAdapter.this.notes.get(selectedItems.get(0)));
-                NoteRecyclerAdapter.this.main.startActivity(intent);
+                Intent intent = new Intent(NoteRecyclerProfileAdapter.this.main, NoteViewActivity.class);
+                intent.putExtra("note", NoteRecyclerProfileAdapter.this.notes.get(selectedItems.get(0)));
+                NoteRecyclerProfileAdapter.this.main.startActivity(intent);
             }
         });
 
         this.editNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoteRecyclerAdapter.this.main, NoteActivity.class);
+                Intent intent = new Intent(NoteRecyclerProfileAdapter.this.main, NoteActivity.class);
                 intent.putExtra("note_action", "edit");
-                intent.putExtra("note_details", NoteRecyclerAdapter.this.notes.get(selectedItems.get(0)));
+                intent.putExtra("note_details", NoteRecyclerProfileAdapter.this.notes.get(selectedItems.get(0)));
                 intent.putExtra("position", selectedItems.get(0));
 
-                NoteRecyclerAdapter.this.main.startActivityForResult(intent, 1);
+                NoteRecyclerProfileAdapter.this.main.startActivityForResult(intent, 1);
             }
         });
     }
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_card_layout, parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_card_profile_layout, parent,false);
         final NoteViewHolder noteViewHolder = new NoteViewHolder(view);
 
         noteViewHolder.cardView.setOnClickListener(new View.OnClickListener() {

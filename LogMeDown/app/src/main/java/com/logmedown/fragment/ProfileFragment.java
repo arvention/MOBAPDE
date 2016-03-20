@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.logmedown.activity.NoteActivity;
-import com.logmedown.adapter.NoteRecyclerAdapter;
+import com.logmedown.adapter.NoteRecyclerProfileAdapter;
 import com.example.arces.logmedown.R;
 import com.logmedown.model.User;
 
@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     private ImageButton viewNoteButton;
     private ImageButton deleteNoteButton;
 
-    private NoteRecyclerAdapter noteRecyclerAdapter;
+    private NoteRecyclerProfileAdapter noteRecyclerProfileAdapter;
     private RecyclerView recyclerView;
 
     private Animation zoomIn;
@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_profile);
         recyclerView.setHasFixedSize(true);
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
+        noteRecyclerProfileAdapter = new NoteRecyclerProfileAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -130,8 +130,8 @@ public class ProfileFragment extends Fragment {
         return profileAddNoteFab;
     }
 
-    public NoteRecyclerAdapter getNoteRecyclerAdapter() {
-        return noteRecyclerAdapter;
+    public NoteRecyclerProfileAdapter getNoteRecyclerAdapter() {
+        return noteRecyclerProfileAdapter;
     }
 
     /*public void editNote() {
