@@ -163,7 +163,6 @@ public class HomeActivity extends AppCompatActivity {
 
                 viewPager.setCurrentItem(tab.getPosition());
                 fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
-
                 if (tab.getPosition() == 0) {
                     FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
                     fm.detach(homeFragment).attach(homeFragment).commit();
@@ -196,13 +195,13 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);
         return true;
     }
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {

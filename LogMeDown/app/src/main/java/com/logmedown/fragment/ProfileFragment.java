@@ -1,5 +1,6 @@
 package com.logmedown.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.logmedown.activity.NoteActivity;
 import com.logmedown.adapter.NoteRecyclerAdapter;
 import com.example.arces.logmedown.R;
 import com.logmedown.model.User;
@@ -30,11 +34,17 @@ public class ProfileFragment extends Fragment {
     private NoteRecyclerAdapter noteRecyclerAdapter;
     private RecyclerView recyclerView;
 
+    private Animation zoomIn;
+    private Animation zoomOut;
+
     private FloatingActionButton profileAddNoteFab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_profile, container, false);
+
+        zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
+        zoomOut = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_out);
 
         profileAddNoteFab = (FloatingActionButton)view.findViewById(R.id.profileAddNoteFab);
 
@@ -66,9 +76,26 @@ public class ProfileFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
+        getProfileAddNoteFab().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getProfileAddNoteFab().startAnimation(zoomIn);
+
+                Intent intent = new Intent(getActivity(), NoteActivity.class);
+                intent.putExtra("logged_user", user);
+                intent.putExtra("note_action", "add");
+                startActivityForResult(intent, 2);
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getProfileAddNoteFab().startAnimation(zoomOut);
+    }
 
     /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

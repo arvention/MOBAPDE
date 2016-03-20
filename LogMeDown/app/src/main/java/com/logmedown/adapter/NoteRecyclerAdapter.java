@@ -84,6 +84,9 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                 }
 
                 selectedItems = new ArrayList<>();
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)NoteRecyclerAdapter.this.recyclerView.getLayoutParams();
+                lp.height = NoteRecyclerAdapter.this.recyclerView.getMeasuredHeight() + NoteRecyclerAdapter.this.noteActionMenu.getHeight();
+                NoteRecyclerAdapter.this.recyclerView.setLayoutParams(lp);
                 closeNoteActionMenu();
             }
         });
