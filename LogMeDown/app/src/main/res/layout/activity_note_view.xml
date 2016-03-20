@@ -65,7 +65,10 @@
             <RelativeLayout
                 android:id="@+id/noteViewImgLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:background="@color/colorLightGray"
+                >
 
                 <ImageButton
                     android:id="@+id/noteViewImg"
@@ -78,12 +81,12 @@
                     android:id="@+id/noteViewImgMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="70sp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="15sp"
                     android:layout_marginRight="5dp"
-                    android:text="+12"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/noteViewImg"
+                    android:text="See More Photos"
                     />
             </RelativeLayout>
             <TextView
