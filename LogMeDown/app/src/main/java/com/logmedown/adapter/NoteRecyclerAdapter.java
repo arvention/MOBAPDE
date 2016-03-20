@@ -1,6 +1,7 @@
 package com.logmedown.adapter;
 
 import android.app.Activity;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.arces.logmedown.R;
-import com.logmedown.activity.HomeActivity;
 import com.logmedown.database.Database;
 import com.logmedown.model.Note;
 
@@ -41,8 +42,10 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     private ImageButton viewNoteButton;
     private ImageButton deleteNoteButton;
 
+    private RecyclerView recyclerView;
+
     public NoteRecyclerAdapter(ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
-                               ImageButton viewNoteButton, ImageButton deleteNoteButton){
+                               ImageButton viewNoteButton, ImageButton deleteNoteButton, RecyclerView recyclerView){
 
         this.notes = notes;
 
@@ -65,6 +68,8 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         this.deleteNoteButton = deleteNoteButton;
 
         selectedItems = new ArrayList<>();
+
+        this.recyclerView = recyclerView;
 
         this.deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,9 +106,6 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                     noteViewHolder.cardView.setSelected(false);
                     noteViewHolder.cardView.setBackgroundColor(ContextCompat.getColor(main.getApplicationContext(), R.color.colorCardView));
                 }
-                for (int i = 0; i < selectedItems.size(); i++) {
-                    Log.d("Adapter Selected ", String.valueOf(selectedItems.get(i)));
-                }
 
                 if (selectedItems.size() == 1 && noteActionMenu.getVisibility() != View.VISIBLE) {
                     noteActionMenu.setVisibility(View.VISIBLE);
@@ -115,6 +117,10 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                     viewNoteButton.startAnimation(zoomOut);
                     deleteNoteButton.setVisibility(View.VISIBLE);
                     deleteNoteButton.startAnimation(zoomOut);
+
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)recyclerView.getLayoutParams();
+                    lp.height = recyclerView.getMeasuredHeight() - noteActionMenu.getHeight();
+                    recyclerView.setLayoutParams(lp);
 
                 } else if (selectedItems.size() == 1 && noteActionMenu.getVisibility() == View.VISIBLE) {
                     editNoteButton.setVisibility(View.VISIBLE);
@@ -135,6 +141,9 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                         deleteNoteButton.startAnimation(zoomOut);
                     }
                 } else if (selectedItems.size() == 0 && noteActionMenu.getVisibility() == View.VISIBLE) {
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)recyclerView.getLayoutParams();
+                    lp.height = recyclerView.getMeasuredHeight() + noteActionMenu.getHeight();
+                    recyclerView.setLayoutParams(lp);
                     closeNoteActionMenu();
                 }
             }

@@ -57,10 +57,9 @@ public class ProfileFragment extends Fragment {
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton);
-
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_profile);
         recyclerView.setHasFixedSize(true);
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

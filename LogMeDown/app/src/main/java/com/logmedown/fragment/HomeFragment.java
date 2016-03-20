@@ -66,10 +66,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton);
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
         recyclerView.setHasFixedSize(true);
+        noteRecyclerAdapter = new NoteRecyclerAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
