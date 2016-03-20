@@ -223,10 +223,24 @@ public class HomeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Note editedNote;
+
         switch(resultCode){
+            case 1:
+                Log.d("result_test", "SUCCESS");
+                editedNote = (Note) data.getSerializableExtra("edited_note");
+
+                int position = data.getIntExtra("position", 0);
+
+                loggedUser.getNoteAt(position).setContent(editedNote.getContent());
+                loggedUser.getNoteAt(position).setTitle(editedNote.getTitle());
+
+                homeFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                profileFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                break;
             case 2:
                 Log.d("result_home_test", "SUCCESS");
-                Note editedNote = (Note) data.getSerializableExtra("saved_note");
+                editedNote = (Note) data.getSerializableExtra("saved_note");
 
                 loggedUser.addNote(editedNote);
                 homeFragment.getNoteRecyclerAdapter().notifyDataSetChanged();

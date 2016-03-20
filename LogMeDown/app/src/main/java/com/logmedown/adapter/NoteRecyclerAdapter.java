@@ -1,7 +1,7 @@
 package com.logmedown.adapter;
 
 import android.app.Activity;
-import android.support.design.widget.CoordinatorLayout;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.arces.logmedown.R;
+import com.logmedown.activity.NoteActivity;
+import com.logmedown.activity.NoteViewActivity;
 import com.logmedown.database.Database;
 import com.logmedown.model.Note;
 
@@ -88,6 +90,27 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
                 lp.height = NoteRecyclerAdapter.this.recyclerView.getMeasuredHeight() + NoteRecyclerAdapter.this.noteActionMenu.getHeight();
                 NoteRecyclerAdapter.this.recyclerView.setLayoutParams(lp);
                 closeNoteActionMenu();
+            }
+        });
+
+        this.viewNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoteRecyclerAdapter.this.main, NoteViewActivity.class);
+                intent.putExtra("note", NoteRecyclerAdapter.this.notes.get(selectedItems.get(0)));
+                NoteRecyclerAdapter.this.main.startActivity(intent);
+            }
+        });
+
+        this.editNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoteRecyclerAdapter.this.main, NoteActivity.class);
+                intent.putExtra("note_action", "edit");
+                intent.putExtra("note_details", NoteRecyclerAdapter.this.notes.get(selectedItems.get(0)));
+                intent.putExtra("position", selectedItems.get(0));
+
+                NoteRecyclerAdapter.this.main.startActivityForResult(intent, 1);
             }
         });
     }
@@ -212,6 +235,14 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
 
             itemView.setClickable(true);
         }
+    }
+
+    public ArrayList<Integer> getSelectedItems(){
+        return selectedItems;
+    }
+
+    public ArrayList<Note> getNotes(){
+        return notes;
     }
 }
 
