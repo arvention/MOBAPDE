@@ -18,9 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.logmedown.activity.SignUpActivity" />
-        <activity android:name="com.logmedown.activity.HomeActivity">
-
-        </activity>
+        <activity android:name="com.logmedown.activity.HomeActivity" />
         <activity android:name="com.logmedown.activity.NoteActivity" />
         <activity android:name="com.logmedown.activity.BlocActivity" />
         <activity android:name="com.logmedown.activity.NoteViewActivity" />
@@ -32,6 +30,7 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity android:name="com.logmedown.activity.BlocAddActivity"></activity>
     </application>
 
 </manifest>

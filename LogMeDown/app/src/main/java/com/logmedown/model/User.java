@@ -14,6 +14,7 @@ public class User implements Serializable{
     private String username;
     private String password;
     private ArrayList<Note> notes;
+    private ArrayList<User> friends;
 
     public int getUserID() {
         return userID;
@@ -70,6 +71,10 @@ public class User implements Serializable{
     public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
+
+    public ArrayList<User> getFriends(){ return friends; }
+
+    public void setFriends(ArrayList<User> friends){ this.friends = friends; }
 
     public void addNote(Note note){
         notes.add(note);
