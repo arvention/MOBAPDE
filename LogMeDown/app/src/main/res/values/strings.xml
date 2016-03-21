@@ -26,4 +26,6 @@
     <string name="textDeleteNotePrompt">Do you want to delete the selected note?</string>
 
     <string name="textConfirm">CONFIRM</string>
+
+    <string name="search_hint">Search for a Note, User, or Bloc</string>
 </resources>

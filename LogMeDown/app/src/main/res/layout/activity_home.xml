@@ -48,18 +48,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="left"
                     />
-
-                <ImageButton
-                    android:id="@+id/buttonSearch"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="right"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/log_me_down_search"
-                    android:background="@color/colorPrimary"/>
-
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
