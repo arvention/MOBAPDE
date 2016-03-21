@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.arces.logmedown.R;
 import com.logmedown.adapter.NoteRecyclerHomeAdapter;
 import com.logmedown.adapter.NoteRecyclerProfileAdapter;
+import com.logmedown.adapter.SearchBlocRecyclerAdapter;
 import com.logmedown.model.Bloc;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class SearchBlocFragment extends Fragment {
     private ArrayList<Bloc> blocs;
 
-    //private NoteRecyclerProfileAdapter noteRecyclerProfileAdapter;
+    private SearchBlocRecyclerAdapter sbra;
     private RecyclerView recyclerView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -26,8 +27,8 @@ public class SearchBlocFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.search_bloc_recycler);
         recyclerView.setHasFixedSize(true);
-        //noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView, user);
-        //recyclerView.setAdapter(getNoteRecyclerAdapter());
+        sbra = new SearchBlocRecyclerAdapter(blocs);
+        recyclerView.setAdapter(sbra);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -38,5 +39,8 @@ public class SearchBlocFragment extends Fragment {
 
     public void updateList(ArrayList<Bloc> blocs){
         this.blocs = blocs;
+        if(sbra != null){
+            sbra.updateList(blocs);
+        }
     }
 }

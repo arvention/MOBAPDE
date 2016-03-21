@@ -110,10 +110,6 @@ public class SearchResultActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             searchName.setText("Search results for " + query + ":");
 
-            if(searchView != null) {
-                searchView.setQuery("", false);
-                menuItem.collapseActionView();
-            }
             ArrayList<Note> noteList = db.searchNotes(query);
             noteFragment.updateList(noteList);
 
@@ -123,6 +119,10 @@ public class SearchResultActivity extends AppCompatActivity {
             ArrayList<Bloc> blocList = db.searchBlocs(query);
             blocFragment.updateList(blocList);
 
+            if(searchView != null) {
+                searchView.setQuery("", false);
+                menuItem.collapseActionView();
+            }
         }
     }
 

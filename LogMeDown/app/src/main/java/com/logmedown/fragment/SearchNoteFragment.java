@@ -14,6 +14,7 @@ import com.example.arces.logmedown.R;
 import com.logmedown.activity.BlocAddActivity;
 import com.logmedown.adapter.NoteRecyclerHomeAdapter;
 import com.logmedown.adapter.NoteRecyclerProfileAdapter;
+import com.logmedown.adapter.SearchNoteRecyclerAdapter;
 import com.logmedown.model.Note;
 import com.logmedown.model.User;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class SearchNoteFragment extends Fragment {
     private ArrayList<Note> notes;
 
-    private NoteRecyclerProfileAdapter noteRecyclerProfileAdapter;
+    private SearchNoteRecyclerAdapter snra;
     private RecyclerView recyclerView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -30,8 +31,8 @@ public class SearchNoteFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.search_note_recycler);
         recyclerView.setHasFixedSize(true);
-        //noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView, user);
-        //recyclerView.setAdapter(getNoteRecyclerAdapter());
+        snra = new SearchNoteRecyclerAdapter(notes);
+        recyclerView.setAdapter(snra);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -42,5 +43,8 @@ public class SearchNoteFragment extends Fragment {
 
     public void updateList(ArrayList<Note> notes){
         this.notes = notes;
+        if(snra != null){
+            snra.updateList(notes);
+        }
     }
 }
