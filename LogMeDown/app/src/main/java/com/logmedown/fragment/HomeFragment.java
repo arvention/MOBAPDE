@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.logmedown.activity.NoteActivity;
 import com.example.arces.logmedown.R;
@@ -24,6 +26,10 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private User user;
+    private LinearLayout actionMenu;
+    private ImageButton editNoteButton;
+    private ImageButton viewNoteButton;
+    private ImageButton deleteNoteButton;
 
     private Animation zoomIn;
     private Animation zoomOut;
@@ -52,10 +58,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        actionMenu = (LinearLayout) view.findViewById(R.id.homeNoteActionMenu);
+
+        editNoteButton = (ImageButton) view.findViewById(R.id.homeNoteEditButton);
+        viewNoteButton = (ImageButton) view.findViewById(R.id.homeNoteViewButton);
+        deleteNoteButton = (ImageButton) view.findViewById(R.id.homeNoteDeleteButton);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_home);
         recyclerView.setHasFixedSize(true);
-        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), recyclerView, user);
+        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView, user);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
