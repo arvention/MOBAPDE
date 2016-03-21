@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -51,16 +50,16 @@ public class BlocAddActivity extends AppCompatActivity {
             user.getFriends().add(friend);
         }
 
-        this.discardButton = (ImageButton)findViewById(R.id.addBlocDiscardButton);
-        this.blocName = (EditText)findViewById(R.id.addBlocName);
-        this.saveButton = (ImageButton)findViewById(R.id.addBlocSaveButton);
+        this.discardButton = (ImageButton)findViewById(R.id.add_bloc_discard_button);
+        this.blocName = (EditText)findViewById(R.id.add_bloc_name);
+        this.saveButton = (ImageButton)findViewById(R.id.add_bloc_save_button);
 
-        this.blocType = (Spinner)findViewById(R.id.addBlocType);
+        this.blocType = (Spinner)findViewById(R.id.add_bloc_type);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                 new String[]{"Public", "Closed", "Private"});
         this.blocType.setAdapter(adapter);
 
-        this.recyclerView = (RecyclerView)findViewById(R.id.recycler_view_add_bloc);
+        this.recyclerView = (RecyclerView)findViewById(R.id.add_bloc_recycler_view);
         recyclerView.setHasFixedSize(true);
         addBlocMemberRecyclerAdapter = new AddBlocMemberRecyclerAdapter(user.getFriends(), this, recyclerView);
         recyclerView.setAdapter(addBlocMemberRecyclerAdapter);

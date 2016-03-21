@@ -8,13 +8,13 @@
     android:focusableInTouchMode="true">
 
     <LinearLayout
-        android:id="@+id/noteHeader"
+        android:id="@+id/note_header"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/noteDiscardButton"
+            android:id="@+id/note_discard_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="fitCenter"
@@ -22,7 +22,7 @@
             android:background="@color/colorBackgroundColor"/>
 
         <EditText
-            android:id="@+id/addNoteTitle"
+            android:id="@+id/add_note_title"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -38,7 +38,7 @@
             />
 
         <ImageButton
-            android:id="@+id/noteLocationButton"
+            android:id="@+id/note_location_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="fitCenter"
@@ -46,7 +46,7 @@
             android:background="@color/colorBackgroundColor"/>
 
         <ImageButton
-            android:id="@+id/noteSaveButton"
+            android:id="@+id/note_save_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="fitCenter"
@@ -55,13 +55,13 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/addNoteScroll"
-        android:layout_below="@id/noteHeader"
+        android:id="@+id/add_note_scroll"
+        android:layout_below="@id/note_header"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:background="@color/colorWhite">
         <EditText
-            android:id="@+id/addNoteContent"
+            android:id="@+id/add_note_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"

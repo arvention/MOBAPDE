@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         */
         db = Database.getInstance(this);
 
-        editTextLoginUsername = (EditText) findViewById(R.id.editTextLoginUsername);
-        editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-        buttonLogin = (Button) findViewById(R.id.buttonLogIn);
-        buttonSignup = (Button) findViewById(R.id.buttonSignUp);
+        editTextLoginUsername = (EditText) findViewById(R.id.edit_text_login_username);
+        editTextLoginPassword = (EditText) findViewById(R.id.edit_text_login_password);
+        buttonLogin = (Button) findViewById(R.id.button_log_in);
+        buttonSignup = (Button) findViewById(R.id.button_sign_up);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override

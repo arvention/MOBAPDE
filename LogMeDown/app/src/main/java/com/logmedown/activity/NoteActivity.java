@@ -57,7 +57,7 @@ public class NoteActivity extends AppCompatActivity {
         db = Database.getInstance(this);
 
         //UI components
-        saveBtn = (ImageButton) findViewById(R.id.noteSaveButton);
+        saveBtn = (ImageButton) findViewById(R.id.note_save_button);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,7 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        discardBtn = (ImageButton) findViewById(R.id.noteDiscardButton);
+        discardBtn = (ImageButton) findViewById(R.id.note_discard_button);
         discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,10 +73,10 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        editTitle = (EditText) findViewById(R.id.addNoteTitle);
-        editContent = (EditText) findViewById(R.id.addNoteContent);
+        editTitle = (EditText) findViewById(R.id.add_note_title);
+        editContent = (EditText) findViewById(R.id.add_note_content);
 
-        locationBtn = (ImageButton) findViewById(R.id.noteLocationButton);
+        locationBtn = (ImageButton) findViewById(R.id.note_location_button);
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +200,7 @@ public class NoteActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        final Spinner blocSpinner = (Spinner) alertView.findViewById(R.id.blocSpinner);
+        final Spinner blocSpinner = (Spinner) alertView.findViewById(R.id.bloc_spinner);
         blocSpinner.setAdapter(adapter);
 
         locationAlert.setView(alertView);

@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d("logged_user", "Name: " + loggedUser.getFirstName() + " " + loggedUser.getLastName() + "" +
                 " Username: " + loggedUser.getUsername() + " Email Address: " + loggedUser.getEmailAddress());
 
-        fragmentName = (TextView) findViewById(R.id.fragmentName);
+        fragmentName = (TextView) findViewById(R.id.fragment_name);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

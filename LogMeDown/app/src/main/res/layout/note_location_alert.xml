@@ -15,7 +15,7 @@
         android:layout_marginBottom="10dp"
         android:padding="10dp"/>
     <Spinner
-        android:id="@+id/blocSpinner"
+        android:id="@+id/bloc_spinner"
         android:layout_width="100dp"
         android:layout_height="50dp"
         >
