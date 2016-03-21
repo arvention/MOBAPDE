@@ -458,12 +458,14 @@ public class Database extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
 
         //apply privacy in query later
-        Cursor cursor = db.query(true, user_table, new String[]{"creatorID"}, "firstName + ' ' + lastName LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
+        Cursor cursor = db.query(true, user_table, new String[]{"userID"}, "firstName||' '||lastName LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
+
+        Log.d("search_user", keyword);
 
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
-                int userID = cursor.getInt(cursor.getColumnIndex("creatorID"));
+                int userID = cursor.getInt(cursor.getColumnIndex("userID"));
                 User user = getUser(userID);
 
                 Log.d("search_user", user.getFirstName() + " " + user.getLastName());
