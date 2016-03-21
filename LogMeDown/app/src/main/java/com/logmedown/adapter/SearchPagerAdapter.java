@@ -33,8 +33,8 @@ public class SearchPagerAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch(position){
             case 0: return searchNoteTab;
-            case 1: return searchBlocTab;
-            case 2: return searchUserTab;
+            case 1: return searchUserTab;
+            case 2: return searchBlocTab;
             default: return null;
         }
     }

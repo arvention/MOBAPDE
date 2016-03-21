@@ -318,4 +318,98 @@ public class Database extends SQLiteOpenHelper{
         db.insert(bloc_table, null, val);
         db.close();
     }
+
+    public ArrayList<Note> searchNotes(String keyword){
+        ArrayList<Note> notes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, note_table, null, "title LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                Note note = new Note();
+                int noteID = cursor.getInt(cursor.getColumnIndex("noteID"));
+                int blocID = cursor.getInt(cursor.getColumnIndex("blocID"));
+                int userID = cursor.getInt(cursor.getColumnIndex("creatorID"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+                Date date = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("date")));
+
+                note.setNoteID(noteID);
+                note.setCreator(getUser(userID));
+
+                if (blocID == -1)
+                    note.setBloc(null);
+
+                note.setTitle(title);
+                note.setContent(content);
+                note.setDate(date);
+
+                Log.d("search_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
+                notes.add(note);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return notes;
+    }
+
+    public ArrayList<Bloc> searchBlocs(String keyword){
+        ArrayList<Bloc> blocs = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //apply privacy in query later
+        Cursor cursor = db.query(true, bloc_table, null, "name LIKE ? AND isDeleted = ?", new String[]{"%" + keyword + "%", Integer.toString(0)}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                Bloc bloc = new Bloc();
+                int blocID = cursor.getInt(cursor.getColumnIndex("blocID"));
+                int userID = cursor.getInt(cursor.getColumnIndex("creatorID"));
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                String type = cursor.getString(cursor.getColumnIndex("type"));
+
+                bloc.setBlocID(blocID);
+                bloc.setCreator(getUser(userID));
+                bloc.setName(name);
+                bloc.setType(type);
+
+                Log.d("search_bloc", bloc.getName() + " by " + bloc.getCreator().getFirstName() + " of type " + bloc.getType());
+                blocs.add(bloc);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return blocs;
+    }
+
+    public ArrayList<User> searchUsers(String keyword){
+        ArrayList<User> users = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //apply privacy in query later
+        Cursor cursor = db.query(true, user_table, new String[]{"creatorID"}, "firstName + ' ' + lastName LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                int userID = cursor.getInt(cursor.getColumnIndex("creatorID"));
+                User user = getUser(userID);
+
+                Log.d("search_user", user.getFirstName() + " " + user.getLastName());
+                users.add(user);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return users;
+    }
 }

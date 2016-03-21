@@ -3,8 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_note_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="note"/>
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        >
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

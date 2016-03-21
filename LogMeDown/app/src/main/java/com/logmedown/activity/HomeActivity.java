@@ -275,4 +275,14 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    public void startActivity(Intent intent) {
+        // check if search intent
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            intent.putExtra("logged_user", loggedUser);
+        }
+
+        super.startActivity(intent);
+    }
 }

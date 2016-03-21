@@ -23,6 +23,14 @@ import com.example.arces.logmedown.R;
 import com.logmedown.adapter.PagerAdapter;
 import com.logmedown.adapter.SearchPagerAdapter;
 import com.logmedown.database.Database;
+import com.logmedown.fragment.SearchBlocFragment;
+import com.logmedown.fragment.SearchNoteFragment;
+import com.logmedown.fragment.SearchUserFragment;
+import com.logmedown.model.Bloc;
+import com.logmedown.model.Note;
+import com.logmedown.model.User;
+
+import java.util.ArrayList;
 
 public class SearchResultActivity extends AppCompatActivity {
     private Database db;
@@ -33,6 +41,10 @@ public class SearchResultActivity extends AppCompatActivity {
     private TypedArray tabNames;
     private ViewPager viewPager;
     private SearchPagerAdapter searchPagerAdapter;
+
+    private SearchNoteFragment noteFragment;
+    private SearchUserFragment userFragment;
+    private SearchBlocFragment blocFragment;
 
     private SearchView searchView;
     private MenuItem menuItem;
@@ -65,6 +77,10 @@ public class SearchResultActivity extends AppCompatActivity {
         viewPager.setAdapter(searchPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(searchTabLayout));
 
+        noteFragment = (SearchNoteFragment) searchPagerAdapter.getItem(0);
+        userFragment = (SearchUserFragment) searchPagerAdapter.getItem(1);
+        blocFragment = (SearchBlocFragment) searchPagerAdapter.getItem(2);
+
         searchTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -80,7 +96,7 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         });
 
-        //get query
+        //handle query
         handleIntent(getIntent());
     }
 
@@ -98,6 +114,15 @@ public class SearchResultActivity extends AppCompatActivity {
                 searchView.setQuery("", false);
                 menuItem.collapseActionView();
             }
+            ArrayList<Note> noteList = db.searchNotes(query);
+            noteFragment.updateList(noteList);
+
+            ArrayList<User> userList = db.searchUsers(query);
+            userFragment.updateList(userList);
+
+            ArrayList<Bloc> blocList = db.searchBlocs(query);
+            blocFragment.updateList(blocList);
+
         }
     }
 
