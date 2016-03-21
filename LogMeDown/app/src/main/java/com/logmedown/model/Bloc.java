@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Bloc {
     private int blocID;
+    private User creator;
     private String name;
     private String type;
     private ArrayList<User> members;
@@ -18,6 +19,10 @@ public class Bloc {
     public void setBlocID(int blocID) {
         this.blocID = blocID;
     }
+
+    public User getCreator(){ return creator; }
+
+    public void setCreator(User creator){ this.creator = creator; }
 
     public String getName() {
         return name;

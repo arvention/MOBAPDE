@@ -79,8 +79,6 @@ public class ProfileFragment extends Fragment {
         getProfileAddNoteFab().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getProfileAddNoteFab().startAnimation(zoomIn);
-
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
                 intent.putExtra("logged_user", user);
                 intent.putExtra("note_action", "add");

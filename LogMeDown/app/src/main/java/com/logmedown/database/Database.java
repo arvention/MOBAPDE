@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.logmedown.model.Bloc;
 import com.logmedown.model.Note;
 import com.logmedown.model.User;
 
@@ -52,12 +53,12 @@ public class Database extends SQLiteOpenHelper{
         db.execSQL(CREATE_USER_TABLE);
 
         //Create Bloc Table
-        String CREATE_BLOC_TABLE = "CREATE TABLE " + bloc_table + "(blocID INTEGER PRIMARY KEY NOT NULL, creatorID INTEGER NOT NULL, " +
+        String CREATE_BLOC_TABLE = "CREATE TABLE " + bloc_table + "(blocID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, creatorID INTEGER NOT NULL, " +
                 "name TEXT NOT NULL, type TEXT NOT NULL, isDeleted BINARY NOT NULL)";
         db.execSQL(CREATE_BLOC_TABLE);
 
         //Create Note Table
-        String CREATE_NOTE_TABLE = "CREATE TABLE " + note_table + "(noteID INTEGER PRIMARY KEY NOT NULL, creatorID INTEGER NOT NULL, " +
+        String CREATE_NOTE_TABLE = "CREATE TABLE " + note_table + "(noteID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, creatorID INTEGER NOT NULL, " +
                 "blocID INTEGER, title TEXT NOT NULL, content TEXT NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
         db.execSQL(CREATE_NOTE_TABLE);
 
@@ -158,7 +159,7 @@ public class Database extends SQLiteOpenHelper{
 
     public ArrayList<Note> getNotes(User user) {
         ArrayList<Note> notes = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(true, note_table, null, "creatorID = ?", new String[]{Integer.toString(user.getUserID())}, null, null, null, null);
 
@@ -196,9 +197,30 @@ public class Database extends SQLiteOpenHelper{
         return notes;
     }
 
+    public void fillUserDetails(User user){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, user_table, null, "userID = ?", new String[]{Integer.toString(user.getUserID())}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+
+            user.setFirstName(cursor.getString(cursor.getColumnIndex("firstName")));
+            user.setLastName(cursor.getString(cursor.getColumnIndex("lastName")));
+            user.setEmailAddress(cursor.getString(cursor.getColumnIndex("emailAddress")));
+            user.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+            user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+
+            cursor.close();
+        }
+        else{
+            cursor.close();
+        }
+    }
+
     public ArrayList<User> getFriends(User user){
         ArrayList<User> friends = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(true, friend_table, null, "friend1 = ? or friend2 = ?", new String[]{Integer.toString(user.getUserID()), Integer.toString(user.getUserID())}, null, null, null, null);
 
@@ -207,12 +229,13 @@ public class Database extends SQLiteOpenHelper{
             while(cursor.isAfterLast() == false){
                 User friend = new User();
 
-                friend.setUserID(cursor.getInt(cursor.getColumnIndex("userID")));
-                friend.setFirstName(cursor.getString(cursor.getColumnIndex("firstName")));
-                friend.setLastName(cursor.getString(cursor.getColumnIndex("lastName")));
-                friend.setEmailAddress(cursor.getString(cursor.getColumnIndex("emailAddress")));
-                friend.setUsername(cursor.getString(cursor.getColumnIndex("username")));
-                friend.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+                if(cursor.getInt(cursor.getColumnIndex("friend1")) == user.getUserID()){
+                    friend.setUserID(cursor.getInt(cursor.getColumnIndex("friend2")));
+                }else{
+                    friend.setUserID(cursor.getInt(cursor.getColumnIndex("friend1")));
+                }
+
+                fillUserDetails(friend);
 
                 friends.add(friend);
                 cursor.moveToNext();
@@ -270,5 +293,18 @@ public class Database extends SQLiteOpenHelper{
         Log.d("Delete db", String.valueOf(note.getNoteID()));
 
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
+    }
+
+    public void addBloc(Bloc bloc){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues val = new ContentValues();
+        val.put("creatorID", bloc.getCreator().getUserID());
+        val.put("name", bloc.getName());
+        val.put("type", bloc.getType());
+        val.put("isDeleted", false);
+
+        db.insert(user_table, null, val);
+        db.close();
     }
 }

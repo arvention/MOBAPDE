@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment {
         getHomeAddNoteFab().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getHomeAddNoteFab().startAnimation(zoomIn);
 
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
                 intent.putExtra("logged_user", user);
