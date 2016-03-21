@@ -178,7 +178,10 @@ public class HomeActivity extends AppCompatActivity {
                     if(getSupportFragmentManager().executePendingTransactions())
                         homeFragment.getHomeAddNoteFab().startAnimation(zoomOut);
                 } else if (tab.getPosition() == 1) {
-                    //bloc.getBlocAddNoteFab().startAnimation(zoomOut);
+                    FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    fm.detach(blocFragment).attach(blocFragment).commit();
+                    if(getSupportFragmentManager().executePendingTransactions())
+                        blocFragment.getBlocAddBlocFab().startAnimation(zoomOut);
                 } else if (tab.getPosition() == 2) {
                     FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
                     fm.detach(profileFragment).attach(profileFragment).commit();
@@ -192,7 +195,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (tab.getPosition() == 0) {
                     homeFragment.getHomeAddNoteFab().startAnimation(zoomIn);
                 } else if (tab.getPosition() == 1) {
-                    //bloc.getBlocAddNoteFab().startAnimation(zoomIn);
+                    blocFragment.getBlocAddBlocFab().startAnimation(zoomIn);
                 } else if (tab.getPosition() == 2) {
                     profileFragment.getProfileAddNoteFab().startAnimation(zoomIn);
                 }
@@ -268,7 +271,7 @@ public class HomeActivity extends AppCompatActivity {
                 Bloc bloc = (Bloc)data.getSerializableExtra("saved_bloc");
 
                 loggedUser.getBlocs().add(bloc);
-                // notify something
+                blocFragment.getBlocRecyclerAdapter().notifyDataSetChanged();
                 break;
             default:
                 Log.d("result_test_home", "FAIL");

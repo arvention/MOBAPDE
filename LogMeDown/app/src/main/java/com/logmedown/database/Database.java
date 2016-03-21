@@ -248,6 +248,60 @@ public class Database extends SQLiteOpenHelper{
         return friends;
     }
 
+    public ArrayList<User> getMembersOfBloc(Bloc bloc){
+        ArrayList<User> members = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, bloc_member_table, null, "blocID = ?", new String[]{Integer.toString(bloc.getBlocID())}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            while(cursor.isAfterLast() == false) {
+                User user = new User();
+                user.setUserID(cursor.getInt(cursor.getColumnIndex("memberID")));
+                fillUserDetails(user);
+
+                members.add(user);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        else{
+            cursor.close();
+        }
+        return members;
+    }
+
+    public ArrayList<Bloc> getBlocs(User user){
+        ArrayList<Bloc> blocs = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, bloc_table, null, "creatorID = ?", new String[]{Integer.toString(user.getUserID())}, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+            while(cursor.isAfterLast() == false){
+                Bloc bloc  = new Bloc();
+
+                bloc.setBlocID(cursor.getInt(cursor.getColumnIndex("blocID")));
+                bloc.setName(cursor.getString(cursor.getColumnIndex("name")));
+                bloc.setType(cursor.getString(cursor.getColumnIndex("type")));
+                bloc.setCreator(user);
+
+                //temporary
+                bloc.setMembers(getMembersOfBloc(bloc));
+
+                blocs.add(bloc);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        } else{
+            cursor.close();
+        }
+
+        return blocs;
+    }
+
     public User getUser(int userID){
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
@@ -268,9 +322,7 @@ public class Database extends SQLiteOpenHelper{
             cursor.close();
             user.setNotes(getNotes(user));
             user.setFriends(getFriends(user));
-
-            //temporary
-            user.setBlocs(new ArrayList<Bloc>());
+            user.setBlocs(getBlocs(user));
 
             Log.d("get_user", "id = " + user.getUserID() + " ; name = " + user.getFirstName() + " " + user.getLastName() +
                     " ; email = " + user.getEmailAddress() + " ; username = " + user.getUsername() + " ; password = " + user.getPassword());
@@ -298,6 +350,17 @@ public class Database extends SQLiteOpenHelper{
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
     }
 
+    public void addMemberToBloc(Bloc bloc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(int i = 0; i < bloc.getMembers().size(); i++){
+            ContentValues val = new ContentValues();
+            val.put("memberID", bloc.getMembers().get(i).getUserID());
+            val.put("blocID", bloc.getBlocID());
+            db.insert(bloc_member_table, null, val);
+        }
+        db.close();
+    }
+
     public void addBloc(Bloc bloc){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -307,7 +370,7 @@ public class Database extends SQLiteOpenHelper{
         val.put("type", bloc.getType());
         val.put("isDeleted", false);
 
-        // ADD LATER: add members to bloc
+        // ADD LATER: add members to bloc function created addMemberToBloc
 
         Log.d("ADD BLOC DB", bloc.getName().toString());
 
