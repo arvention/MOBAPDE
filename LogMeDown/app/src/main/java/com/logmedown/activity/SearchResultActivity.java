@@ -14,11 +14,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.arces.logmedown.R;
 import com.logmedown.adapter.PagerAdapter;
+import com.logmedown.adapter.SearchPagerAdapter;
 import com.logmedown.database.Database;
 
 public class SearchResultActivity extends AppCompatActivity {
@@ -29,7 +32,10 @@ public class SearchResultActivity extends AppCompatActivity {
     private TabLayout searchTabLayout;
     private TypedArray tabNames;
     private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
+    private SearchPagerAdapter searchPagerAdapter;
+
+    private SearchView searchView;
+    private MenuItem menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +60,9 @@ public class SearchResultActivity extends AppCompatActivity {
         searchTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.search_pager);
-       // pagerAdapter = new PagerAdapter(getSupportFragmentManager(), searchTabLayout.getTabCount());
+        searchPagerAdapter = new SearchPagerAdapter(getSupportFragmentManager(), searchTabLayout.getTabCount());
         viewPager.setOffscreenPageLimit(2);
-       // viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(searchPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(searchTabLayout));
 
         searchTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -87,14 +93,19 @@ public class SearchResultActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             searchName.setText("Search results for " + query + ":");
+
+            if(searchView != null) {
+                searchView.setQuery("", false);
+                menuItem.collapseActionView();
+            }
         }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
-
+        menuItem = menu.findItem(R.id.search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultActivity.class)));
         return true;
     }
