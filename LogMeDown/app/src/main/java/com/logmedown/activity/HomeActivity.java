@@ -33,6 +33,7 @@ import com.example.arces.logmedown.R;
 import com.logmedown.fragment.BlocFragment;
 import com.logmedown.fragment.HomeFragment;
 import com.logmedown.fragment.ProfileFragment;
+import com.logmedown.model.Bloc;
 import com.logmedown.model.Note;
 import com.logmedown.model.User;
 
@@ -231,12 +232,9 @@ public class HomeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Note editedNote;
-
         switch(resultCode){
             case 1:
-                Log.d("result_test", "SUCCESS");
-                editedNote = (Note) data.getSerializableExtra("edited_note");
+                Note editedNote = (Note) data.getSerializableExtra("edited_note");
 
                 int position = data.getIntExtra("position", 0);
 
@@ -247,12 +245,17 @@ public class HomeActivity extends AppCompatActivity {
                 profileFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
                 break;
             case 2:
-                Log.d("result_home_test", "SUCCESS");
-                editedNote = (Note) data.getSerializableExtra("saved_note");
+                Note savedNote = (Note) data.getSerializableExtra("saved_note");
 
-                loggedUser.addNote(editedNote);
+                loggedUser.addNote(savedNote);
                 homeFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
                 profileFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                break;
+            case 3:
+                Bloc bloc = (Bloc)data.getSerializableExtra("saved_bloc");
+
+                loggedUser.getBlocs().add(bloc);
+                // notify something
                 break;
             default:
                 Log.d("result_test_home", "FAIL");

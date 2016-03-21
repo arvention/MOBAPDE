@@ -27,5 +27,8 @@
 
     <string name="textConfirm">CONFIRM</string>
 
+    <string name="textDiscardBlocPrompt">Do you want to discard the bloc?</string>
+    <string name="textSaveBlocPrompt">Do you want to save the bloc?</string>
+
     <string name="search_hint">Search for a Note, User, or Bloc</string>
 </resources>

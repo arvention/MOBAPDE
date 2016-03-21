@@ -15,6 +15,7 @@ public class User implements Serializable{
     private String password;
     private ArrayList<Note> notes;
     private ArrayList<User> friends;
+    private ArrayList<Bloc> blocs;
 
     public int getUserID() {
         return userID;
@@ -75,6 +76,10 @@ public class User implements Serializable{
     public ArrayList<User> getFriends(){ return friends; }
 
     public void setFriends(ArrayList<User> friends){ this.friends = friends; }
+
+    public ArrayList<Bloc> getBlocs(){ return blocs; }
+
+    public void setBlocs(ArrayList<Bloc> blocs){ this.blocs = blocs; }
 
     public void addNote(Note note){
         notes.add(note);

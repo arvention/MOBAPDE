@@ -1,11 +1,12 @@
 package com.logmedown.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Arces on 23/02/2016.
  */
-public class Bloc {
+public class Bloc implements Serializable {
     private int blocID;
     private User creator;
     private String name;

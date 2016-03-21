@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.arces.logmedown.R;
 import com.logmedown.activity.BlocAddActivity;
-import com.logmedown.activity.NoteActivity;
 import com.logmedown.model.User;
 
 public class BlocFragment extends Fragment {
@@ -29,8 +28,7 @@ public class BlocFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BlocAddActivity.class);
                 intent.putExtra("logged_user", user);
-                startActivity(intent);
-                //startActivityForResult(intent, 2);
+                startActivityForResult(intent, 3);
             }
         });
 

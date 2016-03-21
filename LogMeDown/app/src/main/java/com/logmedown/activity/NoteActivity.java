@@ -170,7 +170,7 @@ public class NoteActivity extends AppCompatActivity {
 
                             int position = getIntent().getIntExtra("position", 0);
                             Intent intent = new Intent();
-                            intent.putExtra("edited_note", note);
+                            intent.putExtra("edited_note",note);
                             intent.putExtra("position", position);
                             setResult(1, intent);
                             finish();

@@ -3,6 +3,7 @@ package com.logmedown.adapter;
 import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,14 @@ public class AddBlocMemberRecyclerAdapter extends RecyclerView.Adapter<AddBlocMe
     private ArrayList<User> friends;
     private Activity main;
     private RecyclerView recyclerView;
+    private ArrayList<User> selectedFriends;
 
     public AddBlocMemberRecyclerAdapter(ArrayList<User> friends, Activity main, RecyclerView recyclerView){
         this.friends = friends;
         this.main = main;
         this.recyclerView = recyclerView;
+
+        this.selectedFriends = new ArrayList<>();
     }
 
     @Override
@@ -47,10 +51,12 @@ public class AddBlocMemberRecyclerAdapter extends RecyclerView.Adapter<AddBlocMe
                 if(!holder.cardView.isSelected()){
                     holder.cardView.setSelected(true);
                     holder.userCheckBox.setChecked(true);
+                    selectedFriends.add(friends.get(holder.getAdapterPosition()));
                 }
                 else{
                     holder.cardView.setSelected(false);
                     holder.userCheckBox.setChecked(false);
+                    selectedFriends.remove(friends.get(holder.getAdapterPosition()));
                 }
             }
         });
@@ -60,6 +66,8 @@ public class AddBlocMemberRecyclerAdapter extends RecyclerView.Adapter<AddBlocMe
     public int getItemCount() {
         return friends.size();
     }
+
+    public ArrayList<User> getSelectedFriends(){ return selectedFriends; }
 
     public static class AddBlocViewHolder extends RecyclerView.ViewHolder{
 

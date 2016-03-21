@@ -269,6 +269,9 @@ public class Database extends SQLiteOpenHelper{
             user.setNotes(getNotes(user));
             user.setFriends(getFriends(user));
 
+            //temporary
+            user.setBlocs(new ArrayList<Bloc>());
+
             Log.d("get_user", "id = " + user.getUserID() + " ; name = " + user.getFirstName() + " " + user.getLastName() +
                     " ; email = " + user.getEmailAddress() + " ; username = " + user.getUsername() + " ; password = " + user.getPassword());
         }
@@ -304,7 +307,15 @@ public class Database extends SQLiteOpenHelper{
         val.put("type", bloc.getType());
         val.put("isDeleted", false);
 
-        db.insert(user_table, null, val);
+        // ADD LATER: add members to bloc
+
+        Log.d("ADD BLOC DB", bloc.getName().toString());
+
+        for(int i = 0; i < bloc.getMembers().size(); i++){
+            Log.d("ADD BLOC DB MEM", bloc.getMembers().get(i).getFirstName());
+        }
+
+        db.insert(bloc_table, null, val);
         db.close();
     }
 }

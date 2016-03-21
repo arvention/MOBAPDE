@@ -1,23 +1,36 @@
 package com.logmedown.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.example.arces.logmedown.R;
 import com.logmedown.adapter.AddBlocMemberRecyclerAdapter;
+import com.logmedown.database.Database;
+import com.logmedown.model.Bloc;
 import com.logmedown.model.User;
+
+import java.util.ArrayList;
 
 public class BlocAddActivity extends AppCompatActivity {
 
     private User user;
+    private Database db;
 
     private ImageButton discardButton;
     private EditText blocName;
     private ImageButton saveButton;
+    private Spinner blocType;
     private RecyclerView recyclerView;
     private AddBlocMemberRecyclerAdapter addBlocMemberRecyclerAdapter;
 
@@ -27,6 +40,7 @@ public class BlocAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bloc_add);
 
         user = (User) getIntent().getSerializableExtra("logged_user");
+        db = Database.getInstance(this);
 
         // temporary
         User friend = new User();
@@ -41,6 +55,11 @@ public class BlocAddActivity extends AppCompatActivity {
         this.blocName = (EditText)findViewById(R.id.addBlocName);
         this.saveButton = (ImageButton)findViewById(R.id.addBlocSaveButton);
 
+        this.blocType = (Spinner)findViewById(R.id.addBlocType);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Public", "Closed", "Private"});
+        this.blocType.setAdapter(adapter);
+
         this.recyclerView = (RecyclerView)findViewById(R.id.recycler_view_add_bloc);
         recyclerView.setHasFixedSize(true);
         addBlocMemberRecyclerAdapter = new AddBlocMemberRecyclerAdapter(user.getFriends(), this, recyclerView);
@@ -49,5 +68,68 @@ public class BlocAddActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                discardAction();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAction();
+            }
+        });
+    }
+
+    public void discardAction(){
+        new AlertDialog.Builder(this)
+                .setTitle("Discard Bloc")
+                .setMessage(R.string.textDiscardBlocPrompt)
+                .setPositiveButton(R.string.textLogOutYes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton(R.string.textLogOutNo, null)
+                .show();
+    }
+
+    public void saveAction(){
+        new AlertDialog.Builder(this)
+                .setTitle("Discard Bloc")
+                .setMessage(R.string.textSaveBlocPrompt)
+                .setPositiveButton(R.string.textSave, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bloc bloc = new Bloc();
+
+                        bloc.setCreator(user);
+                        bloc.setName(blocName.getText().toString());
+                        bloc.setType(blocType.getSelectedItem().toString());
+
+                        ArrayList<User> members = new ArrayList<>();
+
+                        AddBlocMemberRecyclerAdapter addBlocMemberRecyclerAdapter = (AddBlocMemberRecyclerAdapter)recyclerView.getAdapter();
+
+                        for (int i = 0; i < addBlocMemberRecyclerAdapter.getSelectedFriends().size(); i++) {
+                            members.add(addBlocMemberRecyclerAdapter.getSelectedFriends().get(i));
+                        }
+                        bloc.setMembers(members);
+                        db.addBloc(bloc);
+
+                        Intent intent = new Intent();
+                        intent.putExtra("saved_bloc", bloc);
+                        setResult(3, intent);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton(R.string.textCancel, null)
+                .show();
     }
 }
