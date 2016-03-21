@@ -18,7 +18,8 @@
         <activity android:name="com.logmedown.activity.SignUpActivity" />
         <activity android:name="com.logmedown.activity.HomeActivity" />
         <activity android:name="com.logmedown.activity.NoteActivity" />
-        <activity android:name="com.logmedown.activity.NoteViewActivity"></activity>
+        <activity android:name="com.logmedown.activity.NoteViewActivity" />
+        <activity android:name="com.logmedown.activity.BlocAddActivity"></activity>
     </application>
 
 </manifest>

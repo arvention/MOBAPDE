@@ -196,6 +196,35 @@ public class Database extends SQLiteOpenHelper{
         return notes;
     }
 
+    public ArrayList<User> getFriends(User user){
+        ArrayList<User> friends = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(true, friend_table, null, "friend1 = ? or friend2 = ?", new String[]{Integer.toString(user.getUserID()), Integer.toString(user.getUserID())}, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            cursor.moveToFirst();
+            while(cursor.isAfterLast() == false){
+                User friend = new User();
+
+                friend.setUserID(cursor.getInt(cursor.getColumnIndex("userID")));
+                friend.setFirstName(cursor.getString(cursor.getColumnIndex("firstName")));
+                friend.setLastName(cursor.getString(cursor.getColumnIndex("lastName")));
+                friend.setEmailAddress(cursor.getString(cursor.getColumnIndex("emailAddress")));
+                friend.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+                friend.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+
+                friends.add(friend);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        } else{
+            cursor.close();
+        }
+
+        return friends;
+    }
+
     public User getUser(int userID){
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
@@ -215,6 +244,7 @@ public class Database extends SQLiteOpenHelper{
 
             cursor.close();
             user.setNotes(getNotes(user));
+            user.setFriends(getFriends(user));
 
             Log.d("get_user", "id = " + user.getUserID() + " ; name = " + user.getFirstName() + " " + user.getLastName() +
                     " ; email = " + user.getEmailAddress() + " ; username = " + user.getUsername() + " ; password = " + user.getPassword());

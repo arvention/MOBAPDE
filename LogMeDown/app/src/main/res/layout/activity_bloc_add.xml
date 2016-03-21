@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.logmedown.activity.BlocAddActivity">
+
+    <LinearLayout
+        android:id="@+id/addBlocHeader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageButton
+            android:id="@+id/addBlocDiscardButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/discard_button"
+            android:background="@color/colorBackgroundColor"/>
+
+        <EditText
+            android:id="@+id/addBlocName"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Bloc Name"
+            android:textColorHint="@color/colorGray"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBackgroundColor"
+            android:singleLine="true"
+            android:ellipsize="end"
+            />
+
+        <ImageButton
+            android:id="@+id/addBlocSaveButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/save_button"
+            android:background="@color/colorBackgroundColor"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/addBlocMembersTextWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addBlocHeader"
+        android:background="@color/colorWhite"
+        >
+        <TextView
+            android:id="@+id/addBlocMembersText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:text="Add Bloc Members"
+            />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_add_bloc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addBlocMembersTextWrapper"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
