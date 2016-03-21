@@ -27,12 +27,12 @@ public class NoteViewActivity extends AppCompatActivity {
 
         note = (Note)getIntent().getSerializableExtra("note");
 
-        noteName = (TextView)findViewById(R.id.noteViewNoteName);
-        userImage = (ImageView)findViewById(R.id.noteViewNoteUserImg);
-        userName = (TextView)findViewById(R.id.noteViewUserName);
-        noteImg = (ImageButton)findViewById(R.id.noteViewImg);
-        noteImgMore = (TextView)findViewById(R.id.noteViewImgMore);
-        noteContents = (TextView)findViewById(R.id.noteViewContents);
+        noteName = (TextView)findViewById(R.id.note_view_note_name);
+        userImage = (ImageView)findViewById(R.id.note_view_note_user_img);
+        userName = (TextView)findViewById(R.id.note_view_user_name);
+        noteImg = (ImageButton)findViewById(R.id.note_view_img);
+        noteImgMore = (TextView)findViewById(R.id.note_view_img_more);
+        noteContents = (TextView)findViewById(R.id.note_view_contents);
 
         noteName.setText(note.getTitle());
         // reminder set image for user

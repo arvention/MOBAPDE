@@ -6,7 +6,7 @@
     tools:context="com.logmedown.activity.NoteViewActivity">
 
     <RelativeLayout
-        android:id="@+id/noteViewHeader"
+        android:id="@+id/note_view_header"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:background="@color/colorBackgroundColor"
@@ -17,7 +17,7 @@
             android:layout_centerInParent="true"
             >
             <TextView
-                android:id="@+id/noteViewNoteName"
+                android:id="@+id/note_view_note_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -28,20 +28,20 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/noteViewNoteName"
+                android:layout_below="@id/note_view_note_name"
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:layout_centerHorizontal="true"
                 >
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/noteViewNoteUserImg"
+                    android:id="@+id/note_view_note_user_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/profile_img"
                     android:layout_gravity="center_vertical"
                     />
                 <TextView
-                    android:id="@+id/noteViewUserName"
+                    android:id="@+id/note_view_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -56,14 +56,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/noteViewHeader"
+        android:layout_below="@id/note_view_header"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
             <RelativeLayout
-                android:id="@+id/noteViewImgLayout"
+                android:id="@+id/note_view_img_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
@@ -71,26 +71,26 @@
                 >
 
                 <ImageButton
-                    android:id="@+id/noteViewImg"
+                    android:id="@+id/note_view_img"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_margin="5dp"
                     android:src="@drawable/sample_note_img"
                     />
                 <TextView
-                    android:id="@+id/noteViewImgMore"
+                    android:id="@+id/note_view_img_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorDarkGray"
                     android:textSize="15sp"
                     android:layout_marginRight="5dp"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/noteViewImg"
+                    android:layout_below="@id/note_view_img"
                     android:text="See More Photos"
                     />
             </RelativeLayout>
             <TextView
-                android:id="@+id/noteViewContents"
+                android:id="@+id/note_view_contents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="5dp"
@@ -98,7 +98,7 @@
                 android:paddingRight="5dp"
                 android:textSize="18sp"
                 android:textColor="@color/colorBlack"
-                android:layout_below="@id/noteViewImgLayout"
+                android:layout_below="@id/note_view_img_layout"
                 />
         </RelativeLayout>
     </ScrollView>

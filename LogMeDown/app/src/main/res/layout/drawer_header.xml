@@ -8,7 +8,7 @@
         android:id="@+id/circleView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@id/imageView"
+        android:layout_below="@id/image_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:src="@drawable/profile_img" />

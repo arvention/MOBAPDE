@@ -30,13 +30,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         db = Database.getInstance(this);
 
-        editTextSignUpFirstName = (EditText) findViewById(R.id.editTextSignUpFirstName);
-        editTextSignUpLastName = (EditText) findViewById(R.id.editTextSignUpLastName);
-        editTextSignUpEmail = (EditText) findViewById(R.id.editTextSignUpEmailAddress);
-        editTextSignUpUsername = (EditText) findViewById(R.id.editTextSignUpUsername);
-        editTextSignUpPassword = (EditText) findViewById(R.id.editTextSignUpPassword);
+        editTextSignUpFirstName = (EditText) findViewById(R.id.edit_text_sign_up_first_name);
+        editTextSignUpLastName = (EditText) findViewById(R.id.edit_text_sign_up_last_name);
+        editTextSignUpEmail = (EditText) findViewById(R.id.edit_text_sign_up_email_address);
+        editTextSignUpUsername = (EditText) findViewById(R.id.edit_text_sign_up_username);
+        editTextSignUpPassword = (EditText) findViewById(R.id.edit_text_sign_up_password);
 
-        buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
+        buttonSignUp = (Button) findViewById(R.id.button_sign_up);
     }
 
     public void signUpUser(View view) {

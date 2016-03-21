@@ -16,7 +16,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/editTextSignUpFirstName"
+        android:id="@+id/edit_text_sign_up_first_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -26,53 +26,53 @@
         android:hint="First Name" />
 
     <EditText
-        android:id="@+id/editTextSignUpLastName"
+        android:id="@+id/edit_text_sign_up_last_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_below="@id/editTextSignUpFirstName"
+        android:layout_below="@id/edit_text_sign_up_first_name"
         android:layout_centerHorizontal="true"
         android:hint="Last Name" />
 
     <EditText
-        android:id="@+id/editTextSignUpEmailAddress"
+        android:id="@+id/edit_text_sign_up_email_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_below="@id/editTextSignUpLastName"
+        android:layout_below="@id/edit_text_sign_up_last_name"
         android:layout_centerHorizontal="true"
         android:hint="Email" />
 
     <EditText
-        android:id="@+id/editTextSignUpUsername"
+        android:id="@+id/edit_text_sign_up_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_below="@id/editTextSignUpEmailAddress"
+        android:layout_below="@id/edit_text_sign_up_email_address"
         android:layout_centerHorizontal="true"
         android:hint="Username" />
 
     <EditText
-        android:id="@+id/editTextSignUpPassword"
+        android:id="@+id/edit_text_sign_up_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@id/editTextSignUpUsername"
+        android:layout_below="@id/edit_text_sign_up_username"
         android:layout_centerHorizontal="true"
         android:hint="Password" />
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/button_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Me Up"
-        android:layout_below="@id/editTextSignUpPassword"
-        android:layout_alignStart="@id/editTextSignUpPassword"
-        android:layout_alignEnd="@id/editTextSignUpPassword"
+        android:layout_below="@id/edit_text_sign_up_password"
+        android:layout_alignStart="@id/edit_text_sign_up_password"
+        android:layout_alignEnd="@id/edit_text_sign_up_password"
         android:onClick="signUpUser"
         />
 
