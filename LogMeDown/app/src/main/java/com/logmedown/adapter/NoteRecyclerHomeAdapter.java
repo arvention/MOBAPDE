@@ -215,7 +215,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
             userImage = (ImageView) itemView.findViewById(R.id.home_user_image);
             postContents = (TextView) itemView.findViewById(R.id.home_user_post_content);
 
-            openMenuButton = (ImageButton) itemView.findViewById(R.id.home_noteOpenMenu);
+            openMenuButton = (ImageButton) itemView.findViewById(R.id.home_note_open_menu);
 
             itemView.setClickable(true);
         }

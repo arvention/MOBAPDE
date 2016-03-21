@@ -18,7 +18,7 @@
             >
 
             <CheckBox
-                android:id="@+id/user_checkBox"
+                android:id="@+id/user_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -32,7 +32,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="16dp"
-                android:layout_toRightOf="@id/user_checkBox"
+                android:layout_toRightOf="@id/user_check_box"
                 android:src="@drawable/profile_img"
                 />
 

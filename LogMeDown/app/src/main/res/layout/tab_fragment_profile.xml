@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator_layout_profile"
+    android:id="@+id/profile_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,21 +10,21 @@
         android:layout_height="match_parent"
         >
         <LinearLayout
-            android:id="@+id/userDetailsLayout"
+            android:id="@+id/user_details_layout"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="vertical"
             android:background="@color/colorLightGray"
             >
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
+                android:id="@+id/profile_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 />
             <TextView
-                android:id="@+id/profileName"
+                android:id="@+id/profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -38,19 +38,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical"
-                android:layout_below="@id/profileName"
+                android:layout_below="@id/profile_name"
                 >
                 <TextView
+                    android:id="@+id/profile_username"
                     android:gravity="center"
-                    android:id="@+id/profileUsername"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
                     android:textSize="14dp"
                     android:textColor="@color/colorDarkGray"
                     android:textStyle="italic"/>
                 <TextView
+                    android:id="@+id/profile_email"
                     android:gravity="center"
-                    android:id="@+id/profileEmail"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
                     android:textSize="14dp"
@@ -60,16 +60,16 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_profile"
+            android:id="@+id/profile_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/userDetailsLayout"
+            android:layout_below="@id/user_details_layout"
             >
 
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/profileAddNoteFab"
+        android:id="@+id/profile_add_note_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -80,7 +80,7 @@
 
 
     <LinearLayout
-        android:id="@+id/profileNoteActionMenu"
+        android:id="@+id/profile_note_action_menu"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorLightGray"
@@ -91,7 +91,7 @@
         android:layout_centerHorizontal="true">
 
         <ImageButton
-            android:id="@+id/profileNoteEditButton"
+            android:id="@+id/profile_note_edit_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/edit_button"
@@ -102,7 +102,7 @@
             />
 
         <ImageButton
-            android:id="@+id/profileNoteViewButton"
+            android:id="@+id/profile_note_view_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/view_button"
@@ -113,7 +113,7 @@
             />
 
         <ImageButton
-            android:id="@+id/profileNoteDeleteButton"
+            android:id="@+id/profile_note_delete_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/delete_button"

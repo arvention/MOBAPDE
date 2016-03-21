@@ -68,7 +68,7 @@
             android:layout_gravity="right"
             >
             <ImageButton
-                android:id="@+id/home_noteOpenMenu"
+                android:id="@+id/home_note_open_menu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:paddingLeft="15dp"

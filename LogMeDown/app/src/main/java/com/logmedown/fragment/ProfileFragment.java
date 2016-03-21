@@ -46,18 +46,18 @@ public class ProfileFragment extends Fragment {
         zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
         zoomOut = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_out);
 
-        profileAddNoteFab = (FloatingActionButton)view.findViewById(R.id.profileAddNoteFab);
+        profileAddNoteFab = (FloatingActionButton)view.findViewById(R.id.profile_add_note_fab);
 
-        profileImage = (ImageView) view.findViewById(R.id.profileImage);
+        profileImage = (ImageView) view.findViewById(R.id.profile_image);
 
-        profileName = (TextView) view.findViewById(R.id.profileName);
-        profileEmail = (TextView) view.findViewById(R.id.profileEmail);
-        profileUsername = (TextView) view.findViewById(R.id.profileUsername);
-        actionMenu = (LinearLayout) view.findViewById(R.id.profileNoteActionMenu);
+        profileName = (TextView) view.findViewById(R.id.profile_name);
+        profileEmail = (TextView) view.findViewById(R.id.profile_email);
+        profileUsername = (TextView) view.findViewById(R.id.profile_username);
+        actionMenu = (LinearLayout) view.findViewById(R.id.profile_note_action_menu);
 
-        editNoteButton = (ImageButton) view.findViewById(R.id.profileNoteEditButton);
-        viewNoteButton = (ImageButton) view.findViewById(R.id.profileNoteViewButton);
-        deleteNoteButton = (ImageButton) view.findViewById(R.id.profileNoteDeleteButton);
+        editNoteButton = (ImageButton) view.findViewById(R.id.profile_note_edit_button);
+        viewNoteButton = (ImageButton) view.findViewById(R.id.profile_note_view_button);
+        deleteNoteButton = (ImageButton) view.findViewById(R.id.profile_note_delete_button);
 
         user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment {
         profileEmail.setText(user.getEmailAddress());
         profileUsername.setText(user.getUsername());
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_profile);
+        recyclerView = (RecyclerView)view.findViewById(R.id.profile_recycler_view);
         recyclerView.setHasFixedSize(true);
         noteRecyclerProfileAdapter = new NoteRecyclerProfileAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
         recyclerView.setAdapter(getNoteRecyclerAdapter());

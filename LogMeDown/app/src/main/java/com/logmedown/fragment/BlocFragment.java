@@ -22,7 +22,7 @@ public class BlocFragment extends Fragment {
 
         user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
-        blocAddBlocFab = (FloatingActionButton) view.findViewById(R.id.addBlocFab);
+        blocAddBlocFab = (FloatingActionButton) view.findViewById(R.id.add_bloc_fab);
         blocAddBlocFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

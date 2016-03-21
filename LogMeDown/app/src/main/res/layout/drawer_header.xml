@@ -5,7 +5,7 @@
     android:background="@color/colorBackgroundColor">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleView"
+        android:id="@+id/circle_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/image_view"
@@ -17,7 +17,7 @@
         android:id="@+id/header_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/circleView"
+        android:layout_below="@id/circle_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="@string/textLoginUsername"

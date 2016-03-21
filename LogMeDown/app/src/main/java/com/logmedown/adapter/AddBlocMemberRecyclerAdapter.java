@@ -81,7 +81,7 @@ public class AddBlocMemberRecyclerAdapter extends RecyclerView.Adapter<AddBlocMe
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.card_layout);
-            userCheckBox = (CheckBox) itemView.findViewById(R.id.user_checkBox);
+            userCheckBox = (CheckBox) itemView.findViewById(R.id.user_check_box);
             userCheckBox.setChecked(false);
             userImage = (ImageView) itemView.findViewById(R.id.user_image);
             userName = (TextView) itemView.findViewById(R.id.user_name);
