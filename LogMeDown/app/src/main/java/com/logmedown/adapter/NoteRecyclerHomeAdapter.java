@@ -2,8 +2,10 @@ package com.logmedown.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,8 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
             @Override
             public void onClick(View v) {
 
+                Log.d("POS DEL", String.valueOf(selectedItem));
+
                 db.deleteNote(NoteRecyclerHomeAdapter.this.notes.get(selectedItem));
                 NoteRecyclerHomeAdapter.this.notes.remove(selectedItem);
                 notifyItemRemoved(selectedItem);
@@ -121,6 +125,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
 
     @Override
     public void onBindViewHolder(final NoteViewHolder holder, final int position) {
+
         if(notes.get(position).getBloc() == null)
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
         else // fix this
@@ -129,70 +134,51 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
         holder.userPostTitle.setText(notes.get(position).getTitle());
         holder.userImage.setImageResource(R.drawable.profile_img);
 
-        holder.openMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedItem != position) {
-                    selectedItem = position;
+        holder.postContents.setText(notes.get(position).getContent());
 
-                    noteActionMenu.setVisibility(View.VISIBLE);
-                    noteActionMenu.startAnimation(slideUp);
+        if(notes.get(holder.getAdapterPosition()).getCreator().getUserID() == user.getUserID()) {
+            holder.openMenuButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (selectedItem != holder.getAdapterPosition()) {
+                        selectedItem = holder.getAdapterPosition();
 
-                    editNoteButton.setVisibility(View.VISIBLE);
-                    editNoteButton.startAnimation(zoomOut);
-                    viewNoteButton.setVisibility(View.VISIBLE);
-                    viewNoteButton.startAnimation(zoomOut);
-                    deleteNoteButton.setVisibility(View.VISIBLE);
-                    deleteNoteButton.startAnimation(zoomOut);
+                        if (noteActionMenu.getVisibility() != View.VISIBLE) {
+                            noteActionMenu.setVisibility(View.VISIBLE);
+                            noteActionMenu.startAnimation(slideUp);
 
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
-                    lp.height = recyclerView.getMeasuredHeight() - noteActionMenu.getHeight();
-                    recyclerView.setLayoutParams(lp);
-                }else{
-                    selectedItem = -1;
-                    closeNoteActionMenu();
+                            editNoteButton.setVisibility(View.VISIBLE);
+                            editNoteButton.startAnimation(zoomOut);
+                            viewNoteButton.setVisibility(View.VISIBLE);
+                            viewNoteButton.startAnimation(zoomOut);
+                            deleteNoteButton.setVisibility(View.VISIBLE);
+                            deleteNoteButton.startAnimation(zoomOut);
 
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
-                    lp.height = recyclerView.getMeasuredHeight() + noteActionMenu.getHeight();
-                    recyclerView.setLayoutParams(lp);
+                            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+                            lp.height = recyclerView.getMeasuredHeight() - noteActionMenu.getHeight();
+                            recyclerView.setLayoutParams(lp);
+                        }
+                    } else {
+                        selectedItem = -1;
+                        closeNoteActionMenu();
+
+                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+                        lp.height = recyclerView.getMeasuredHeight() + noteActionMenu.getHeight();
+                        recyclerView.setLayoutParams(lp);
+                    }
                 }
-            }
-        });
-
+            });
+        } else{
+            holder.openMenuButton.setVisibility(View.GONE);
+        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NoteRecyclerHomeAdapter.this.main, NoteViewActivity.class);
-                intent.putExtra("note", notes.get(position));
+                intent.putExtra("note", notes.get(holder.getAdapterPosition()));
                 NoteRecyclerHomeAdapter.this.main.startActivity(intent);
             }
         });
-
-        /*if(user.getUserID() == notes.get(position).getCreator().getUserID()) {
-            holder.editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(NoteRecyclerHomeAdapter.this.main, NoteActivity.class);
-                    intent.putExtra("note_action", "edit");
-                    intent.putExtra("note_details", notes.get(position));
-                    intent.putExtra("position", position);
-
-                    NoteRecyclerHomeAdapter.this.main.startActivityForResult(intent, 1);
-                }
-            });
-
-            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    db.deleteNote(NoteRecyclerHomeAdapter.this.notes.get(position));
-                    NoteRecyclerHomeAdapter.this.notes.remove(position);
-                    notifyItemRemoved(position);
-                }
-            });
-        }else{
-            holder.deleteButton.setVisibility(View.GONE);
-            holder.editButton.setVisibility(View.GONE);
-        }*/
     }
 
     @Override
@@ -218,9 +204,8 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
         TextView userName;
         TextView userPostTitle;
         ImageView userImage;
+        TextView postContents;
         ImageButton openMenuButton;
-        //ImageButton editButton;
-        //ImageButton deleteButton;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
@@ -228,11 +213,9 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
             userName = (TextView) itemView.findViewById(R.id.home_user_name);
             userPostTitle = (TextView) itemView.findViewById(R.id.home_user_post_title);
             userImage = (ImageView) itemView.findViewById(R.id.home_user_image);
+            postContents = (TextView) itemView.findViewById(R.id.home_user_post_content);
 
             openMenuButton = (ImageButton) itemView.findViewById(R.id.home_noteOpenMenu);
-
-            //editButton = (ImageButton) itemView.findViewById(R.id.home_noteEditButton);
-            //deleteButton = (ImageButton) itemView.findViewById(R.id.home_noteDeleteButton);
 
             itemView.setClickable(true);
         }
