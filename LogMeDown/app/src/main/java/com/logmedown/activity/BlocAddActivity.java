@@ -17,6 +17,7 @@ import com.example.arces.logmedown.R;
 import com.logmedown.adapter.AddBlocMemberRecyclerAdapter;
 import com.logmedown.database.Database;
 import com.logmedown.model.Bloc;
+import com.logmedown.model.Note;
 import com.logmedown.model.User;
 
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class BlocAddActivity extends AppCompatActivity {
                         bloc.setType(blocType.getSelectedItem().toString());
 
                         ArrayList<User> members = new ArrayList<>();
+                        ArrayList<Note> notes = new ArrayList<>();
 
                         AddBlocMemberRecyclerAdapter addBlocMemberRecyclerAdapter = (AddBlocMemberRecyclerAdapter)recyclerView.getAdapter();
 
@@ -119,6 +121,8 @@ public class BlocAddActivity extends AppCompatActivity {
                             members.add(addBlocMemberRecyclerAdapter.getSelectedFriends().get(i));
                         }
                         bloc.setMembers(members);
+                        bloc.setNotes(notes);
+                        
                         db.addBloc(bloc);
 
                         Intent intent = new Intent();

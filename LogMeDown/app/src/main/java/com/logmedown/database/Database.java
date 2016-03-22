@@ -74,12 +74,8 @@ public class Database extends SQLiteOpenHelper{
         String CREATE_BLOC_MEMBER_TABLE = "CREATE TABLE " + bloc_member_table + "(memberID INTEGER NOT NULL, blocID INTEGER NOT NULL)";
         db.execSQL(CREATE_BLOC_MEMBER_TABLE);
 
-        //Create Invite User To Bloc Table
-        String CREATE_INVITE_TO_BLOC_TABLE = "CREATE TABLE " + invite_user_to_bloc_table + "(inviterID INTEGER NOT NULL, invitedID INTEGER NOT NULL, blocID TEXT NOT NULL, status TEXT NOT NULL)";
-        db.execSQL(CREATE_INVITE_TO_BLOC_TABLE);
-
         //Create Request To Join Bloc Table
-        String CREATE_REQUEST_TO_JOIN_BLOC_TABLE = "CREATE TABLE " + request_to_join_table + "(ownerID INTEGER NOT NULL, blocID INTEGER NOT NULL, requesterID TEXT NOT NULL, status TEXT NOT NULL)";
+        String CREATE_REQUEST_TO_JOIN_BLOC_TABLE = "CREATE TABLE " + request_to_join_table + "(ownerID INTEGER NOT NULL, blocID INTEGER NOT NULL, requesterID INTEGER NOT NULL, status TEXT NOT NULL)";
         db.execSQL(CREATE_REQUEST_TO_JOIN_BLOC_TABLE);
     }
 
@@ -380,6 +376,7 @@ public class Database extends SQLiteOpenHelper{
         val.put("content", note.getContent());
 
         db.update(note_table, val, "noteID = " + note.getNoteID(), null);
+        db.close();
     }
 
     public void deleteNote(Note note){
@@ -388,6 +385,7 @@ public class Database extends SQLiteOpenHelper{
         Log.d("Delete db", String.valueOf(note.getNoteID()));
 
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
+        db.close();
     }
 
     public void deleteBloc(Bloc bloc){
@@ -402,9 +400,37 @@ public class Database extends SQLiteOpenHelper{
         for(int i = 0; i < bloc.getNotes().size(); i++){
             db.delete(note_table, "blocID = ?", new String[]{String.valueOf(bloc.getBlocID())});
         }
+        db.close();
     }
 
-    public void addMemberToBloc(Bloc bloc){
+    public void deleteMemberFromBloc(Bloc bloc, User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(bloc_member_table, "memberID = ? and blocID = ?", new String[]{String.valueOf(user.getUserID()), String.valueOf(bloc.getBlocID())});
+        db.close();
+    }
+
+    public void addRequestToJoin(Bloc bloc, User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues val = new ContentValues();
+        val.put("ownerID", bloc.getCreator().getUserID());
+        val.put("blocID", bloc.getBlocID());
+        val.put("requesterID", user.getUserID());
+        val.put("status", "Pending");
+
+        db.insert(request_to_join_table, null, val);
+        db.close();
+    }
+
+    public void deleteRequestToJoin(Bloc bloc, User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(request_to_join_table, "blocID = ? and requesterID = ?", new String[]{String.valueOf(bloc.getBlocID()), String.valueOf(user.getUserID())});
+        db.close();
+    }
+
+    public void addMembersToBloc(Bloc bloc){
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i = 0; i < bloc.getMembers().size(); i++){
             ContentValues val = new ContentValues();
@@ -412,6 +438,29 @@ public class Database extends SQLiteOpenHelper{
             val.put("blocID", bloc.getBlocID());
             db.insert(bloc_member_table, null, val);
         }
+        db.close();
+    }
+
+    public boolean hasPendingRequestToJoin(Bloc bloc, User user){
+        boolean hasPending = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, request_to_join_table, null, "blocID = ? and requesterID = ? and status = ?", new String[]{String.valueOf(bloc.getBlocID()), String.valueOf(user.getUserID()), "Pending"}, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            hasPending = true;
+        }
+
+        return hasPending;
+    }
+
+    public void addMemberToBloc(Bloc bloc, User member){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put("memberID",member.getUserID());
+        val.put("blocID", bloc.getBlocID());
+        db.insert(bloc_member_table, null, val);
+
         db.close();
     }
 
@@ -424,7 +473,7 @@ public class Database extends SQLiteOpenHelper{
         val.put("type", bloc.getType());
         val.put("isDeleted", false);
 
-        // ADD LATER: add members to bloc function created addMemberToBloc
+        // add member to bloc
 
         Log.d("ADD BLOC DB", bloc.getName().toString());
 
