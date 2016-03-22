@@ -12,6 +12,7 @@ public class Bloc implements Serializable {
     private String name;
     private String type;
     private ArrayList<User> members;
+    private ArrayList<Note> notes;
 
     public int getBlocID() {
         return blocID;
@@ -48,4 +49,8 @@ public class Bloc implements Serializable {
     public void setMembers(ArrayList<User> members) {
         this.members = members;
     }
+
+    public ArrayList<Note> getNotes(){ return notes; }
+
+    public void setNotes(ArrayList<Note> notes) { this.notes = notes; }
 }

@@ -273,6 +273,14 @@ public class HomeActivity extends AppCompatActivity {
                 loggedUser.getBlocs().add(bloc);
                 blocFragment.getBlocRecyclerAdapter().notifyDataSetChanged();
                 break;
+            case 4:
+                String action = (String)data.getSerializableExtra("action");
+                if(action.equals("delete")){
+                    int positionToDelete = (Integer)data.getSerializableExtra("position");
+                    loggedUser.getBlocs().remove(positionToDelete);
+                    blocFragment.getBlocRecyclerAdapter().notifyDataSetChanged();
+                }
+                break;
             default:
                 Log.d("result_test_home", "FAIL");
                 break;

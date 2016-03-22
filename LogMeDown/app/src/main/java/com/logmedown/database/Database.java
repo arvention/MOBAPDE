@@ -197,6 +197,46 @@ public class Database extends SQLiteOpenHelper{
         return notes;
     }
 
+    public ArrayList<Note> getNotes(Bloc bloc) {
+        ArrayList<Note> notes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, note_table, null, "blocID = ?", new String[]{Integer.toString(bloc.getBlocID())}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                Note note = new Note();
+                int noteID = cursor.getInt(cursor.getColumnIndex("noteID"));
+                int blocID = cursor.getInt(cursor.getColumnIndex("blocID"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+                Date date = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("date")));
+
+                note.setNoteID(noteID);
+                note.setCreator(bloc.getCreator());
+
+                if(blocID == -1)
+                    note.setBloc(null);
+                else
+                    note.setBloc(bloc); //later
+
+                note.setTitle(title);
+                note.setContent(content);
+                note.setDate(date);
+
+                Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
+                notes.add(note);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        else {
+            cursor.close();
+        }
+        return notes;
+    }
+
     public void fillUserDetails(User user){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -288,8 +328,8 @@ public class Database extends SQLiteOpenHelper{
                 bloc.setType(cursor.getString(cursor.getColumnIndex("type")));
                 bloc.setCreator(user);
 
-                //temporary
                 bloc.setMembers(getMembersOfBloc(bloc));
+                bloc.setNotes(getNotes(bloc));
 
                 blocs.add(bloc);
                 cursor.moveToNext();
@@ -348,6 +388,20 @@ public class Database extends SQLiteOpenHelper{
         Log.d("Delete db", String.valueOf(note.getNoteID()));
 
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
+    }
+
+    public void deleteBloc(Bloc bloc){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(bloc_table, "blocID = " + bloc.getBlocID(), null);
+
+        for(int i = 0; i < bloc.getMembers().size(); i++){
+            db.delete(bloc_member_table, "memberID = ? and blocID = ?", new String[]{String.valueOf(bloc.getMembers().get(i).getUserID()), String.valueOf(bloc.getBlocID())});
+        }
+
+        for(int i = 0; i < bloc.getNotes().size(); i++){
+            db.delete(note_table, "blocID = ?", new String[]{String.valueOf(bloc.getBlocID())});
+        }
     }
 
     public void addMemberToBloc(Bloc bloc){

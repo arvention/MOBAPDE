@@ -38,7 +38,7 @@ public class BlocFragment extends Fragment {
         });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.bloc_recycler_view);
-        blocRecyclerAdapter = new BlocRecyclerAdapter(user.getBlocs(), getActivity(), recyclerView);
+        blocRecyclerAdapter = new BlocRecyclerAdapter(user.getBlocs(), getActivity(), user, recyclerView);
         recyclerView.setAdapter(blocRecyclerAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
