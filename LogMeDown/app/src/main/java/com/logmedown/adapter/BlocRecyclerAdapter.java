@@ -50,7 +50,7 @@ public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BlocRecyclerAdapter.this.main, BlocViewActivity.class);
-                intent.putExtra("user", BlocRecyclerAdapter.this.user);
+                intent.putExtra("logged_user", BlocRecyclerAdapter.this.user);
                 intent.putExtra("bloc", blocs.get(position));
                 intent.putExtra("position", position);
                 BlocRecyclerAdapter.this.main.startActivityForResult(intent, 4);

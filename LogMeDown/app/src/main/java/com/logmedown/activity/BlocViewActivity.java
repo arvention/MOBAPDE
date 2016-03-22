@@ -5,14 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.arces.logmedown.R;
+import com.logmedown.adapter.NoteRecyclerHomeAdapter;
 import com.logmedown.database.Database;
 import com.logmedown.model.Bloc;
 import com.logmedown.model.Note;
@@ -39,14 +42,20 @@ public class BlocViewActivity extends AppCompatActivity {
     private ImageButton editButton;
     private ImageButton deleteButton;
 
+    private LinearLayout noteActionMenu;
+    private ImageButton noteEditButton;
+    private ImageButton noteViewButton;
+    private ImageButton noteDeleteButton;
+
     private RecyclerView recyclerView;
+    private NoteRecyclerHomeAdapter noteRecyclerHomeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloc_view);
 
-        user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("logged_user");
         bloc = (Bloc) getIntent().getSerializableExtra("bloc");
         position = (Integer) getIntent().getSerializableExtra("position");
         db = Database.getInstance(this);
@@ -60,11 +69,23 @@ public class BlocViewActivity extends AppCompatActivity {
         editButton = (ImageButton) findViewById(R.id.bloc_view_edit_button);
         deleteButton = (ImageButton) findViewById(R.id.bloc_view_delete_button);
 
+        noteActionMenu = (LinearLayout) findViewById(R.id.bloc_view_note_action_menu);
+        noteEditButton = (ImageButton) findViewById(R.id.bloc_view_note_edit_button);
+        noteViewButton = (ImageButton) findViewById(R.id.bloc_view_note_view_button);
+        noteDeleteButton = (ImageButton) findViewById(R.id.bloc_view_note_delete_button);
+
         recyclerView = (RecyclerView) findViewById(R.id.bloc_view_recycler_view);
+
+        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(bloc.getNotes(), this, noteActionMenu, noteEditButton, noteViewButton, noteDeleteButton, recyclerView, user);
+        recyclerView.setAdapter(noteRecyclerHomeAdapter);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
         blocName.setText(bloc.getName());
         //set user image later
-        userName.setText(user.getFirstName() + " " + user.getLastName());
+        userName.setText(bloc.getCreator().getFirstName() + " " + bloc.getCreator().getLastName());
 
         if(bloc.getCreator().getUserID() == user.getUserID()){
             joinButton.setVisibility(View.GONE);

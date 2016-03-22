@@ -123,4 +123,50 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/bloc_view_note_action_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorLightGray"
+        android:orientation="horizontal"
+        android:gravity="center|center_vertical"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageButton
+            android:id="@+id/bloc_view_note_edit_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_button"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
+            android:id="@+id/bloc_view_note_view_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/view_button"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
+            android:id="@+id/bloc_view_note_delete_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/delete_button"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:visibility="gone"
+            android:layout_marginRight="2dp"
+            />
+    </LinearLayout>
 </RelativeLayout>
