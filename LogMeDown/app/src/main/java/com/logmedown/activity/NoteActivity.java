@@ -38,6 +38,8 @@ public class NoteActivity extends AppCompatActivity {
     private ImageButton locationBtn;
     private Bloc bloc;
 
+    private int index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +142,11 @@ public class NoteActivity extends AppCompatActivity {
                             note.setContent(editContent.getText().toString());
                             note.setDate(new Date());
 
+                            if(index != -1)
+                                note.setBloc(loggedUser.getBlocs().get(index));
+                            else
+                                note.setBloc(null);
+
                             Log.d("add_note", note.getTitle() + " " + note.getContent());
                             db.addNote(note);
 
@@ -188,6 +195,9 @@ public class NoteActivity extends AppCompatActivity {
 
         //add public to list of choices
         blocList.add(0, "Public");
+        for(int i = 0; i < loggedUser.getBlocs().size(); i++){
+            blocList.add(loggedUser.getBlocs().get(i).getName());
+        }
 
         //alert
         AlertDialog.Builder locationAlert = new AlertDialog.Builder(this);
@@ -211,7 +221,11 @@ public class NoteActivity extends AppCompatActivity {
                     locationBtn.setImageResource(R.drawable.public_note_icon);
                     bloc = null;
                 } else {
-                    //get bloc of user
+                    index = -1;
+                    for(int i = 0; i < loggedUser.getBlocs().size() && index == -1; i++){
+                        if(loggedUser.getBlocs().get(i).getName().equals(location))
+                            index = i;
+                    }
                 }
             }
         });

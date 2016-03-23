@@ -127,9 +127,9 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
     public void onBindViewHolder(final NoteViewHolder holder, final int position) {
 
         if(notes.get(position).getBloc() == null)
-            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > Public");
+            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName());
         else // fix this
-            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > ");
+            holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName() + " > " + notes.get(position).getBloc().getName());
 
         holder.userPostTitle.setText(notes.get(position).getTitle());
         holder.userImage.setImageResource(R.drawable.profile_img);

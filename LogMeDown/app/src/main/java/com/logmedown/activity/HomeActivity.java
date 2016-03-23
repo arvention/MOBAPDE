@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.logmedown.adapter.PagerAdapter;
 import com.example.arces.logmedown.R;
+import com.logmedown.database.Database;
 import com.logmedown.fragment.BlocFragment;
 import com.logmedown.fragment.HomeFragment;
 import com.logmedown.fragment.ProfileFragment;
@@ -42,7 +43,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String USERPREFERENCES = "UserPreferences";
     public SharedPreferences sharedPreferences;
-    public static User loggedUser;
+    public User loggedUser;
+    public Database db;
 
     private TextView fragmentName;
 
@@ -78,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         zoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
 
         loggedUser = (User) getIntent().getSerializableExtra("logged_user");
+        db = Database.getInstance(this);
 
         Log.d("logged_user", "Name: " + loggedUser.getFirstName() + " " + loggedUser.getLastName() + "" +
                 " Username: " + loggedUser.getUsername() + " Email Address: " + loggedUser.getEmailAddress());
@@ -174,19 +177,28 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentName.setText(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getText());
                 if (tab.getPosition() == 0) {
                     FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    loggedUser = db.getUser(loggedUser.getUserID());
                     fm.detach(homeFragment).attach(homeFragment).commit();
-                    if(getSupportFragmentManager().executePendingTransactions())
+                    if(getSupportFragmentManager().executePendingTransactions()) {
                         homeFragment.getHomeAddNoteFab().startAnimation(zoomOut);
+                        homeFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                    }
                 } else if (tab.getPosition() == 1) {
                     FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    loggedUser = db.getUser(loggedUser.getUserID());
                     fm.detach(blocFragment).attach(blocFragment).commit();
-                    if(getSupportFragmentManager().executePendingTransactions())
+                    if(getSupportFragmentManager().executePendingTransactions()) {
                         blocFragment.getBlocAddBlocFab().startAnimation(zoomOut);
+                        blocFragment.getBlocRecyclerAdapter().notifyDataSetChanged();
+                    }
                 } else if (tab.getPosition() == 2) {
                     FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+                    loggedUser = db.getUser(loggedUser.getUserID());
                     fm.detach(profileFragment).attach(profileFragment).commit();
-                    if(getSupportFragmentManager().executePendingTransactions())
+                    if(getSupportFragmentManager().executePendingTransactions()) {
                         profileFragment.getProfileAddNoteFab().startAnimation(zoomOut);
+                        profileFragment.getNoteRecyclerAdapter().notifyDataSetChanged();
+                    }
                 }
             }
 

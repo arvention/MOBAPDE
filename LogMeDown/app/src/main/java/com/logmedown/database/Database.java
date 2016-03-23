@@ -149,7 +149,7 @@ public class Database extends SQLiteOpenHelper{
 
         db.insert(note_table, null, val);
 
-       // Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName());
+        Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName() + " " + note.getBloc().getName());
         db.close();
     }
 
@@ -174,8 +174,12 @@ public class Database extends SQLiteOpenHelper{
 
                 if(blocID == -1)
                     note.setBloc(null);
-               // else
-                 //   note.setBloc(); //later
+                else {
+                    Bloc bloc = new Bloc();
+                    bloc.setBlocID(blocID);
+                    fillBlocDetails(bloc, user);
+                    note.setBloc(bloc);
+                }
 
                 note.setTitle(title);
                 note.setContent(content);
@@ -252,6 +256,25 @@ public class Database extends SQLiteOpenHelper{
         else{
             cursor.close();
         }
+    }
+
+    public void fillBlocDetails(Bloc bloc, User user){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, bloc_table, null, "blocID = ?", new String[]{Integer.toString(bloc.getBlocID())}, null, null, null, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+
+            bloc.setBlocID(cursor.getInt(cursor.getColumnIndex("blocID")));
+            bloc.setName(cursor.getString(cursor.getColumnIndex("name")));
+            bloc.setType(cursor.getString(cursor.getColumnIndex("type")));
+            bloc.setCreator(user);
+
+        }
+        cursor.close();
+        db.close();
+
     }
 
     public ArrayList<User> getFriends(User user){

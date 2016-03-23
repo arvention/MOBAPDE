@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.arces.logmedown.R;
 import com.logmedown.activity.BlocViewActivity;
+import com.logmedown.database.Database;
 import com.logmedown.model.Bloc;
 import com.logmedown.model.User;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapter.BlocViewHolder>{
 
     private User user;
+    private Database db;
 
     private ArrayList<Bloc> blocs;
     private Activity main;
@@ -29,6 +31,7 @@ public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapte
         this.blocs = blocs;
         this.main = main;
         this.user = user;
+        db = Database.getInstance(main);
         this.recyclerView = recyclerView;
     }
 
@@ -50,6 +53,13 @@ public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BlocRecyclerAdapter.this.main, BlocViewActivity.class);
+
+                Bloc bloc = blocs.get(position);
+                db.fillBlocDetails(bloc, user);
+                bloc.setMembers(db.getMembersOfBloc(bloc));
+                bloc.setNotes(db.getNotes(bloc));
+                blocs.set(position, bloc);
+
                 intent.putExtra("logged_user", BlocRecyclerAdapter.this.user);
                 intent.putExtra("bloc", blocs.get(position));
                 intent.putExtra("position", position);
