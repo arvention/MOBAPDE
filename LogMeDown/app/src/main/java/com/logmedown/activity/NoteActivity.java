@@ -8,8 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -29,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
-    private ImageButton saveBtn, discardBtn;
+    private ImageButton saveBtn;
     private EditText editTitle, editContent;
     private User loggedUser;
     private Database db;
@@ -38,12 +40,20 @@ public class NoteActivity extends AppCompatActivity {
     private ImageButton locationBtn;
     private Bloc bloc;
 
+    private Toolbar toolbar;
+
     private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        toolbar = (Toolbar) findViewById(R.id.note_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //initialize bloc to null (public)
         bloc = null;
@@ -64,14 +74,6 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveNote();
-            }
-        });
-
-        discardBtn = (ImageButton) findViewById(R.id.note_discard_button);
-        discardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelNoteAction();
             }
         });
 
@@ -237,5 +239,13 @@ public class NoteActivity extends AppCompatActivity {
         });
 
         locationAlert.show();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home) {
+            cancelNoteAction();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

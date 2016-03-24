@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -27,12 +29,13 @@ public class BlocAddActivity extends AppCompatActivity {
     private User user;
     private Database db;
 
-    private ImageButton discardButton;
     private EditText blocName;
     private ImageButton saveButton;
     private Spinner blocType;
     private RecyclerView recyclerView;
     private AddBlocMemberRecyclerAdapter addBlocMemberRecyclerAdapter;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,13 @@ public class BlocAddActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("logged_user");
         db = Database.getInstance(this);
+
+        // toolbar
+        toolbar = (Toolbar) findViewById(R.id.add_bloc_header);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // temporary
         User friend = new User();
@@ -51,7 +61,6 @@ public class BlocAddActivity extends AppCompatActivity {
             user.getFriends().add(friend);
         }
 
-        this.discardButton = (ImageButton)findViewById(R.id.add_bloc_discard_button);
         this.blocName = (EditText)findViewById(R.id.add_bloc_name);
         this.saveButton = (ImageButton)findViewById(R.id.add_bloc_save_button);
 
@@ -68,13 +77,6 @@ public class BlocAddActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-        discardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                discardAction();
-            }
-        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,5 +136,13 @@ public class BlocAddActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.textCancel, null)
                 .show();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home) {
+            discardAction();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

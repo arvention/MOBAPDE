@@ -1,73 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.logmedown.activity.NoteActivity"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    tools:context="com.logmedown.activity.NoteActivity">
 
-    <LinearLayout
-        android:id="@+id/note_header"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/note_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBackgroundColor"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageButton
-            android:id="@+id/note_discard_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/discard_button"
-            android:background="@color/colorBackgroundColor"/>
-
-        <EditText
-            android:id="@+id/add_note_title"
-            android:layout_weight="1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="Title"
-            android:textColorHint="@color/colorGray"
-            android:gravity="center"
-            android:textSize="20sp"
+            android:layout_height="match_parent">
 
-            android:textColor="@color/colorWhite"
-            android:background="@color/colorBackgroundColor"
-            android:singleLine="true"
-            android:ellipsize="end"
-            />
+            <EditText
+                android:id="@+id/add_note_title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@color/colorBackgroundColor"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:hint="Title"
 
-        <ImageButton
-            android:id="@+id/note_location_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/public_note_icon"
-            android:background="@color/colorBackgroundColor"/>
+                android:singleLine="true"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorGray"
+                android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/note_save_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/save_button"
-            android:background="@color/colorBackgroundColor"/>
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/note_location_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorBackgroundColor"
+                android:scaleType="fitCenter"
+                android:src="@drawable/public_note_icon" />
+
+            <ImageButton
+                android:id="@+id/note_save_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorBackgroundColor"
+                android:scaleType="fitCenter"
+                android:src="@drawable/save_button" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:id="@+id/add_note_scroll"
-        android:layout_below="@id/note_header"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/note_toolbar"
         android:background="@color/colorWhite">
+
         <EditText
             android:id="@+id/add_note_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:hint="Tap Here to Start Writing a Note"
             android:padding="15dp"
             android:textColor="@color/colorBlack"
             android:textCursorDrawable="@null"
-            android:hint="Tap Here to Start Writing a Note"/>
+            android:textSize="18sp" />
     </ScrollView>
 </RelativeLayout>
