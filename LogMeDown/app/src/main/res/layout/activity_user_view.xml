@@ -78,7 +78,7 @@
                 android:layout_height="22dp"
                 android:layout_below="@id/user_view_user_name"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/rounded_rectangle_button"
+                android:background="@drawable/rounded_rectangle_button_gray"
                 android:text="@string/add_friend"
                 android:textSize="16dp"
                 android:visibility="gone"/>
@@ -102,14 +102,14 @@
                     android:layout_below="@id/user_view_friend_text"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:background="@drawable/rounded_rectangle_button"
+                    android:background="@drawable/rounded_rectangle_button_gray"
                     android:text="@string/remove_friend"/>
                 <Button
                     android:id="@+id/user_view_cancel_request"
                     android:layout_below="@id/user_view_friend_text"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:background="@drawable/rounded_rectangle_button"
+                    android:background="@drawable/rounded_rectangle_button_gray"
                     android:text="@string/cancel_friend_request"/>
                 <LinearLayout
                     android:id="@+id/user_view_respond_request_container"
@@ -123,7 +123,7 @@
                         android:id="@+id/user_view_accept_request"
                         android:layout_width="90dp"
                         android:layout_height="22dp"
-                        android:background="@drawable/rounded_rectangle_button"
+                        android:background="@drawable/rounded_rectangle_button_green"
                         android:text="@string/textAccept"
                         android:layout_marginRight="5dp"
                         />
@@ -131,7 +131,7 @@
                         android:id="@+id/user_view_decline_request"
                         android:layout_width="90dp"
                         android:layout_height="22dp"
-                        android:background="@drawable/rounded_rectangle_button"
+                        android:background="@drawable/rounded_rectangle_button_red"
                         android:text="@string/textDecline"
                         />
                 </LinearLayout>

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.arces.logmedown.R;
+import com.logmedown.adapter.UserViewNoteRecyclerAdapter;
 import com.logmedown.database.Database;
 import com.logmedown.model.User;
 
@@ -26,9 +29,12 @@ public class UserViewActivity extends AppCompatActivity {
     private RelativeLayout friendContainer;
     private LinearLayout requestContainer;
 
-    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private UserViewNoteRecyclerAdapter uvnra;
 
+    private Toolbar toolbar;
     private Database db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class UserViewActivity extends AppCompatActivity {
                 showAddFriend();
             }
         });
-        removeFriendButton.setOnClickListener(new View.OnClickListener(){
+        removeFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showRemoveFriend();
@@ -111,6 +117,15 @@ public class UserViewActivity extends AppCompatActivity {
                 showDeclineRequest();
             }
         });
+
+        recyclerView = (RecyclerView) findViewById(R.id.user_view_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        uvnra = new UserViewNoteRecyclerAdapter(user.getNotes(), this);
+        recyclerView.setAdapter(uvnra);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override

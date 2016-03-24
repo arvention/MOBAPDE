@@ -85,8 +85,8 @@ public class SearchResultActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(searchTabLayout));
 
         noteFragment = (SearchNoteFragment) searchPagerAdapter.getItem(0);
-        userFragment = (SearchUserFragment) searchPagerAdapter.getItem(1);
-        blocFragment = (SearchBlocFragment) searchPagerAdapter.getItem(2);
+        blocFragment = (SearchBlocFragment) searchPagerAdapter.getItem(1);
+        userFragment = (SearchUserFragment) searchPagerAdapter.getItem(2);
 
         searchTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

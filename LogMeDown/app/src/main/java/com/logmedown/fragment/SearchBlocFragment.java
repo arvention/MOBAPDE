@@ -13,6 +13,7 @@ import com.logmedown.adapter.NoteRecyclerHomeAdapter;
 import com.logmedown.adapter.NoteRecyclerProfileAdapter;
 import com.logmedown.adapter.SearchBlocRecyclerAdapter;
 import com.logmedown.model.Bloc;
+import com.logmedown.model.User;
 
 import java.util.ArrayList;
 
@@ -21,13 +22,15 @@ public class SearchBlocFragment extends Fragment {
 
     private SearchBlocRecyclerAdapter sbra;
     private RecyclerView recyclerView;
+    private User loggedUser;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_search_bloc, container, false);
 
+        loggedUser = (User) getActivity().getIntent().getSerializableExtra("logged_user");
         recyclerView = (RecyclerView)view.findViewById(R.id.search_bloc_recycler);
         recyclerView.setHasFixedSize(true);
-        sbra = new SearchBlocRecyclerAdapter(blocs);
+        sbra = new SearchBlocRecyclerAdapter(blocs, getActivity(), loggedUser);
         recyclerView.setAdapter(sbra);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

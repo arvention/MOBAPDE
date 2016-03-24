@@ -103,7 +103,7 @@ public class BlocAddActivity extends AppCompatActivity {
 
     public void saveAction(){
         new AlertDialog.Builder(this)
-                .setTitle("Discard Bloc")
+                .setTitle("Save Bloc")
                 .setMessage(R.string.textSaveBlocPrompt)
                 .setPositiveButton(R.string.textSave, new DialogInterface.OnClickListener() {
                     @Override

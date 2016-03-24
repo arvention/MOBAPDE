@@ -15,7 +15,7 @@
 
     <array name="searchTabNames">
         <item>@string/textNote</item>
-        <item>@string/textUser</item>
         <item>@string/textBloc</item>
+        <item>@string/textUser</item>
     </array>
 </resources>

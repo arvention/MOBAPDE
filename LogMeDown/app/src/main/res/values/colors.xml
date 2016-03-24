@@ -12,6 +12,8 @@
     <color name="colorBlackOpacity">#55000000</color>
     <color name="colorCardView">#f9f9f9</color>
     <color name="colorBackgroundColor">#00a4bc</color>
+    <color name="colorGreen">#96f97b</color>
+    <color name="colorRed">#f6591b</color>
 
     <color name="colorTransparent">#00000000</color>
 </resources>
