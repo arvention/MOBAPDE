@@ -36,7 +36,8 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name="com.logmedown.activity.BlocAddActivity" />
-        <activity android:name="com.logmedown.activity.BlocViewActivity"></activity>
+        <activity android:name="com.logmedown.activity.BlocViewActivity" />
+        <activity android:name="com.logmedown.activity.UserViewActivity"></activity>
     </application>
 
 </manifest>

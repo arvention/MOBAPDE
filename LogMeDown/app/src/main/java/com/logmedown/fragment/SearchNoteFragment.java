@@ -1,8 +1,6 @@
 package com.logmedown.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.arces.logmedown.R;
-import com.logmedown.activity.BlocAddActivity;
-import com.logmedown.adapter.NoteRecyclerHomeAdapter;
-import com.logmedown.adapter.NoteRecyclerProfileAdapter;
 import com.logmedown.adapter.SearchNoteRecyclerAdapter;
 import com.logmedown.model.Note;
-import com.logmedown.model.User;
 
 import java.util.ArrayList;
 

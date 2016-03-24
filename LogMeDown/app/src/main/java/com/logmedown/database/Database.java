@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import com.logmedown.model.Bloc;
@@ -527,7 +528,10 @@ public class Database extends SQLiteOpenHelper{
                 Date date = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("date")));
 
                 note.setNoteID(noteID);
-                note.setCreator(getUser(userID));
+                User user = new User();
+                user.setUserID(userID);
+                fillUserDetails(user);
+                note.setCreator(user);
 
                 if (blocID == -1)
                     note.setBloc(null);
@@ -536,7 +540,7 @@ public class Database extends SQLiteOpenHelper{
                 note.setContent(content);
                 note.setDate(date);
 
-                Log.d("search_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
+//                Log.d("search_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }
@@ -586,7 +590,7 @@ public class Database extends SQLiteOpenHelper{
         //apply privacy in query later
         Cursor cursor = db.query(true, user_table, new String[]{"userID"}, "firstName||' '||lastName LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
 
-        Log.d("search_user", keyword);
+        //Log.d("search_user", keyword);
 
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
@@ -594,7 +598,7 @@ public class Database extends SQLiteOpenHelper{
                 int userID = cursor.getInt(cursor.getColumnIndex("userID"));
                 User user = getUser(userID);
 
-                Log.d("search_user", user.getFirstName() + " " + user.getLastName());
+              //  Log.d("search_user", user.getFirstName() + " " + user.getLastName());
                 users.add(user);
                 cursor.moveToNext();
             }
@@ -602,5 +606,100 @@ public class Database extends SQLiteOpenHelper{
         cursor.close();
 
         return users;
+    }
+
+    public void requestAsFriend(User adder, User added){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues val = new ContentValues();
+
+        val.put("adderID", adder.getUserID());
+        val.put("addedID", added.getUserID());
+        val.put("status", "Pending");
+
+        db.insert(add_as_friend_table, null, val);
+    }
+
+    public boolean isFriend(User friend1, User friend2){
+        int friend1ID = friend1.getUserID();
+        int friend2ID = friend2.getUserID();
+        boolean isFriend = false;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(true, friend_table, null, "friend1 = ? AND friend2 = ?", new String[]{Integer.toString(friend1ID), Integer.toString(friend2ID)}, null, null, null, null);
+        if(cursor.getCount() != 0){
+            isFriend = true;
+        }
+        if(!isFriend){
+            cursor = db.query(true, friend_table, null, "friend1 = ? AND friend2 = ?", new String[]{Integer.toString(friend2ID), Integer.toString(friend1ID)}, null, null, null, null);
+            if(cursor.getCount() != 0){
+                isFriend = true;
+            }
+        }
+        return isFriend;
+    }
+
+    public boolean hasFriendRequest(User adder, User added){
+        int adderID = adder.getUserID();
+        int addedID = added.getUserID();
+        boolean hasRequest = false;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(true, add_as_friend_table, null, "adderID = ? AND addedID = ? AND status = ?", new String[]{Integer.toString(adderID), Integer.toString(addedID), "Pending"}, null, null, null, null);
+
+        if(cursor.getCount() != 0){
+            hasRequest = true;
+        }
+
+        return hasRequest;
+    }
+
+    public void cancelFriendRequest(User adder, User added){
+        int adderID = adder.getUserID();
+        int addedID = added.getUserID();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(add_as_friend_table, "adderID = ? and addedID = ?", new String[]{Integer.toString(adderID), Integer.toString(addedID)});
+        db.close();
+    }
+
+    public void acceptFriendRequest(User added, User adder){
+        int adderID = adder.getUserID();
+        int addedID = added.getUserID();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //update friend request -> Accepted
+        ContentValues val = new ContentValues();
+        val.put("status", "Accepted");
+
+        db.update(add_as_friend_table, val, "adderID = " + adderID + " AND addedID = " + addedID, null);
+        val.clear();
+
+        //add friendship to friend table
+        val.put("friend1", adderID);
+        val.put("friend2", addedID);
+        db.insert(friend_table, null, val);
+        db.close();
+    }
+
+    public void declineFriendRequest(User added, User adder){
+        int adderID = adder.getUserID();
+        int addedID = added.getUserID();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(add_as_friend_table, "addedID = " + addedID + " AND adderID = " + adderID, null);
+        db.close();
+    }
+
+    public void removeAsFriend(User friend1, User friend2){
+        int friend1ID = friend1.getUserID();
+        int friend2ID = friend2.getUserID();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //delete from friend table
+        db.delete(friend_table, "friend1 = " + friend1ID + " AND friend2 = " + friend2ID, null);
+        db.delete(friend_table, "friend1 = " + friend2ID + " AND friend2 = " + friend1ID, null);
+
+        //delete accepted request
+        db.delete(add_as_friend_table, "adderID = " + friend1ID + " AND addedID = " + friend2ID + " AND status = 'Accepted'", null);
+        db.delete(add_as_friend_table, "adderID = " + friend2ID + " AND addedID = " + friend1ID + " AND status = 'Accepted'", null);
+        db.close();
     }
 }

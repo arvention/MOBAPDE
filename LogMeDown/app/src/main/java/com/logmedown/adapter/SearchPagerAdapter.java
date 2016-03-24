@@ -25,8 +25,6 @@ public class SearchPagerAdapter extends FragmentStatePagerAdapter{
         searchNoteTab = new SearchNoteFragment();
         searchBlocTab = new SearchBlocFragment();
         searchUserTab = new SearchUserFragment();
-
-
     }
 
     @Override

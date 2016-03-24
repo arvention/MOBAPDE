@@ -35,4 +35,13 @@
     <string name="textNote">Notes</string>
     <string name="textUser">Users</string>
 
+    <string name="add_friend">Add as Friend</string>
+    <string name="remove_friend">Remove as Friend</string>
+    <string name="accept_request">Accept Friend Request</string>
+    <string name="decline_request">Decline Friend Request</string>
+    <string name="cancel_friend_request">Cancel Friend Request</string>
+    <string name="textAccept">ACCEPT</string>
+    <string name="textDecline">DECLINE</string>
+    <string name="textBack">GO BACK</string>
+
 </resources>

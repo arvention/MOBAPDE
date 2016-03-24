@@ -49,6 +49,8 @@ public class SearchResultActivity extends AppCompatActivity {
     private SearchView searchView;
     private MenuItem menuItem;
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +58,17 @@ public class SearchResultActivity extends AppCompatActivity {
         //database
         db = Database.getInstance(this);
 
+        //logged user
+        user = (User) getIntent().getSerializableExtra("logged_user");
+        Log.d("search_logged_user", user.getFirstName());
+
         //components
         searchName = (TextView) findViewById(R.id.searchName);
         toolbar = (Toolbar) findViewById(R.id.searchToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         searchTabLayout = (TabLayout) findViewById(R.id.search_tab);
 
         tabNames = getResources().obtainTypedArray(R.array.searchTabNames);
@@ -133,5 +140,13 @@ public class SearchResultActivity extends AppCompatActivity {
         searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultActivity.class)));
         return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
