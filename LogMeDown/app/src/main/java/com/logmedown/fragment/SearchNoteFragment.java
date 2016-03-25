@@ -25,7 +25,7 @@ public class SearchNoteFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.search_note_recycler);
         recyclerView.setHasFixedSize(true);
-        snra = new SearchNoteRecyclerAdapter(notes);
+        snra = new SearchNoteRecyclerAdapter(notes, getActivity());
         recyclerView.setAdapter(snra);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
