@@ -275,8 +275,11 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case 3:
                 Bloc bloc = (Bloc)data.getSerializableExtra("saved_bloc");
-
+                Log.d("Bloc added", bloc.getName());
                 loggedUser.getBlocs().add(bloc);
+                // take note
+                blocFragment.getBlocRecyclerAdapter().getBlocs().clear();
+                blocFragment.getBlocRecyclerAdapter().getBlocs().addAll(loggedUser.getBlocs());
                 blocFragment.getBlocRecyclerAdapter().notifyDataSetChanged();
                 break;
             case 4:

@@ -73,6 +73,10 @@ public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapte
         return blocs.size();
     }
 
+    public ArrayList<Bloc> getBlocs(){
+        return blocs;
+    }
+
     public static class BlocViewHolder extends RecyclerView.ViewHolder{
 
         CardView cardView;
