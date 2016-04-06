@@ -61,7 +61,6 @@ public class NoteActivity extends AppCompatActivity {
 
         //retrieve note action
         action = getIntent().getStringExtra("note_action");
-        Log.d("note_debug", action);
 
         //retrieve logged user details
         loggedUser = (User) getIntent().getSerializableExtra("logged_user");
@@ -139,7 +138,6 @@ public class NoteActivity extends AppCompatActivity {
                             Note note = new Note();
 
                             note.setNoteID(db.getLastNoteId()+1);
-                            Log.d("getNoteIdOfAdded", String.valueOf(note.getNoteID()));
                             note.setCreator(loggedUser);
                             note.setTitle(editTitle.getText().toString());
                             note.setContent(editContent.getText().toString());
@@ -150,7 +148,6 @@ public class NoteActivity extends AppCompatActivity {
                             else
                                 note.setBloc(null);
 
-                            Log.d("add_note", note.getTitle() + " " + note.getContent());
                             db.addNote(note);
 
                             Intent intent = new Intent();

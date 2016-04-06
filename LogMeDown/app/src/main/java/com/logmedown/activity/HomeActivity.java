@@ -79,9 +79,6 @@ public class HomeActivity extends AppCompatActivity {
         loggedUser = (User) getIntent().getSerializableExtra("logged_user");
         db = Database.getInstance(this);
 
-        Log.d("logged_user", "Name: " + loggedUser.getFirstName() + " " + loggedUser.getLastName() + "" +
-                " Username: " + loggedUser.getUsername() + " Email Address: " + loggedUser.getEmailAddress());
-
         fragmentName = (TextView) findViewById(R.id.fragment_name);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -291,7 +288,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
             default:
-                Log.d("result_test_home", "FAIL");
                 break;
         }
     }

@@ -60,7 +60,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
         //logged user
         user = (User) getIntent().getSerializableExtra("logged_user");
-        Log.d("search_logged_user", user.getFirstName());
 
         //components
         searchName = (TextView) findViewById(R.id.searchName);

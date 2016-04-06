@@ -77,8 +77,6 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
             @Override
             public void onClick(View v) {
 
-                Log.d("POS DEL", String.valueOf(selectedItem));
-
                 db.deleteNote(NoteRecyclerHomeAdapter.this.notes.get(selectedItem));
                 NoteRecyclerHomeAdapter.this.notes.remove(selectedItem);
                 notifyItemRemoved(selectedItem);

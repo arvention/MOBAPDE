@@ -150,7 +150,6 @@ public class Database extends SQLiteOpenHelper{
 
         db.insert(note_table, null, val);
 
-        //Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName() + " " + note.getBloc().getName());
         db.close();
     }
 
@@ -175,14 +174,13 @@ public class Database extends SQLiteOpenHelper{
 
                 if(blocID == -1) {
                     note.setBloc(null);
-                    Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate() + " null");
+
                 }
                 else {
                     Bloc bloc = new Bloc();
                     bloc.setBlocID(blocID);
                     fillBlocDetails(bloc, user);
                     note.setBloc(bloc);
-                    Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate() + " " + note.getBloc().getName());
                 }
 
                 note.setTitle(title);
@@ -228,7 +226,6 @@ public class Database extends SQLiteOpenHelper{
                 note.setContent(content);
                 note.setDate(date);
 
-                Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }
@@ -338,7 +335,6 @@ public class Database extends SQLiteOpenHelper{
                 User user = new User();
                 user.setUserID(cursor.getInt(cursor.getColumnIndex("memberID")));
                 fillUserDetails(user);
-                Log.d("db.membersofbloc", user.getFirstName() + " " + user.getLastName());
 
                 members.add(user);
                 cursor.moveToNext();
@@ -424,8 +420,6 @@ public class Database extends SQLiteOpenHelper{
 
     public void deleteNote(Note note){
         SQLiteDatabase db = this.getWritableDatabase();
-
-        Log.d("Delete db", String.valueOf(note.getNoteID()));
 
         db.delete(note_table, "noteID = " + note.getNoteID(), null);
         db.close();
@@ -516,11 +510,8 @@ public class Database extends SQLiteOpenHelper{
         val.put("type", bloc.getType());
         val.put("isDeleted", false);
 
-        Log.d("ADD BLOC DB", bloc.getName().toString());
-
         db.insert(bloc_table, null, val);
         for(int i = 0; i < bloc.getMembers().size(); i++){
-            Log.d("ADD BLOC DB MEM", bloc.getMembers().get(i).getFirstName());
             addMemberToBloc(bloc, bloc.getMembers().get(i));
         }
         db.close();
@@ -557,7 +548,6 @@ public class Database extends SQLiteOpenHelper{
                 note.setContent(content);
                 note.setDate(date);
 
-//                Log.d("search_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }
@@ -589,7 +579,6 @@ public class Database extends SQLiteOpenHelper{
                 bloc.setName(name);
                 bloc.setType(type);
 
-                Log.d("search_bloc", bloc.getName() + " by " + bloc.getCreator().getFirstName() + " of type " + bloc.getType());
                 blocs.add(bloc);
                 cursor.moveToNext();
             }
@@ -607,15 +596,12 @@ public class Database extends SQLiteOpenHelper{
         //apply privacy in query later
         Cursor cursor = db.query(true, user_table, new String[]{"userID"}, "firstName||' '||lastName LIKE ?", new String[]{"%" + keyword + "%"}, null, null, null, null);
 
-        //Log.d("search_user", keyword);
-
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
                 int userID = cursor.getInt(cursor.getColumnIndex("userID"));
                 User user = getUser(userID);
 
-              //  Log.d("search_user", user.getFirstName() + " " + user.getLastName());
                 users.add(user);
                 cursor.moveToNext();
             }

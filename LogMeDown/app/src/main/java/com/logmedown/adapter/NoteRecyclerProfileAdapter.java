@@ -79,7 +79,6 @@ public class NoteRecyclerProfileAdapter extends RecyclerView.Adapter<NoteRecycle
 
                 Collections.sort(selectedItems, Collections.reverseOrder());
                 for(int i = 0; i < selectedItems.size(); i++){
-                    Log.d("DELETE", NoteRecyclerProfileAdapter.this.notes.get((int) selectedItems.get(i)).getTitle());
                     db.deleteNote(NoteRecyclerProfileAdapter.this.notes.get((int) selectedItems.get(i)));
                     NoteRecyclerProfileAdapter.this.notes.remove((int) selectedItems.get(i));
                     notifyItemRemoved(selectedItems.get(i));
@@ -179,7 +178,6 @@ public class NoteRecyclerProfileAdapter extends RecyclerView.Adapter<NoteRecycle
 
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
-        Log.d("BIND", String.valueOf(position));
 
         if(notes.get(position).getBloc() == null)
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName());

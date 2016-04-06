@@ -71,7 +71,6 @@ public class UserViewActivity extends AppCompatActivity {
 
         friendText = (TextView) findViewById(R.id.user_view_friend_text);
 
-        Log.d("view_user_debug", user.getUserID() + " vs " + loggedUser.getUserID());
         if(user.getUserID() == loggedUser.getUserID()){
             friendContainer.setVisibility(View.GONE);
             addFriendButton.setVisibility(View.GONE);

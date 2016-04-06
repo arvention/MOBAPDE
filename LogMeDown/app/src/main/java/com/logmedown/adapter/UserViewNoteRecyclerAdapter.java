@@ -36,7 +36,6 @@ public class UserViewNoteRecyclerAdapter extends RecyclerView.Adapter<UserViewNo
 
     @Override
     public void onBindViewHolder(NoteViewHolder holder, final int position) {
-        Log.d("recycler!", notes.get(position).getTitle());
         if(notes.get(position).getBloc() == null)
             holder.userName.setText(notes.get(position).getCreator().getFirstName() + " " + notes.get(position).getCreator().getLastName());
         else // fix this

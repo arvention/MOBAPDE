@@ -116,7 +116,6 @@ public class BlocViewActivity extends AppCompatActivity {
             membershipStatus = "Not Member";
             for(int i = 0; i < bloc.getMembers().size(); i++){
                 if(bloc.getMembers().get(i).getUserID() == user.getUserID()){
-                    Log.d("blocview_members", bloc.getMembers().get(i).getFirstName() + " " + bloc.getMembers().get(i).getLastName());
                     membershipStatus = "Member";
                 }
             }
