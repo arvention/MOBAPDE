@@ -50,7 +50,7 @@ public class SearchBlocRecyclerAdapter extends RecyclerView.Adapter<SearchBlocRe
                 Intent intent = new Intent(main, BlocViewActivity.class);
 
                 Bloc bloc = blocs.get(position);
-                db.fillBlocDetails(bloc, user);
+                db.fillBlocDetails(bloc, db.getCreatorOfBloc(bloc));
                 bloc.setMembers(db.getMembersOfBloc(bloc));
                 bloc.setNotes(db.getNotes(bloc));
                 blocs.set(position, bloc);
