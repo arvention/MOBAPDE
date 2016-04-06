@@ -150,7 +150,7 @@ public class Database extends SQLiteOpenHelper{
 
         db.insert(note_table, null, val);
 
-        Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName() + " " + note.getBloc().getName());
+        //Log.d("note_add", "note added!: " + note.getTitle() + " " + note.getContent() + " by " + note.getCreator().getFirstName() + " " + note.getBloc().getName());
         db.close();
     }
 
@@ -173,20 +173,22 @@ public class Database extends SQLiteOpenHelper{
                 note.setNoteID(noteID);
                 note.setCreator(user);
 
-                if(blocID == -1)
+                if(blocID == -1) {
                     note.setBloc(null);
+                    Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate() + " null");
+                }
                 else {
                     Bloc bloc = new Bloc();
                     bloc.setBlocID(blocID);
                     fillBlocDetails(bloc, user);
                     note.setBloc(bloc);
+                    Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate() + " " + note.getBloc().getName());
                 }
 
                 note.setTitle(title);
                 note.setContent(content);
                 note.setDate(date);
 
-                Log.d("get_note", note.getTitle() + " by " + note.getCreator().getFirstName() + " on " + note.getDate());
                 notes.add(note);
                 cursor.moveToNext();
             }

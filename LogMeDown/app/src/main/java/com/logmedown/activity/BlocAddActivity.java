@@ -52,15 +52,6 @@ public class BlocAddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // temporary
-        User friend = new User();
-        friend.setFirstName("Nog");
-        friend.setLastName("Nog");
-        friend.setUsername("noggie");
-        for(int i = 0; i < 10; i++) {
-            user.getFriends().add(friend);
-        }
-
         this.blocName = (EditText)findViewById(R.id.add_bloc_name);
         this.saveButton = (ImageButton)findViewById(R.id.add_bloc_save_button);
 

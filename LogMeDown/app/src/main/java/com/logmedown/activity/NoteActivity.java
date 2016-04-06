@@ -57,6 +57,7 @@ public class NoteActivity extends AppCompatActivity {
 
         //initialize bloc to null (public)
         bloc = null;
+        index = -1;
 
         //retrieve note action
         action = getIntent().getStringExtra("note_action");
