@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class BlocAddActivity extends AppCompatActivity {
 
-    private User user;
+    private User loggedUser;
     private Database db;
 
     private EditText blocName;
@@ -42,7 +42,7 @@ public class BlocAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloc_add);
 
-        user = (User) getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getIntent().getSerializableExtra("logged_user");
         db = Database.getInstance(this);
 
         // toolbar
@@ -62,7 +62,7 @@ public class BlocAddActivity extends AppCompatActivity {
 
         this.recyclerView = (RecyclerView)findViewById(R.id.add_bloc_recycler_view);
         recyclerView.setHasFixedSize(true);
-        addBlocMemberRecyclerAdapter = new AddBlocMemberRecyclerAdapter(user.getFriends(), this, recyclerView);
+        addBlocMemberRecyclerAdapter = new AddBlocMemberRecyclerAdapter(loggedUser.getFriends(), this, recyclerView);
         recyclerView.setAdapter(addBlocMemberRecyclerAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -101,7 +101,7 @@ public class BlocAddActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Bloc bloc = new Bloc();
 
-                        bloc.setCreator(user);
+                        bloc.setCreator(loggedUser);
                         bloc.setName(blocName.getText().toString());
                         bloc.setType(blocType.getSelectedItem().toString());
 

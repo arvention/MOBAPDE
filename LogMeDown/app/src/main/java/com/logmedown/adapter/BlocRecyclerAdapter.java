@@ -20,17 +20,17 @@ import java.util.ArrayList;
 
 public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapter.BlocViewHolder>{
 
-    private User user;
+    private User loggedUser;
     private Database db;
 
     private ArrayList<Bloc> blocs;
     private Activity main;
     private RecyclerView recyclerView;
 
-    public BlocRecyclerAdapter(ArrayList<Bloc> blocs, Activity main, User user, RecyclerView recyclerView){
+    public BlocRecyclerAdapter(ArrayList<Bloc> blocs, Activity main, User loggedUser, RecyclerView recyclerView){
         this.blocs = blocs;
         this.main = main;
-        this.user = user;
+        this.loggedUser = loggedUser;
         db = Database.getInstance(main);
         this.recyclerView = recyclerView;
     }
@@ -55,12 +55,12 @@ public class BlocRecyclerAdapter extends RecyclerView.Adapter<BlocRecyclerAdapte
                 Intent intent = new Intent(BlocRecyclerAdapter.this.main, BlocViewActivity.class);
 
                 Bloc bloc = blocs.get(position);
-                db.fillBlocDetails(bloc, user);
+                db.fillBlocDetails(bloc, loggedUser);
                 bloc.setMembers(db.getMembersOfBloc(bloc));
                 bloc.setNotes(db.getNotes(bloc));
                 blocs.set(position, bloc);
 
-                intent.putExtra("logged_user", BlocRecyclerAdapter.this.user);
+                intent.putExtra("logged_user", BlocRecyclerAdapter.this.loggedUser);
                 intent.putExtra("bloc", blocs.get(position));
                 intent.putExtra("position", position);
                 BlocRecyclerAdapter.this.main.startActivityForResult(intent, 4);

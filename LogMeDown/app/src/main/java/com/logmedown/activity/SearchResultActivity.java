@@ -49,7 +49,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private SearchView searchView;
     private MenuItem menuItem;
 
-    private User user;
+    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class SearchResultActivity extends AppCompatActivity {
         db = Database.getInstance(this);
 
         //logged user
-        user = (User) getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getIntent().getSerializableExtra("logged_user");
 
         //components
         searchName = (TextView) findViewById(R.id.searchName);

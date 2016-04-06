@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!editTextLoginUsername.getText().toString().equals("") && !editTextLoginPassword.getText().toString().equals("")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    User user = logInUser();
-                    if(user != null) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT);
+                    User loggedUser = logInUser();
+                    if(loggedUser != null) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Welcome " + loggedUser.getFirstName(), Toast.LENGTH_SHORT);
                         toast.show();
 
                         finish();
 
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        intent.putExtra("logged_user", user);
+                        intent.putExtra("logged_user", loggedUser);
                         startActivity(intent);
 
                         editor.putString(stringUsernameTag, editTextLoginUsername.getText().toString());
@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
           String username = sharedPreferences.getString(stringUsernameTag, "");
           String password = sharedPreferences.getString(stringPasswordTag, "");
 
-          User user = db.logInUser(username, password);
-          (Toast.makeText(getApplicationContext(), "Welcome " + user.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
+          User loggedUser = db.logInUser(username, password);
+          (Toast.makeText(getApplicationContext(), "Welcome " + loggedUser.getFirstName() + ".", Toast.LENGTH_SHORT)).show();
 
           Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-          intent.putExtra("logged_user", user);
+          intent.putExtra("logged_user", loggedUser);
           startActivity(intent);
       }
     }
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         String username = editTextLoginUsername.getText().toString();
         String password = editTextLoginPassword.getText().toString();
 
-        User user = db.logInUser(username, password);
+        User loggedUser = db.logInUser(username, password);
 
-        return user;
+        return loggedUser;
     }
 }

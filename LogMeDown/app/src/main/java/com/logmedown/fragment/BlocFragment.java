@@ -17,7 +17,7 @@ import com.logmedown.model.User;
 
 public class BlocFragment extends Fragment {
 
-    private User user;
+    private User loggedUser;
     private FloatingActionButton blocAddBlocFab;
     private RecyclerView recyclerView;
     private BlocRecyclerAdapter blocRecyclerAdapter;
@@ -25,20 +25,20 @@ public class BlocFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_bloc, container, false);
 
-        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
         blocAddBlocFab = (FloatingActionButton) view.findViewById(R.id.add_bloc_fab);
         blocAddBlocFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BlocAddActivity.class);
-                intent.putExtra("logged_user", user);
+                intent.putExtra("logged_user", loggedUser);
                 startActivityForResult(intent, 3);
             }
         });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.bloc_recycler_view);
-        blocRecyclerAdapter = new BlocRecyclerAdapter(user.getBlocs(), getActivity(), user, recyclerView);
+        blocRecyclerAdapter = new BlocRecyclerAdapter(loggedUser.getBlocs(), getActivity(), loggedUser, recyclerView);
         recyclerView.setAdapter(blocRecyclerAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

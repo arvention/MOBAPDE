@@ -33,7 +33,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
     private ArrayList<Note> notes;
     private Activity main;
     private RecyclerView recyclerView;
-    private User user;
+    private User loggedUser;
 
     private Animation zoomIn;
     private Animation zoomOut;
@@ -48,7 +48,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
     private int selectedItem;
 
     public NoteRecyclerHomeAdapter(ArrayList<Note> notes, Activity main, LinearLayout noteActionMenu, ImageButton editNoteButton,
-                                   ImageButton viewNoteButton, ImageButton deleteNoteButton, RecyclerView recyclerView, User user){
+                                   ImageButton viewNoteButton, ImageButton deleteNoteButton, RecyclerView recyclerView, User loggedUser){
 
         this.db = Database.getInstance(main);
 
@@ -71,7 +71,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
         this.deleteNoteButton = deleteNoteButton;
 
         this.recyclerView = recyclerView;
-        this.user = user;
+        this.loggedUser = loggedUser;
 
         this.deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +134,7 @@ public class NoteRecyclerHomeAdapter extends RecyclerView.Adapter<NoteRecyclerHo
 
         holder.postContents.setText(notes.get(position).getContent());
 
-        if(notes.get(holder.getAdapterPosition()).getCreator().getUserID() == user.getUserID()) {
+        if(notes.get(holder.getAdapterPosition()).getCreator().getUserID() == loggedUser.getUserID()) {
             holder.openMenuButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

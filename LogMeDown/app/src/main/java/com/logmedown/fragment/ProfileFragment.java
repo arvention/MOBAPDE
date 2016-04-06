@@ -25,7 +25,7 @@ public class ProfileFragment extends Fragment {
     private TextView profileName, profileEmail, profileUsername;
     private ImageView profileImage;
 
-    private User user;
+    private User loggedUser;
     private LinearLayout actionMenu;
     private ImageButton editNoteButton;
     private ImageButton viewNoteButton;
@@ -59,17 +59,17 @@ public class ProfileFragment extends Fragment {
         viewNoteButton = (ImageButton) view.findViewById(R.id.profile_note_view_button);
         deleteNoteButton = (ImageButton) view.findViewById(R.id.profile_note_delete_button);
 
-        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
         profileImage.setImageResource(R.drawable.profile_img);
 
-        profileName.setText(user.getFirstName() + " " + user.getLastName());
-        profileEmail.setText(user.getEmailAddress());
-        profileUsername.setText(user.getUsername());
+        profileName.setText(loggedUser.getFirstName() + " " + loggedUser.getLastName());
+        profileEmail.setText(loggedUser.getEmailAddress());
+        profileUsername.setText(loggedUser.getUsername());
 
         recyclerView = (RecyclerView)view.findViewById(R.id.profile_recycler_view);
         recyclerView.setHasFixedSize(true);
-        noteRecyclerProfileAdapter = new NoteRecyclerProfileAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
+        noteRecyclerProfileAdapter = new NoteRecyclerProfileAdapter(loggedUser.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
-                intent.putExtra("logged_user", user);
+                intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
                 startActivityForResult(intent, 2);
             }
@@ -105,8 +105,8 @@ public class ProfileFragment extends Fragment {
                 Note editedNote = (Note) data.getSerializableExtra("edited_note");
 
                 int position = data.getIntExtra("position", 0);
-                user.getNoteAt(position).setContent(editedNote.getContent());
-                user.getNoteAt(position).setTitle(editedNote.getTitle());
+                loggedUser.getNoteAt(position).setContent(editedNote.getContent());
+                loggedUser.getNoteAt(position).setTitle(editedNote.getTitle());
 
                 getNoteRecyclerAdapter().notifyItemChanged(position);
                 break;
@@ -118,8 +118,8 @@ public class ProfileFragment extends Fragment {
 
     /*public void addNoteToUser(Note note) {
         Log.d("profile_add_debug", "hehe");
-        if (user != null) {
-            user.addNote(note);
+        if (loggedUser != null) {
+            loggedUser.addNote(note);
             getNoteRecyclerAdapter().notifyDataSetChanged();
         }
     }*/
@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
     /*public void editNote() {
         Intent intent = new Intent(this.getActivity(), NoteActivity.class);
         intent.putExtra("note_action", "edit");
-        intent.putExtra("note_details", user.getNoteAt(selectedPos));
+        intent.putExtra("note_details", loggedUser.getNoteAt(selectedPos));
         intent.putExtra("position", selectedPos);
 
         startActivityForResult(intent, 1);

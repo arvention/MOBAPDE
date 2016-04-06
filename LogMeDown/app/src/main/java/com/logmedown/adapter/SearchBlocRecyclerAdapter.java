@@ -23,13 +23,13 @@ public class SearchBlocRecyclerAdapter extends RecyclerView.Adapter<SearchBlocRe
     private ArrayList<Bloc> blocs;
     private Activity main;
     private Database db;
-    private User user;
+    private User loggedUser;
 
-    public SearchBlocRecyclerAdapter(ArrayList<Bloc> blocs, Activity main, User user) {
+    public SearchBlocRecyclerAdapter(ArrayList<Bloc> blocs, Activity main, User loggedUser) {
         this.blocs = blocs;
         this.main = main;
         this.db = Database.getInstance(main);
-        this.user = user;
+        this.loggedUser = loggedUser;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class SearchBlocRecyclerAdapter extends RecyclerView.Adapter<SearchBlocRe
                 bloc.setNotes(db.getNotes(bloc));
                 blocs.set(position, bloc);
 
-                intent.putExtra("logged_user", user);
+                intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("bloc", blocs.get(position));
                 intent.putExtra("position", position);
                 main.startActivityForResult(intent, 4);

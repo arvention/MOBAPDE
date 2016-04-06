@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class BlocViewActivity extends AppCompatActivity {
 
-    private User user;
+    private User loggedUser;
     private Bloc bloc;
     private int position;
     private String membershipStatus;
@@ -55,7 +55,7 @@ public class BlocViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloc_view);
 
-        user = (User) getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getIntent().getSerializableExtra("logged_user");
         bloc = (Bloc) getIntent().getSerializableExtra("bloc");
         position = (Integer) getIntent().getSerializableExtra("position");
         db = Database.getInstance(this);
@@ -76,7 +76,7 @@ public class BlocViewActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.bloc_view_recycler_view);
 
-        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(bloc.getNotes(), this, noteActionMenu, noteEditButton, noteViewButton, noteDeleteButton, recyclerView, user);
+        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(bloc.getNotes(), this, noteActionMenu, noteEditButton, noteViewButton, noteDeleteButton, recyclerView, loggedUser);
         recyclerView.setAdapter(noteRecyclerHomeAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -87,7 +87,7 @@ public class BlocViewActivity extends AppCompatActivity {
         //set user image later
         userName.setText(bloc.getCreator().getFirstName() + " " + bloc.getCreator().getLastName());
 
-        if(bloc.getCreator().getUserID() == user.getUserID()){
+        if(bloc.getCreator().getUserID() == loggedUser.getUserID()){
             joinButton.setVisibility(View.GONE);
 
             memberButton.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class BlocViewActivity extends AppCompatActivity {
 
             membershipStatus = "Not Member";
             for(int i = 0; i < bloc.getMembers().size(); i++){
-                if(bloc.getMembers().get(i).getUserID() == user.getUserID()){
+                if(bloc.getMembers().get(i).getUserID() == loggedUser.getUserID()){
                     membershipStatus = "Member";
                 }
             }
@@ -123,7 +123,7 @@ public class BlocViewActivity extends AppCompatActivity {
             if(membershipStatus.equals("Member")){
                 joinButton.setImageResource(R.drawable.join_joined_bloc_icon);
             } else{
-                if(db.hasPendingRequestToJoin(bloc, user)){
+                if(db.hasPendingRequestToJoin(bloc, loggedUser)){
                     membershipStatus = "Pending";
                     joinButton.setImageResource(R.drawable.join_pending_bloc_icon);
                 }else{
@@ -152,8 +152,8 @@ public class BlocViewActivity extends AppCompatActivity {
         if(membershipStatus.equals("Member")){
             joinButton.setImageResource(R.drawable.join_join_bloc_icon);
             membershipStatus = "Not Member";
-            db.deleteMemberFromBloc(bloc, user);
-            bloc.getMembers().remove(user);
+            db.deleteMemberFromBloc(bloc, loggedUser);
+            bloc.getMembers().remove(loggedUser);
 
             if(bloc.getType().equals("Private")){
                 finish();
@@ -161,18 +161,18 @@ public class BlocViewActivity extends AppCompatActivity {
         }else if(membershipStatus.equals("Pending")){
             joinButton.setImageResource(R.drawable.join_join_bloc_icon);
             membershipStatus = "Not Member";
-            db.deleteRequestToJoin(bloc, user);
+            db.deleteRequestToJoin(bloc, loggedUser);
         }
         else if(membershipStatus.equals("Not Member")){
             if(bloc.getType().equals("Public")){
                 joinButton.setImageResource(R.drawable.join_joined_bloc_icon);
                 membershipStatus = "Member";
-                db.addMemberToBloc(bloc, user);
-                bloc.getMembers().add(user);
+                db.addMemberToBloc(bloc, loggedUser);
+                bloc.getMembers().add(loggedUser);
             } else if(bloc.getType().equals("Closed")){
                 joinButton.setImageResource(R.drawable.join_pending_bloc_icon);
                 membershipStatus = "Pending";
-                db.addRequestToJoin(bloc, user);
+                db.addRequestToJoin(bloc, loggedUser);
             }
         }
     }

@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     private NoteRecyclerHomeAdapter noteRecyclerHomeAdapter;
     private RecyclerView recyclerView;
 
-    private User user;
+    private User loggedUser;
     private LinearLayout actionMenu;
     private ImageButton editNoteButton;
     private ImageButton viewNoteButton;
@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
         zoomOut = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_out);
 
-        user = (User) getActivity().getIntent().getSerializableExtra("logged_user");
+        loggedUser = (User) getActivity().getIntent().getSerializableExtra("logged_user");
 
         homeAddNoteFab = (FloatingActionButton)view.findViewById(R.id.home_add_note_fab);
 
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
-                intent.putExtra("logged_user", user);
+                intent.putExtra("logged_user", loggedUser);
                 intent.putExtra("note_action", "add");
                 startActivityForResult(intent, 2);
             }
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.home_recycler_view);
         recyclerView.setHasFixedSize(true);
-        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(user.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView, user);
+        noteRecyclerHomeAdapter = new NoteRecyclerHomeAdapter(loggedUser.getNotes(), getActivity(), actionMenu, editNoteButton, viewNoteButton, deleteNoteButton, recyclerView, loggedUser);
         recyclerView.setAdapter(getNoteRecyclerAdapter());
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
